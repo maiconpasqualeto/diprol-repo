@@ -1,0 +1,110 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE html>
+
+<html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:p="http://primefaces.org/ui">
+
+<h:head>
+
+</h:head>
+<h:body>
+	<!-- Na composição tudo que está fora da tag é ignorado -->
+	<ui:composition>
+
+		<div class="navbar navbar-default navbar-fixed-top" role="navigation">
+			<div class="container">
+				<div class="navbar-header">
+					<button type="button" class="navbar-toggle" data-toggle="collapse"
+						data-target=".navbar-collapse">
+						<span class="sr-only">Toggle navigation</span> <span
+							class="icon-bar"></span> <span class="icon-bar"></span> <span
+							class="icon-bar"></span>
+					</button>
+					<a class="navbar-brand" href="${request.contextPath}/principal.xhtml">Diprol</a>
+				</div>
+				<div class="navbar-collapse collapse">
+					<ul class="nav navbar-nav navbar-right">
+						<li class="dropdown">
+							<a class="dropdown-toggle" data-toggle="dropdown" href="#">
+								Clientes
+								<span class="caret"></span>
+							</a>
+							<ul class="dropdown-menu" role="menu">
+								<li>
+									<a href="#">Cadastro</a>
+								</li>
+								<li>
+									<a href="#">Classificação</a>
+								</li>
+								<li>
+									<a href="#">Perfil</a>
+								</li>
+							</ul>
+						</li>
+						
+						<li class="dropdown">
+							<a class="dropdown-toggle" data-toggle="dropdown" href="#">
+								Estoque
+								<span class="caret"></span>
+							</a>
+							<ul class="dropdown-menu" role="menu">
+								<li>
+									<a href="#">Entradas</a>
+								</li>
+								<li>
+									<a href="#">Saídas</a>
+								</li>
+								<li>
+									<a href="#">Movimento</a>
+								</li>
+								<li>
+									<a href="#">Inventário</a>
+								</li>
+							</ul>
+						</li>
+						
+						<li class="dropdown">
+							<a class="dropdown-toggle" data-toggle="dropdown" href="#">
+								Financeiro
+								<span class="caret"></span>
+							</a>
+							<ul class="dropdown-menu" role="menu">
+								<li>
+									<a href="#">Receitas</a>
+								</li>
+								<li>
+									<a href="#">Despesas</a>
+								</li>
+								<li>
+									<a href="#">Fluxo Caixa</a>
+								</li>								
+							</ul>
+						</li>
+						
+						<li class="dropdown">
+							<a class="dropdown-toggle" data-toggle="dropdown" href="#">
+								Configurações
+								<span class="caret"></span>
+							</a>
+							<ul class="dropdown-menu" role="menu">
+								<li>
+									<a href="#">Senha</a>
+								</li>
+								<li>
+									<a href="#">Usuário</a>
+								</li>																
+							</ul>
+						</li>
+					</ul>
+				</div>
+				<!--/.navbar-collapse -->
+			</div>
+		</div>
+		
+	</ui:composition>
+	<!-- Fim composição -->
+</h:body>
+
+</html>

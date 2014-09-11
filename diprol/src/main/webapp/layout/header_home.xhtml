@@ -1,0 +1,52 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE html>
+
+<html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:p="http://primefaces.org/ui">
+
+<h:head>
+
+</h:head>
+<h:body>
+	<!-- Na composição tudo que está fora da tag é ignorado -->
+	<ui:composition>
+
+		<div class="navbar navbar-inverse navbar-static-top" role="navigation">
+			<div class="container">
+				<div class="navbar-header">
+					<button type="button" class="navbar-toggle" data-toggle="collapse"
+						data-target=".navbar-collapse">
+						<span class="sr-only">Toggle navigation</span> <span
+							class="icon-bar"></span> <span class="icon-bar"></span> <span
+							class="icon-bar"></span>
+					</button>
+					<a class="navbar-brand" href="#">Diprol</a>
+				</div>
+				<div class="navbar-collapse collapse">
+					<h:form class="navbar-form navbar-right" >
+						<p:growl id="msgs" />
+						
+						<div class="form-group">
+							<p:inputText id="txtCpf" value="#{segurancaBean.usuario.cpf}" placeholder="CPF" class="form-control" 
+									required="true" label="CPF" requiredMessage="CPF é obrigatório">
+								<p:focus for="txtCpf" />
+							</p:inputText>
+						</div>
+						<div class="form-group">
+							<p:password id="txtPass" value="#{segurancaBean.usuario.senha}" placeholder="Senha" class="form-control" 
+								required="true" label="Senha" requiredMessage="Senha é obrigatório"/>
+						</div>
+						<p:commandButton ajax="false" id="btnLogar" action="#{segurancaBean.logar}" value="Logar" class="btn btn-success" />
+					</h:form>
+				</div>
+				<!--/.navbar-collapse -->
+			</div>
+		</div>
+		
+	</ui:composition>
+	<!-- Fim composição -->
+</h:body>
+
+</html>

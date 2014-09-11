@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<f:view 
+	xmlns="http://www.w3.org/1999/xhtml" 
+	xmlns:h="http://java.sun.com/jsf/html" 
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	>
+
+	<ui:insert name="ie_defs" >
+		<ui:include src="ie_defs.xhtml" />
+	</ui:insert>
+	
+<h:outputText value="&lt;!--[if gt IE 8]&gt;&lt;!--&gt;" escape="false" />
+
+<html xmlns="http://www.w3.org/1999/xhtml" class="no-js">
+	
+<h:outputText value="&lt;!--&lt;![endif]--&gt;" escape="false" />
+		
+	<h:head>
+		<ui:insert name="defs" >
+			<ui:include src="definicoes.xhtml" />
+		</ui:insert>
+	</h:head>
+	<h:body>
+	
+		<header id="header">
+  			<ui:insert name="header" >
+			  <ui:include src="header_home.xhtml" />
+			</ui:insert>
+	    </header>
+		
+	  	<ui:insert name="principal" />
+	  				
+	    <footer>
+	    	<p>&#169; SiX Tecnologia da Informação 2014</p>
+   	    </footer>
+   	    
+   	    <ui:insert name="footer_defs" >
+			<ui:include src="footer_defs.xhtml" />
+		</ui:insert>
+   	    
+	</h:body>
+	
+</html>
+</f:view>
