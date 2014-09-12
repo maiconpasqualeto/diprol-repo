@@ -12,7 +12,9 @@ import javax.faces.bean.ManagedBean;
 import javax.faces.bean.ViewScoped;
 import javax.faces.context.FacesContext;
 
+import br.com.sixinf.diprol.dao.SegurancaDAO;
 import br.com.sixinf.diprol.entidades.Usuario;
+import br.com.sixinf.ferramentas.Utilitarios;
 
 /**
  * @author maicon
@@ -40,11 +42,39 @@ public class SegurancaBean implements Serializable {
 	}
 
 	public void logar() throws IOException {
-		if (!usuario.getCpf().equals("admin") &&
-				!usuario.getSenha().equals("admin")) {
+		if (!Utilitarios.validaCpf(usuario.getCpf())) {
 			
 			FacesMessage m = new FacesMessage(
-					FacesMessage.SEVERITY_ERROR, "CPF ou senha inválidos", "CPF ou senha inválidos");
+					FacesMessage.SEVERITY_ERROR, "CPF inválido", "CPF inválido");
+			FacesContext.getCurrentInstance().addMessage(null, m);
+			
+			return;
+		}			
+		
+		Usuario u = SegurancaDAO.getInstance().buscarUsuarioPorCpf(usuario.getCpf());
+		
+		if (u == null) {
+			FacesMessage m = new FacesMessage(
+					FacesMessage.SEVERITY_ERROR, "Usuário não cadastrado", "Usuário ou senha inválidos");
+			FacesContext.getCurrentInstance().addMessage(null, m);
+			
+			return;
+		}
+		
+		if (!u.getStatus().equals('A')) {
+			
+			FacesMessage m = new FacesMessage(
+					FacesMessage.SEVERITY_ERROR, "Usuário desativado, acesso negado", 
+						"Usuário desativado, acesso negado");
+			FacesContext.getCurrentInstance().addMessage(null, m);
+			
+			return;
+		}
+		
+		if (!usuario.getSenha().equals(u.getSenha())) {
+			
+			FacesMessage m = new FacesMessage(
+					FacesMessage.SEVERITY_ERROR, "Senha inválida", "Senha inválida");
 			FacesContext.getCurrentInstance().addMessage(null, m);
 			
 			return;

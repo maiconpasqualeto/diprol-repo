@@ -1,0 +1,68 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE html>
+
+<html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:p="http://primefaces.org/ui">
+
+<h:head>
+
+</h:head>
+<h:body>
+	<!-- Na composição tudo que está fora da tag é ignorado -->
+	<ui:composition template="/layout/layout_interno.xhtml">
+
+		<ui:define name="principal">
+		
+			<h:form class="form-inline" role="form">
+								
+				<p:growl id="msgs" />
+			
+				<div class="container start-jb">
+					
+				  <div class="row">
+				    <label class="col-xs-2" for="txtRazaoSocial">Razão Social</label>
+				    <div class="col-xs-6">
+					    <p:inputText id="txtRazaoSocial" value="#{cadastroClienteBean.cliente.razaoSocial}" 
+					    	class="form-control fullwidth" />
+				    </div>
+				    
+				    <label class="col-xs-1" for="txtCnpj">CNPJ</label>
+				    <div class="col-xs-3">
+					    <p:inputText id="txtCnpj" value="#{cadastroClienteBean.cliente.cnpj}" 
+					    	class="form-control fullwidth" />
+				    </div>
+				  </div>
+				  
+				  <div class="row">
+				    <label class="col-xs-2" for="txtCEP">CEP</label>
+				    <div class="col-xs-3">
+					    <p:inputText id="txtCEP" value="#{cadastroClienteBean.cliente.cep}" 
+					    	class="form-control fullwidth" />
+				    </div>
+				    
+				    <label class="col-xs-1" for="txtEndereco">Endereço</label>
+				    <div class="col-xs-4">
+					    <p:inputText id="txtEndereco" value="#{cadastroClienteBean.cliente.endereco}" 
+					    	class="form-control fullwidth" />
+				    </div>
+				    
+				    <label class="col-xs-1" for="txtNumero">Número</label>
+				    <div class="col-xs-1">
+					    <p:inputText id="txtNumero" value="#{cadastroClienteBean.cliente.enderecoNumero}" 
+					    	class="form-control fullwidth" />
+				    </div>
+				  </div>
+				  
+				</div>
+				
+			</h:form>
+			
+		</ui:define>
+	</ui:composition>
+	<!-- Fim composição -->
+
+</h:body>
+
+</html>

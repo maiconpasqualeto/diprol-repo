@@ -29,10 +29,9 @@
 						<p:growl id="msgs" />
 						
 						<div class="form-group">
-							<p:inputText id="txtCpf" value="#{segurancaBean.usuario.cpf}" placeholder="CPF" class="form-control" 
-									required="true" label="CPF" requiredMessage="CPF é obrigatório">
-								<p:focus for="txtCpf" />
-							</p:inputText>
+							<p:inputMask id="txtCpf" mask="999.999.999-99" value="#{segurancaBean.usuario.cpf}" placeholder="CPF" class="form-control" 
+									required="true" label="CPF" requiredMessage="CPF é obrigatório" converter="inputMaskConverter">
+							</p:inputMask>
 						</div>
 						<div class="form-group">
 							<p:password id="txtPass" value="#{segurancaBean.usuario.senha}" placeholder="Senha" class="form-control" 

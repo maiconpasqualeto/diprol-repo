@@ -7,7 +7,9 @@ import java.io.Serializable;
 import java.util.Date;
 
 import javax.persistence.Column;
+import javax.persistence.Entity;
 import javax.persistence.Id;
+import javax.persistence.Table;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
 
@@ -17,12 +19,14 @@ import br.com.sixinf.ferramentas.persistencia.Entidade;
  * @author maicon
  *
  */
+@Entity
+@Table(name = "cliente", schema = "public")
 public class Cliente implements Serializable, Entidade {
 
 	private static final long serialVersionUID = 1L;
 	
 	@Id
-	@Column(name = "cod_CEF")
+	@Column(name = "cod_cef")
 	private String codCEF;
 	
 	@Column(name = "razao_social")
@@ -31,7 +35,7 @@ public class Cliente implements Serializable, Entidade {
 	@Column(name = "cnpj")
 	private String cnpj;
 	
-	@Column(name = "CEP")
+	@Column(name = "cep")
 	private String cep;
 	
 	@Column(name = "endereco")
@@ -76,7 +80,7 @@ public class Cliente implements Serializable, Entidade {
 	@Column(name = "canal_atendimento")
 	private String canalAtendimento;
 	
-	@Column(name = "satus")
+	@Column(name = "status")
 	private Character status;
 	
 	@Column(name = "data_cadastro")
