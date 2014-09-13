@@ -16,26 +16,50 @@
 
 		<ui:define name="principal">
 		
-			<h:form class="form-horizontal" role="form">
+			<!--  ==========  -->
+		    <!--  = Breadcrumbs =  -->
+		    <!--  ==========  -->
+	        <div class="container">
+	        	<div class="row">
+        			<div class="darker-stripe">
+						<ul class="breadcrumb">
+							<li>Clientes
+								<span class="icon-chevron-right"></span>
+							</li>
+							<li class="active">Pesquisa</li>
+						</ul>
+					</div>
+				</div>
+			</div>
+				
+			<h:form id="formLista" class="form-inline" role="form">
 			
 				<p:growl id="msgs" />
-			
-				<div class="container start-jb">
-			
-					<div class="form-group">
-						<label class="col-sm-2 control-label" for="txtCodCEF">Código CEF</label>
-						<div class="col-sm-4">
-							<p:inputText id="txtCodCEF" value="#{cadastroClienteBean.codigoCEF}" 
-									validatorMessage="Código CEF inválido" label="Código CEF" >
-								<f:convertNumber for="txtCodCEF" />
-							</p:inputText>
-						</div>
+				
+				<div class="container">
+					<div class="btn-toolbar pull-right push-down-20">
+						<h:button value="Novo" styleClass="btn btn-primary" outcome="form_cliente.xhtml" />
+						
 					</div>
-					
-					<div class="form-group">
-						<div class="col-sm-offset-2 col-sm-4">
-							<p:commandButton value="Confirma" actionListener="#{cadastroClienteBean.pesquisar}" 
-								update="@form msgs">
+				</div>
+			
+				<div class="container well">
+					<div class="row">
+						<div class="form-group">
+							<label class="col-sm-4" for="txtCodCEF">Código CEF</label>
+							<div class="col-sm-4">
+								<p:inputMask id="txtCodCEF" value="#{cadastroClienteBean.codigoCEF}" 
+										validatorMessage="Código CEF inválido" label="Código CEF" 
+										mask="99.999999-9" >
+								</p:inputMask>
+							</div>							
+						</div>
+						<div class="form-group">
+							<div class="col-sm-4">
+								<h:commandButton value="Confirma" actionListener="#{cadastroClienteBean.pesquisar}" styleClass="btn btn-success" >
+									<f:ajax render="formLista" execute="@form msgs" />
+								</h:commandButton>								
+							</div>
 						</div>
 					</div>
 				</div>

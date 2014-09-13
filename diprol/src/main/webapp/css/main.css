@@ -4,7 +4,7 @@
    Author's custom styles
    ========================================================================== */
 
-.start-jb{
+.wrapper{
 	min-height: 540px;
 }
 
@@ -47,8 +47,20 @@
 	top:0;
 }
 
+.formrow{
+	margin-bottom: 30px;
+}
 
+.form-cointainer{
+	background-color: white; 
+	padding: 10px; 
+	min-height: 450px;
+}
 
+.btn{
+	.btn;
+	color: #fff !important;
+}
 
 
 

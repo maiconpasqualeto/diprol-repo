@@ -37,7 +37,7 @@
 							<p:password id="txtPass" value="#{segurancaBean.usuario.senha}" placeholder="Senha" class="form-control" 
 								required="true" label="Senha" requiredMessage="Senha é obrigatório"/>
 						</div>
-						<p:commandButton ajax="false" id="btnLogar" action="#{segurancaBean.logar}" value="Logar" class="btn btn-success" />
+						<h:commandButton ajax="false" id="btnLogar" actionListener="#{segurancaBean.logar}" value="Logar" class="btn btn-success" />
 					</h:form>
 				</div>
 				<!--/.navbar-collapse -->
