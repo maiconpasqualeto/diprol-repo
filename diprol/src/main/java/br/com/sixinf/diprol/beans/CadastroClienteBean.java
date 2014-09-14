@@ -15,6 +15,7 @@ import javax.faces.bean.ManagedBean;
 import javax.faces.bean.ViewScoped;
 import javax.faces.context.FacesContext;
 
+import org.apache.log4j.Logger;
 import org.primefaces.json.JSONException;
 import org.primefaces.json.JSONObject;
 
@@ -85,7 +86,7 @@ public class CadastroClienteBean implements Serializable{
 	 * @throws DAOException 
 	 * 
 	 */
-	public void confirma() throws DAOException {
+	public void confirma() {
 		if (cliente.getCnpj() != null && 
 				!cliente.getCnpj().isEmpty() &&
 				!Utilitarios.validaCnpj(cliente.getCnpj())) {
@@ -95,11 +96,21 @@ public class CadastroClienteBean implements Serializable{
 			FacesContext.getCurrentInstance().addMessage(null, m);
 			return;
 			
+		} 
+		try {
+			DiprolFacade.getInstance().salvarCliente(cliente, novo);
+			
+			novo = false;
+			
+			FacesMessage m = new FacesMessage("Registro salvo com sucesso!");
+			FacesContext.getCurrentInstance().addMessage(null, m);
+			
+		} catch (Exception e) {
+			FacesMessage m = new FacesMessage(
+					FacesMessage.SEVERITY_ERROR, "Erro ao gravar registro", "Erro ao gravar registro");
+			FacesContext.getCurrentInstance().addMessage(null, m);
+			return;
 		}
-		DiprolFacade.getInstance().salvarCliente(cliente, novo);
-		
-		FacesMessage m = new FacesMessage("Registro salvo com sucesso!");
-		FacesContext.getCurrentInstance().addMessage(null, m);
 		
 	}
 	
@@ -108,7 +119,7 @@ public class CadastroClienteBean implements Serializable{
 	 * @throws IOException
 	 * @throws JSONException
 	 */
-	public void buscarCep() throws IOException, JSONException {		
+	public void buscarCep(String cep) throws IOException, JSONException {		
 		// Objeto URL
 		//URL url = new URL("http://www.buscarcep.com.br?cep=" + cep + "&formato=xml&chave=1aLqB2mpqHoH/Xa/m8jkf0Wm/S99vK0");
 		URL url = new URL("http://cep.republicavirtual.com.br/web_cep.php?formato=json&cep=" + cliente.getCep());

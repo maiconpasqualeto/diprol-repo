@@ -76,7 +76,7 @@ public class ClienteDAO extends BridgeBaseDAO {
 	 */
 	public List<Cliente> buscarClientesPaginado(
 			int inicio, int fim, String sortField, 
-			SortOrder order, Map<String, String> filters) {
+			SortOrder order, Map<String, Object> filters) {
 		EntityManager em = AdministradorPersistencia.getEntityManager();
 		
 		List<Cliente> list = null;
@@ -109,7 +109,7 @@ public class ClienteDAO extends BridgeBaseDAO {
 	 * 
 	 * @return
 	 */
-	public Long buscarCountClientesPaginado(Map<String, String> filters) {
+	public Long buscarCountClientesPaginado(Map<String, Object> filters) {
 		EntityManager em = AdministradorPersistencia.getEntityManager();
 		
 		Long count = null;
@@ -141,8 +141,8 @@ public class ClienteDAO extends BridgeBaseDAO {
 	 * @param hql
 	 * @param filters
 	 */
-	private void montaHqlParameter(StringBuilder hql, Map<String, String> filters, String sortField, SortOrder order){
-		String globalFilterParameter = filters.get("globalFilter");
+	private void montaHqlParameter(StringBuilder hql, Map<String, Object> filters, String sortField, SortOrder order){
+		String globalFilterParameter = (String) filters.get("globalFilter");
 		if (globalFilterParameter != null && 
 				globalFilterParameter.isEmpty())
 			filters.remove("globalFilter");
@@ -177,7 +177,7 @@ public class ClienteDAO extends BridgeBaseDAO {
 	 * @param q
 	 * @param filters
 	 */
-	private void preencheQueryParameter(Query q, Map<String, String> filters) {
+	private void preencheQueryParameter(Query q, Map<String, Object> filters) {
 		if (filters.containsKey("globalFilter")) {
 			q.setParameter("codigoCEF", "=" + filters.get("globalFilter"));
 			q.setParameter("titulo", "%" + filters.get("globalFilter") + "%");

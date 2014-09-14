@@ -36,20 +36,28 @@
 			<h:form id="formCadastro" class="form-inline" role="form">
 								
 				<p:growl id="msgs" />
+				
+				<p:ajaxStatus onstart="PF('statusDialog').show()" onsuccess="PF('statusDialog').hide()" />
+ 
+				<p:dialog widgetVar="statusDialog" modal="true" draggable="false" closable="false" resizable="false" showHeader="false">
+				    <p:graphicImage url="/img/progress.gif" />
+				</p:dialog>
 								
 				<div class="container">
 					<div class="btn-toolbar pull-right push-down-20">
 						<h:button value="Voltar" styleClass="btn btn-primary" outcome="lista_cliente.xhtml" />
-						<h:commandButton actionListener="#{cadastroClienteBean.confirma}" value="Confirma" styleClass="btn btn-success" >
-							<f:ajax render="msgs" execute="@form"  />
-						</h:commandButton>
+						<p:commandButton actionListener="#{cadastroClienteBean.confirma}" value="Confirma" styleClass="btn btn-success"
+							process="formCadastro" update="formCadastro">
+								
+						</p:commandButton>
 					</div>
 				</div>
 
-				<div class="container well">
+				<h:panelGroup layout="block" id="divForm" class="container well">
 				
 					<div class="row formrow">
-						<p:outputLabel for="txtCodigoCEF" value="Código CEF" styleClass="col-sm-2" />
+						
+						<p:outputLabel id="lblCodigoCEF" for="txtCodigoCEF" value="Código CEF" styleClass="col-sm-2" />
 						<div class="col-sm-3">
 							<p:inputText 
 								value="#{cadastroClienteBean.cliente.codCEF}" disabled="true"
@@ -57,7 +65,7 @@
 							
 							<p:inputMask id="txtCodigoCEF" value="#{cadastroClienteBean.cliente.codCEF}" 
 										validatorMessage="Código CEF inválido" label="Código CEF" 
-										mask="99.999999-9" class="form-control fullwidth" 
+										mask="99.999999-9" class="form-control fullwidth" required="true"
 										rendered="#{cadastroClienteBean.cliente.codCEF == null}">
 							</p:inputMask>	
 						</div>
@@ -84,16 +92,17 @@
 							<p:inputMask id="txtCEP" required="true" mask="99999-999"
 								value="#{cadastroClienteBean.cliente.cep}" converter="inputMaskConverter"
 								class="form-control fullwidth" >
-									<f:ajax event="blur" listener="#{cadastroClienteBean.buscarCep}" render="txtEndereco txtBairro txtCidade txtUf" />
+									<p:ajax event="blur" partialSubmit="true" resetValues="true" 
+										update="txtEndereco txtCidade txtUf txtBairro" listener="#{cadastroClienteBean.buscarCep}" />
 							</p:inputMask>
 						</div>
 
 						<label class="col-sm-1" for="txtEndereco">Endereço</label>
-						<div class="col-sm-4">
+						<h:panelGroup id="divTxtEndereco" class="col-sm-4" layout="block"  >
 							<p:inputText id="txtEndereco"
 								value="#{cadastroClienteBean.cliente.endereco}"
 								class="form-control fullwidth" />
-						</div>
+						</h:panelGroup>
 
 						<label class="col-sm-1" for="txtNumero">Número</label>
 						<div class="col-sm-1">
@@ -142,16 +151,20 @@
 
 						<label class="col-sm-1" for="txtTel1">Tel1</label>
 						<div class="col-sm-2">
-							<p:inputText id="txtTel1"
+							<p:inputMask id="txtTel1"
 								value="#{cadastroClienteBean.cliente.telefone1}"
-								class="form-control fullwidth" />
+								class="form-control fullwidth"
+								mask="(99)9999-9999" 
+								converter="inputMaskConverter"/>
 						</div>
 
 						<label class="col-sm-1" for="txtTel2">Tel2</label>
 						<div class="col-sm-2">
-							<p:inputText id="txtTel2"
+							<p:inputMask id="txtTel2"
 								value="#{cadastroClienteBean.cliente.telefone2}"
-								class="form-control fullwidth" />
+								class="form-control fullwidth" 
+								mask="(99)9999-9999" 
+								converter="inputMaskConverter"/>
 						</div>
 					</div>
 					
@@ -160,7 +173,8 @@
 						<div class="col-sm-5">
 							<p:inputText id="txtEmail"
 								value="#{cadastroClienteBean.cliente.email}"
-								class="form-control fullwidth" />
+								class="form-control fullwidth" validator="emailValidator" >									
+							</p:inputText>
 						</div>
 
 						<label class="col-sm-2" for="txtVendaFixa">Venda Fixa</label>
@@ -171,7 +185,7 @@
 						</div>
 					</div>
 
-				</div>
+				</h:panelGroup>
 
 			</h:form>
 			
