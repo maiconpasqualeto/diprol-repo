@@ -15,7 +15,6 @@ import javax.faces.bean.ManagedBean;
 import javax.faces.bean.ViewScoped;
 import javax.faces.context.FacesContext;
 
-import org.apache.log4j.Logger;
 import org.primefaces.json.JSONException;
 import org.primefaces.json.JSONObject;
 
@@ -38,6 +37,7 @@ public class CadastroClienteBean implements Serializable{
 	private String codigoCEF;
 	private Cliente cliente; 
 	private boolean novo = false;
+	private String canalAtendimento = "";
 	
 	//private LazyDataModel<Cliente> dataModel;
 	
@@ -55,6 +55,8 @@ public class CadastroClienteBean implements Serializable{
 			this.novo = true;
 		}
 		
+		atualizaCanalAtendimento();
+		
 	}
 
 	public String getCodigoCEF() {
@@ -71,6 +73,14 @@ public class CadastroClienteBean implements Serializable{
 
 	public void setCliente(Cliente cliente) {
 		this.cliente = cliente;
+	}
+
+	public String getCanalAtendimento() {
+		return canalAtendimento;
+	}
+
+	public void setCanalAtendimento(String canalAtendimento) {
+		this.canalAtendimento = canalAtendimento;
 	}
 
 	public void pesquisar() throws IOException {
@@ -150,6 +160,39 @@ public class CadastroClienteBean implements Serializable{
 			this.cliente.setBairro(j.getString("bairro"));
 			this.cliente.setCidade(j.getString("cidade"));
 			this.cliente.setUf(j.getString("uf"));
+		}
+		
+		atualizaCanalAtendimento();
+	}
+	
+	/**
+	 * 
+	 */
+	public void atualizaCanalAtendimento(){
+		if (cliente.getCep() != null && 
+				!cliente.getCep().isEmpty()) {
+			try {
+				Integer intCEP = Integer.valueOf(cliente.getCep());
+										
+				if (intCEP >= 78000000 && 
+					intCEP <= 78169000)
+					canalAtendimento = "Grande Cuiabá";
+				else 
+					if (intCEP >= 78170000 && 
+					intCEP <= 78898000)
+					canalAtendimento = "Interior MT";
+				else
+					if (intCEP >= 79000000 && 
+					intCEP <= 79127000)
+					canalAtendimento = "Campo Grande";
+				else
+					if (intCEP >= 79130000 && 
+					intCEP <= 79995000)
+					canalAtendimento = "Interior MS";
+				
+			} catch (Exception e) {
+				// se der exceção o sistema não para
+			}
 		}
 	}
 }
