@@ -12,6 +12,12 @@
 <h:body>
 	<!-- Na composição tudo que está fora da tag é ignorado -->
 	<ui:composition>
+	
+		<p:ajaxStatus onstart="PF('statusDialog').show()" onsuccess="PF('statusDialog').hide()" />
+		
+		<p:dialog widgetVar="statusDialog" modal="true" draggable="false" closable="false" resizable="false" showHeader="false">
+		    <p:graphicImage url="/img/progress.gif" />
+		</p:dialog>
 
 		<div class="navbar navbar-default navbar-static-top" role="navigation">
 			<div class="container">
@@ -51,7 +57,7 @@
 							</a>
 							<ul class="dropdown-menu" role="menu">
 								<li>
-									<a href="#">Entradas</a>
+									<a href="form_estoque.xhtml">Entradas</a>
 								</li>
 								<li>
 									<a href="#">Saídas</a>
