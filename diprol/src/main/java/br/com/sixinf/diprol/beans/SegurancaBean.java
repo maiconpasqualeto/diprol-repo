@@ -9,6 +9,7 @@ import java.io.Serializable;
 import javax.annotation.PostConstruct;
 import javax.faces.application.FacesMessage;
 import javax.faces.bean.ManagedBean;
+import javax.faces.bean.SessionScoped;
 import javax.faces.bean.ViewScoped;
 import javax.faces.context.FacesContext;
 
@@ -21,7 +22,7 @@ import br.com.sixinf.ferramentas.Utilitarios;
  *
  */
 @ManagedBean(name="segurancaBean")
-@ViewScoped
+@SessionScoped
 public class SegurancaBean implements Serializable {
 
 	private static final long serialVersionUID = 1L;

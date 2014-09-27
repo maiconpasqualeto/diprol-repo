@@ -117,8 +117,7 @@ public class Movimento implements Serializable, Entidade {
 
 	@Override
 	public Long getIdentificacao() {
-		// TODO Auto-generated method stub
-		return null;
+		return codMovimento.longValue();
 	}
 	
 	

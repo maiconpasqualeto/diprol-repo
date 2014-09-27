@@ -41,44 +41,91 @@
 				<div class="container">
 					<div class="btn-toolbar pull-right push-down-20">
 						<h:button value="Voltar" styleClass="btn btn-primary" outcome="lista_cliente.xhtml" />
+						<p:commandButton actionListener="#{estoqueBean.confirma}" 
+							value="Confirma" styleClass="btn btn-success" update="formEstoque" />
 					</div>
 				</div>
 
 				<h:panelGroup layout="block" id="divForm" class="container well">
-
+					
 					<div class="form-group">
 						<p:outputLabel value="Campanha" for="cmbCampanha" styleClass="col-sm-2 control-label" />
 						<div class="col-sm-3">
-							<h:selectOneMenu id="cmbCampanha" class="form-control">
-								<f:selectItem itemLabel="" />
-								<f:selectItems value="#{estoqueBean.campanhas}" />
+							<h:selectOneMenu id="cmbCampanha" class="form-control" converter="entidadeConverter" 
+									required="true" value="#{estoqueBean.estoque.campanha}">
+								<f:selectItem itemValue="#{null}" itemLabel="" />
+								<f:selectItems var="camp" value="#{estoqueBean.campanhas}" 
+									itemValue="#{camp}" itemLabel="#{camp.campanha}"/>
 							</h:selectOneMenu>
 						</div>
 					</div>
 					<div class="form-group">
 						<p:outputLabel value="UF" for="cmbUf" styleClass="col-sm-2 control-label" />
 						<div class="col-sm-1">
-							<h:selectOneMenu id="cmbUf" class="form-control">
-								<f:selectItem itemLabel="" />
+							<h:selectOneMenu id="cmbUf" class="form-control" 
+									value="#{estoqueBean.estoque.uf}" required="true">
 								<f:selectItems value="#{estoqueBean.ufs}" />
+								<f:ajax event="change" execute="@this" listener="#{estoqueBean.ufChange}" 
+									render="@form" />
 							</h:selectOneMenu>
 						</div>
 					</div>
 					<div class="form-group">
 						<p:outputLabel value="Movimento" for="cmbMovimento" styleClass="col-sm-2 control-label" />
 						<div class="col-sm-3">
-							<h:selectOneMenu id="cmbMovimento" class="form-control">
-								<f:selectItem itemValue=""  itemLabel="" />
+							<h:selectOneMenu id="cmbMovimento" class="form-control" required="true"
+									value="#{estoqueBean.estoque.movimento}" converter="entidadeConverter" >
+									
+								<f:selectItem  itemLabel="" />
 								<f:selectItems var="mov" value="#{estoqueBean.movimentos}"
-									itemLabel="#{mov.movimento}" itemValue="#{mov.codMovimento}"  />
+									itemLabel="#{mov.movimento}" itemValue="#{mov}"  />
+									
+								<f:ajax event="change" execute="@this cmbUf" listener="#{estoqueBean.movimentoChange}" 
+									render="divContrapartida" />
+								
 							</h:selectOneMenu>
 						</div>
 					</div>
+					<hr/>
 					
-					<p:commandButton actionListener="#{estoqueBean.confirma}" 
-							value="Confirma" styleClass="btn btn-success" update="formEstoque" />
+					<div class="form-group">
+						<p:outputLabel value="Quantidade" for="txtQuantidade" styleClass="col-sm-2 control-label" />
+						<div class="col-sm-4">
+							<p:inputText id="txtQuantidade" required="true"
+									value="#{estoqueBean.estoque.quantidade}" 
+									class="form-control fullwidth" >
+								<f:convertNumber for="txtQuantidade" />
+							</p:inputText>
+						</div>
+					</div>
+					
+					<div class="form-group">
+						<p:outputLabel value="Observação" for="txtObservacao" styleClass="col-sm-2 control-label" />
+						<div class="col-sm-4">
+							<p:inputText id="txtObservacao" 
+								value="#{estoqueBean.estoque.observacao}" 
+								class="form-control fullwidth" />
+						</div>
+					</div>
+					
+					<h:panelGroup id="divContrapartida" layout="block" >
+												
+						<h:panelGroup layout="block" styleClass="form-group" 
+								rendered="#{estoqueBean.mostraCamposContrap}">
+						
+							<p:outputLabel value="UF Destino" for="txtUfDestino" styleClass="col-sm-2 control-label"	/>
+							<div class="col-sm-1">
+								<p:inputText id="txtUfDestino" disabled="true"
+									value="#{estoqueBean.ufDestino}" 
+									class="form-control fullwidth" />
+							</div>
+						</h:panelGroup>
+					</h:panelGroup>
 					
 				</h:panelGroup>
+				
+				
+				
 
 			</h:form>
 			
