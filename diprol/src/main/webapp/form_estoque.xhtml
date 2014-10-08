@@ -40,8 +40,8 @@
 								
 				<div class="container">
 					<div class="btn-toolbar pull-right push-down-20">
-						<h:button value="Voltar" styleClass="btn btn-primary" outcome="lista_cliente.xhtml" />
-						<p:commandButton actionListener="#{estoqueBean.confirma}" 
+						<h:button value="Voltar" styleClass="btn btn-primary" outcome="principal.xhtml" />
+						<p:commandButton actionListener="#{estoqueBean.confirmaEstoque}" 
 							value="Confirma" styleClass="btn btn-success" update="formEstoque" />
 					</div>
 				</div>
@@ -61,12 +61,12 @@
 					</div>
 					<div class="form-group">
 						<p:outputLabel value="UF" for="cmbUf" styleClass="col-sm-2 control-label" />
-						<div class="col-sm-1">
+						<div class="col-sm-2">
 							<h:selectOneMenu id="cmbUf" class="form-control" 
 									value="#{estoqueBean.estoque.uf}" required="true">
 								<f:selectItems value="#{estoqueBean.ufs}" />
 								<f:ajax event="change" execute="@this" listener="#{estoqueBean.ufChange}" 
-									render="@form" />
+									render="divContrapartida" />
 							</h:selectOneMenu>
 						</div>
 					</div>
@@ -114,7 +114,7 @@
 								rendered="#{estoqueBean.mostraCamposContrap}">
 						
 							<p:outputLabel value="UF Destino" for="txtUfDestino" styleClass="col-sm-2 control-label"	/>
-							<div class="col-sm-1">
+							<div class="col-sm-2">
 								<p:inputText id="txtUfDestino" disabled="true"
 									value="#{estoqueBean.ufDestino}" 
 									class="form-control fullwidth" />

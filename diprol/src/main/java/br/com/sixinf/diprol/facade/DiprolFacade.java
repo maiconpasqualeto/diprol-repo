@@ -8,6 +8,7 @@ import java.util.Date;
 import br.com.sixinf.diprol.dao.ClienteDAO;
 import br.com.sixinf.diprol.dao.EstoqueDAO;
 import br.com.sixinf.diprol.dao.SegurancaDAO;
+import br.com.sixinf.diprol.entidades.Campanha;
 import br.com.sixinf.diprol.entidades.Cliente;
 import br.com.sixinf.diprol.entidades.Estoque;
 import br.com.sixinf.diprol.entidades.Movimento;
@@ -61,19 +62,10 @@ public class DiprolFacade {
 	 * @param estoque
 	 * @throws LoggerException 
 	 */
-	public void salvarEstoque(Estoque estoque, String ufDestino, String usuarioCPF) throws LoggerException {
+	public void salvarEstoque(Estoque estoque, String ufDestino, 
+			String codigoCEF, String codigoCEFContra, String usuarioCPF) throws LoggerException {
 		
 		Integer quantidadeInformada = estoque.getQuantidade();
-		
-		String codigoCEF = "";
-		String codigoCEFContra = "";
-		if (estoque.getUf().equals("MS")) {
-			codigoCEF = "07.000000-0";
-			codigoCEFContra = "10.000000-0";
-		} else { 
-			codigoCEF = "10.000000-0";
-			codigoCEFContra = "07.000000-0";
-		}
 		
 		Estoque ultimoEstoque = 
 				EstoqueDAO.getInstance().buscarUltimoEstoque(
@@ -83,12 +75,21 @@ public class DiprolFacade {
 				EstoqueDAO.getInstance().buscarUltimoEstoque(
 						estoque.getCampanha(), ufDestino, codigoCEFContra);
 		
+		Campanha campanhaContra = estoque.getCampanha();
+		Integer saldoAtualContra = 0;
+		
+		if (ultimoEstoqueContra != null) {
+			campanhaContra = ultimoEstoqueContra.getCampanha();
+			saldoAtualContra = ultimoEstoqueContra.getSaldoAtual();
+		}
+	
+		
 		Integer saldoAtualUltimoEst = 0;
 		
 		if (ultimoEstoque != null) 
 			saldoAtualUltimoEst = ultimoEstoque.getSaldoAtual();
 		
-		if (estoque.getMovimento().getAcaoSaldo().equals("subtrai"))
+		if (estoque.getMovimento().getAcaoSaldo().equals("subtrae"))
 			estoque.setQuantidade(estoque.getQuantidade() * -1);
 		
 		estoque.setDataMovimento(new Date());
@@ -105,7 +106,7 @@ public class DiprolFacade {
 			estoque.setCodCEFContrapartida(codigoCEFContra);
 			
 			estContra = new Estoque();
-			estContra.setCampanha(ultimoEstoqueContra.getCampanha());			
+			estContra.setCampanha(campanhaContra);			
 			estContra.setUf(ufDestino);
 			estContra.setCodCEF(codigoCEFContra);
 			estContra.setUsuarioCPF(usuarioCPF);
@@ -119,10 +120,10 @@ public class DiprolFacade {
 			estContra.setMovimento(mContra);
 			estContra.setQuantidade(quantidadeInformada);
 			
-			if (estContra.getMovimento().getAcaoSaldo().equals("subtrai"))
+			if (estContra.getMovimento().getAcaoSaldo().equals("subtrae"))
 				estContra.setQuantidade(estContra.getQuantidade() * -1);
 			
-			estContra.setSaldoAnterior(ultimoEstoqueContra.getSaldoAtual());
+			estContra.setSaldoAnterior(saldoAtualContra);
 			estContra.setSaldoAtual(estContra.getSaldoAnterior() + estContra.getQuantidade());
 		} 
 		

@@ -8,6 +8,8 @@
 	min-height: 540px;
 }
 
+hr { border-color: #CCC -moz-use-text-color -moz-use-text-color }
+
 .push-down-0 { margin-bottom: 0px; }
 
 .push-down-5 { margin-bottom: 5px; }
@@ -68,4 +70,8 @@
 
 .form-control{
 	background-color: white !important;
+}
+
+.calendar input[type="text"] { 
+	width: 100%;
 }

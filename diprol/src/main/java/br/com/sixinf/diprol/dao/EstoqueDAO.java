@@ -3,6 +3,7 @@
  */
 package br.com.sixinf.diprol.dao;
 
+import java.util.Date;
 import java.util.List;
 
 import javax.persistence.EntityManager;
@@ -91,6 +92,67 @@ public class EstoqueDAO  extends BridgeBaseDAO {
 			
 		} catch (Exception e) {
 			LOG.error("Erro ao buscar todos Campanha ativas", e);
+		} finally {
+            em.close();
+        }
+		return list;
+	}
+	
+	/**
+	 * 
+	 * @param dataAtual
+	 * @return
+	 */
+	public List<Campanha> buscarCampanhasAtivasNoPeriodo(Date dataAtual) {
+		EntityManager em = AdministradorPersistencia.getEntityManager();
+		
+		List<Campanha> list = null;
+		try {
+			StringBuilder hql = new StringBuilder();
+			hql.append("select c from Campanha c ");
+			hql.append("where c.status = 'A' ");
+			hql.append("and c.dataInicio <= :dataAtual ");
+			hql.append("and c.dataTermino >= :dataAtual ");
+												
+			TypedQuery<Campanha> q = em.createQuery(hql.toString(), Campanha.class);
+			q.setParameter("dataAtual", dataAtual);
+			
+			list = q.getResultList();
+			
+		} catch (NoResultException e) {
+			
+		} catch (Exception e) {
+			LOG.error("Erro ao buscar todos Campanha ativas", e);
+		} finally {
+            em.close();
+        }
+		return list;
+	}
+	
+	/**
+	 * 
+	 * @param dataAtual
+	 * @return
+	 */
+	public List<Campanha> buscarCampanhasAtivasFuturas(Campanha capanhaAtual) {
+		EntityManager em = AdministradorPersistencia.getEntityManager();
+		
+		List<Campanha> list = null;
+		try {
+			StringBuilder hql = new StringBuilder();
+			hql.append("select c from Campanha c ");
+			hql.append("where c.status = 'A' ");
+			hql.append("and c.dataInicio >= :dataInicio ");
+												
+			TypedQuery<Campanha> q = em.createQuery(hql.toString(), Campanha.class);
+			q.setParameter("dataInicio", capanhaAtual.getDataTermino());
+			
+			list = q.getResultList();
+			
+		} catch (NoResultException e) {
+			
+		} catch (Exception e) {
+			LOG.error("Erro ao buscar Campanhas futuras ativas", e);
 		} finally {
             em.close();
         }

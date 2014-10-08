@@ -1,0 +1,153 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE html>
+
+<html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:p="http://primefaces.org/ui"
+	xmlns:f="http://java.sun.com/jsf/core">
+
+<h:head>
+
+</h:head>
+<h:body>
+	<!-- Na composição tudo que está fora da tag é ignorado -->
+	<ui:composition template="/layout/layout_interno.xhtml">
+
+		<ui:define name="principal">
+		
+			<!--  ==========  -->
+		    <!--  = Breadcrumbs =  -->
+		    <!--  ==========  -->
+	        <div class="container">
+	        	<div class="row">
+        			<div class="darker-stripe">
+						<ul class="breadcrumb">
+							<li>
+								<a href="lista_cliente.xhtml">Estoque</a>
+								<span class="icon-chevron-right"></span>
+							</li>
+							<li class="active">Vendas</li>
+						</ul>
+					</div>
+				</div>
+			</div>
+			
+			<h:form id="formEstoque" prependId="false" class="form-horizontal" role="form">
+								
+				<p:growl id="msgs" />
+				
+								
+				<div class="container">
+					<div class="btn-toolbar pull-right push-down-20">
+						<h:button value="Voltar" styleClass="btn btn-primary" outcome="principal.xhtml" />
+						<p:commandButton actionListener="#{estoqueBean.confirmaVenda}" rendered="#{estoqueBean.botaoConfirmaAtivo}"
+							value="Confirma" styleClass="btn btn-success" update="formEstoque" />
+					</div>
+				</div>
+
+				<h:panelGroup layout="block" id="divForm" class="container well">
+					
+					<div class="form-group">
+						<p:outputLabel value="Campanha" for="cmbCampanha" styleClass="col-sm-2 control-label" />
+						<div class="col-sm-3">
+							<h:selectOneMenu id="cmbCampanha" class="form-control" converter="entidadeConverter" 
+									required="true" value="#{estoqueBean.estoque.campanha}">
+								<f:selectItem itemValue="#{null}" itemLabel="" />
+								<f:selectItems var="camp" value="#{estoqueBean.campanhas}" 
+									itemValue="#{camp}" itemLabel="#{camp.campanha}"/>
+							</h:selectOneMenu>
+						</div>
+					</div>
+					<div class="form-group">
+						<p:outputLabel value="Código CEF" for="txtCodigoCEF" styleClass="col-sm-2 control-label" />
+						<div class="col-sm-2">
+							<p:inputMask id="txtCodigoCEF" value="#{estoqueBean.codCEF}" 
+								validatorMessage="Código CEF inválido" label="Código CEF" 
+								mask="99.999999-9" class="form-control fullwidth" required="true"/>
+						</div>
+					</div>
+					<div class="form-group">
+						<p:outputLabel value="Movimento" for="cmbMovimento" styleClass="col-sm-2 control-label" />
+						<div class="col-sm-3">
+							<h:selectOneMenu id="cmbMovimento" class="form-control" required="true"
+									value="#{estoqueBean.estoque.movimento}" converter="entidadeConverter" >
+								<f:selectItem  itemLabel="" />
+								<f:selectItems var="mov" value="#{estoqueBean.movimentos}"
+									itemLabel="#{mov.movimento}" itemValue="#{mov}"  />								
+							</h:selectOneMenu>							
+						</div>
+						<div class="col-sm-1">
+							<p:commandButton id="btnConfirmaInicio" actionListener="#{estoqueBean.confirmaInicioVendas}" 
+								value="Confirma" styleClass="btn btn-primary" rendered="#{estoqueBean.botaoConfirmaAtivo}"
+							 	process="@this cmbMovimento txtCodigoCEF cmbCampanha" update="divForm msgs"/>
+						</div>
+					</div>
+					
+					<hr/>
+					<h:panelGroup layout="block" rendered="#{estoqueBean.mostraCampos}">
+						<div class="form-group">
+							<p:outputLabel value="Quantidade" for="txtQuantidade" styleClass="col-sm-2 control-label" />
+							<div class="col-sm-2">
+								<p:inputText id="txtQuantidade" required="true"
+										value="#{estoqueBean.estoque.quantidade}" 
+										class="form-control fullwidth" >
+									<f:convertNumber for="txtQuantidade" />
+								</p:inputText>
+							</div>
+							
+							<h:panelGroup id="divPermuta" layout="block" rendered="#{estoqueBean.mostraCampoPermuta}">
+								<p:outputLabel value="Campanha Permuta" for="cmbCampanhaPermuta" styleClass="col-sm-2 control-label" />
+								<div class="col-sm-2">
+									<h:selectOneMenu id="cmbCampanhaPermuta" class="form-control" converter="entidadeConverter" 
+											required="true" value="#{estoqueBean.campanhaPermuta}">
+										<f:selectItem itemValue="#{null}" itemLabel="" />
+										<f:selectItems var="camp" value="#{estoqueBean.campanhasPermuta}" 
+											itemValue="#{camp}" itemLabel="#{camp.campanha}"/>
+									</h:selectOneMenu>
+								</div>
+							</h:panelGroup>
+						</div>						
+						<div class="form-group">
+							<p:outputLabel value="PAC" for="txtPac" styleClass="col-sm-2 control-label" />
+							<div class="col-sm-2">
+								<p:inputText id="txtPac"
+										value="#{estoqueBean.estoque.pac}" 
+										class="form-control fullwidth" />
+							</div>
+							<p:outputLabel value="Data Envio" for="dtDataEnvio" styleClass="col-sm-2 control-label" />
+							<p:calendar id="dtDataEnvio" value="#{estoqueBean.estoque.dataEnvio}" pattern="dd/MM/yyyy"
+									mask="99/99/9999" styleClass="calendar col-sm-2" />
+						</div>
+						
+						<div class="form-group">
+							<p:outputLabel value="Observação" for="txtObservacao" styleClass="col-sm-2 control-label" />
+							<div class="col-sm-6">
+								<p:inputText id="txtObservacao" 
+									value="#{estoqueBean.estoque.observacao}" 
+									class="form-control fullwidth" />
+							</div>
+						</div>
+						<h:panelGroup layout="block" styleClass="form-group" rendered="#{estoqueBean.mostraCamposContrap}">
+							<p:outputLabel value="UF Destino" for="txtUfDestino" styleClass="col-sm-2 control-label"	/>
+							<div class="col-sm-2">
+								<p:inputText id="txtUfDestino" disabled="true"
+									value="#{estoqueBean.ufDestino}" 
+									class="form-control fullwidth" />
+							</div>
+						</h:panelGroup>
+					</h:panelGroup>	
+				</h:panelGroup>
+				
+				
+				
+
+			</h:form>
+			
+		</ui:define>
+	</ui:composition>
+	<!-- Fim composição -->
+
+</h:body>
+
+</html>

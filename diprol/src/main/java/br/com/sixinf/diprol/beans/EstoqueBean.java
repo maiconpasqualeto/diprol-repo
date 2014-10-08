@@ -5,6 +5,7 @@ package br.com.sixinf.diprol.beans;
 
 import java.io.Serializable;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 
 import javax.annotation.PostConstruct;
@@ -13,12 +14,18 @@ import javax.faces.bean.ManagedBean;
 import javax.faces.bean.ManagedProperty;
 import javax.faces.bean.ViewScoped;
 import javax.faces.context.FacesContext;
+import javax.servlet.http.HttpServletRequest;
 
+import org.apache.log4j.Logger;
+
+import br.com.sixinf.diprol.dao.ClienteDAO;
 import br.com.sixinf.diprol.dao.EstoqueDAO;
 import br.com.sixinf.diprol.entidades.Campanha;
+import br.com.sixinf.diprol.entidades.Cliente;
 import br.com.sixinf.diprol.entidades.Estoque;
 import br.com.sixinf.diprol.entidades.Movimento;
 import br.com.sixinf.diprol.facade.DiprolFacade;
+import br.com.sixinf.ferramentas.log.LoggerException;
 
 /**
  * @author maicon
@@ -37,6 +44,12 @@ public class EstoqueBean implements Serializable {
 	private String ufSelecionado;
 	private boolean mostraCamposContrap = false;
 	private String ufDestino;
+	private String codCEF;
+	private Campanha campanhaPermuta;
+	private boolean mostraCampos = false;
+	private boolean mostraCampoPermuta = false;
+	private boolean botaoConfirmaAtivo = false;
+	private List<Campanha> campanhasPermuta;
 	
 	@ManagedProperty(value="#{segurancaBean}")
 	private SegurancaBean segurancaBean;
@@ -44,12 +57,38 @@ public class EstoqueBean implements Serializable {
 	@PostConstruct
 	public void init() {
 		campanhas = EstoqueDAO.getInstance().buscarCampanhasAtivas();
+		if (campanhas == null ||
+				campanhas.isEmpty()) {
+			FacesMessage m = new FacesMessage(
+					FacesMessage.SEVERITY_ERROR, "Não existem campanhas ativas para movimentação", 
+						"Não existem campanhas ativas para movimentação");
+			FacesContext.getCurrentInstance().addMessage(null, m);
+			return;
+		}
 		
-		movimentos = EstoqueDAO.getInstance().buscarMovimentosAtivosPorTipoCliente("diprol");
+		campanhas = EstoqueDAO.getInstance().buscarCampanhasAtivasNoPeriodo(new Date());
+		if (campanhas == null ||
+				campanhas.isEmpty()) {
+			FacesMessage m = new FacesMessage(
+					FacesMessage.SEVERITY_ERROR, "Não existe campanha para o período", 
+						"Não existe campanha para o período");
+			FacesContext.getCurrentInstance().addMessage(null, m);
+			return;
+		}
+		
+		String uri = ((HttpServletRequest) FacesContext.getCurrentInstance().getExternalContext().getRequest()).getRequestURI();
+		
+		if (uri.contains("form_estoque.xhtml"))
+			movimentos = EstoqueDAO.getInstance().buscarMovimentosAtivosPorTipoCliente("diprol");
+		else
+			if (uri.contains("form_vendas.xhtml"))
+			movimentos = EstoqueDAO.getInstance().buscarMovimentosAtivosPorTipoCliente("loterica");
 		
 		ufs = new ArrayList<String>();
 		ufs.add("MS");
 		ufs.add("MT");
+		
+		botaoConfirmaAtivo = true;
 		
 		estoque = new Estoque();
 	}
@@ -118,6 +157,54 @@ public class EstoqueBean implements Serializable {
 		this.segurancaBean = segurancaBean;
 	}
 
+	public String getCodCEF() {
+		return codCEF;
+	}
+
+	public void setCodCEF(String codCEF) {
+		this.codCEF = codCEF;
+	}
+
+	public Campanha getCampanhaPermuta() {
+		return campanhaPermuta;
+	}
+
+	public void setCampanhaPermuta(Campanha campanhaPermuta) {
+		this.campanhaPermuta = campanhaPermuta;
+	}
+
+	public boolean isMostraCampos() {
+		return mostraCampos;
+	}
+
+	public void setMostraCampos(boolean mostraCampos) {
+		this.mostraCampos = mostraCampos;
+	}
+
+	public boolean isMostraCampoPermuta() {
+		return mostraCampoPermuta;
+	}
+
+	public void setMostraCampoPermuta(boolean mostraCampoPermuta) {
+		this.mostraCampoPermuta = mostraCampoPermuta;
+	}
+
+	public boolean isBotaoConfirmaAtivo() {
+		return botaoConfirmaAtivo;
+	}
+
+	public void setBotaoConfirmaAtivo(boolean botaoConfirmaAtivo) {
+		this.botaoConfirmaAtivo = botaoConfirmaAtivo;
+	}
+
+	public List<Campanha> getCampanhasPermuta() {
+		return campanhasPermuta;
+	}
+
+	public void setCampanhasPermuta(List<Campanha> campanhasPermuta) {
+		this.campanhasPermuta = campanhasPermuta;
+	}
+
 	/**
 	 * 
 	 * @param event
@@ -141,10 +228,22 @@ public class EstoqueBean implements Serializable {
 	/**
 	 * 
 	 */
-	public void confirma(){
+	public void confirmaEstoque(){
 		try {
 			
-			DiprolFacade.getInstance().salvarEstoque(estoque, ufDestino, segurancaBean.getUsuario().getCpf());
+			String codigoCEF = "";
+			String codigoCEFContra = "";
+			if (estoque.getUf().equals("MS")) {
+				codigoCEF = "07.000000-0";
+				codigoCEFContra = "10.000000-0";
+			} else { 
+				codigoCEF = "10.000000-0";
+				codigoCEFContra = "07.000000-0";
+			}
+			
+			DiprolFacade.getInstance().salvarEstoque(
+					estoque, ufDestino, codigoCEF, codigoCEFContra,
+						segurancaBean.getUsuario().getCpf());
 			
 			FacesMessage m = new FacesMessage("Registro salvo com sucesso!");
 			FacesContext.getCurrentInstance().addMessage(null, m);
@@ -152,6 +251,8 @@ public class EstoqueBean implements Serializable {
 			estoque = new Estoque();
 			
 		} catch (Exception e) {
+			Logger.getLogger(getClass()).error("Erro ao gravar venda", e);
+			
 			FacesMessage m = new FacesMessage(
 					FacesMessage.SEVERITY_ERROR, "Erro ao gravar estoque", "Erro ao gravar estoque");
 			FacesContext.getCurrentInstance().addMessage(null, m);
@@ -168,6 +269,85 @@ public class EstoqueBean implements Serializable {
 				ufDestino = "MT";
 			else
 				ufDestino = "MS";
+	}
+	
+	/**
+	 * 
+	 */
+	public void confirmaInicioVendas(){
+		Cliente c = ClienteDAO.getInstance().buscarClientePorCodigo(codCEF);
+		if (c == null) {
+			FacesMessage m = new FacesMessage(
+					FacesMessage.SEVERITY_ERROR, "Código CEF não encontrado", 
+						"Código CEF não encontrado");
+			FacesContext.getCurrentInstance().addMessage(null, m);
+			return;
+		}
+		
+		campanhasPermuta = EstoqueDAO.getInstance().buscarCampanhasAtivasFuturas(estoque.getCampanha()); 
+		if (campanhasPermuta == null) {
+			FacesMessage m = new FacesMessage(
+					FacesMessage.SEVERITY_ERROR, "Não existem campanhas futuras cadastradas", 
+						"Não existem campanhas futuras cadastradas");
+			FacesContext.getCurrentInstance().addMessage(null, m);
+			return;
+		}
+		
+		if ( 'S' == estoque.getMovimento().getPermuta().charValue() ) 
+			mostraCampoPermuta = true;
+		else
+			mostraCampoPermuta = false;
+		
+		estoque.setUf(c.getUf());
+		
+		if ( estoque.getMovimento().getGeraContrapartida() != null && 
+				'S' == estoque.getMovimento().getGeraContrapartida().charValue() ) {
+			
+			ufDestino = c.getUf();
+						
+			mostraCamposContrap = true;
+			
+		} else
+			mostraCamposContrap = false;
+		
+		mostraCampos = true;
+	}
+	
+	/**
+	 * @throws LoggerException 
+	 * 
+	 */
+	public void confirmaVenda() {
+		try {
+			
+			String codigoCEFContra = "";
+			if (ufDestino.equals("MS"))
+				codigoCEFContra = "07.000000-0";
+			else 
+				codigoCEFContra = "10.000000-0";
+			
+			
+			DiprolFacade.getInstance().salvarEstoque(
+					estoque, ufDestino, codCEF, codigoCEFContra, 
+					segurancaBean.getUsuario().getCpf());
+			
+			FacesMessage m = new FacesMessage("Registro salvo com sucesso!");
+			FacesContext.getCurrentInstance().addMessage(null, m);
+			
+			estoque = new Estoque();
+			codCEF = null;
+			campanhaPermuta = null;
+			mostraCampos = false;
+			mostraCampoPermuta = false;			
+			
+		} catch (Exception e) {
+			Logger.getLogger(getClass()).error("Erro ao gravar venda", e);
+			
+			FacesMessage m = new FacesMessage(
+					FacesMessage.SEVERITY_ERROR, "Erro ao gravar venda", "Erro ao gravar venda");
+			FacesContext.getCurrentInstance().addMessage(null, m);
+		}
+		
 	}
 	
 }

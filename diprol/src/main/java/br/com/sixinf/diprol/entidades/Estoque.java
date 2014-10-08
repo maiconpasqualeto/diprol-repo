@@ -73,6 +73,13 @@ public class Estoque implements Serializable, Entidade {
 	@Column(name="observacao")
 	private String observacao;
 	
+	@Column(name="pac")
+	private String pac;
+	
+	@Column(name="data_envio")
+	@Temporal(TemporalType.DATE)
+	private Date dataEnvio;
+	
 	public Long getId() {
 		return id;
 	}
@@ -167,6 +174,22 @@ public class Estoque implements Serializable, Entidade {
 
 	public void setObservacao(String observacao) {
 		this.observacao = observacao;
+	}
+
+	public String getPac() {
+		return pac;
+	}
+
+	public void setPac(String pac) {
+		this.pac = pac;
+	}
+
+	public Date getDataEnvio() {
+		return dataEnvio;
+	}
+
+	public void setDataEnvio(Date dataEnvio) {
+		this.dataEnvio = dataEnvio;
 	}
 
 	@Override
