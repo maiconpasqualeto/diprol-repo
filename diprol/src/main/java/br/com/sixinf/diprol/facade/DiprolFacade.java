@@ -63,7 +63,55 @@ public class DiprolFacade {
 	 * @throws LoggerException 
 	 */
 	public void salvarEstoque(Estoque estoque, String ufDestino, 
-			String codigoCEF, String codigoCEFContra, String usuarioCPF) throws LoggerException {
+			String codigoCEF, String codigoCEFContra, String usuarioCPF,
+			Campanha campanhaPermuta) throws LoggerException {
+		
+		Estoque estContraDevolucao = null;
+		Estoque estDevolucao = null;
+		
+		Estoque estContra = geraMovimentoEstoque(estoque, ufDestino, codigoCEF, codigoCEFContra, usuarioCPF);
+		
+		if ( estoque.getMovimento().getPermuta() != null && 
+				estoque.getMovimento().getPermuta().equals('S') ) {
+			
+			Movimento mPermuta = 
+					EstoqueDAO.getInstance().buscarMovimento(
+							estoque.getMovimento().getCodMovimentoPermuta());
+			
+			estDevolucao = new Estoque();
+			estDevolucao.setCampanha(campanhaPermuta);
+			estDevolucao.setCodCEF(estoque.getCodCEF());
+			estDevolucao.setCodCEFContrapartida(estoque.getCodCEFContrapartida());
+			estDevolucao.setDataEnvio(estoque.getDataEnvio());
+			estDevolucao.setDataMovimento(estoque.getDataMovimento());
+			estDevolucao.setMovimento(mPermuta);
+			estDevolucao.setObservacao(estoque.getObservacao());
+			estDevolucao.setPac(estoque.getPac());
+			estDevolucao.setQuantidade(estoque.getQuantidade());
+			estDevolucao.setUf(estoque.getUf());
+			estDevolucao.setUsuarioCPF(estoque.getUsuarioCPF());
+			
+			estContraDevolucao = geraMovimentoEstoque(estDevolucao, ufDestino, codigoCEF, codigoCEFContra, usuarioCPF);
+		}
+		
+		estoqueDAO.salvarEstoque(estoque, estContra, estDevolucao, estContraDevolucao);
+	}
+	
+	/**
+	 * 
+	 * @param estoque
+	 * @param ufDestino
+	 * @param codigoCEF
+	 * @param codigoCEFContra
+	 * @param usuarioCPF
+	 * @param estContra
+	 * 
+	 * @return retorna o estoque de contra partida se houver
+	 */
+	private Estoque geraMovimentoEstoque(Estoque estoque, String ufDestino, 
+			String codigoCEF, String codigoCEFContra, String usuarioCPF){
+		
+		Estoque estContra = null;
 		
 		Integer quantidadeInformada = estoque.getQuantidade();
 		
@@ -98,8 +146,6 @@ public class DiprolFacade {
 		estoque.setUsuarioCPF(usuarioCPF);
 		estoque.setCodCEF(codigoCEF);
 		
-		Estoque estContra = null;
-		
 		if ( estoque.getMovimento().getGeraContrapartida() != null && 
 				estoque.getMovimento().getGeraContrapartida().equals('S') ) {
 			
@@ -127,7 +173,7 @@ public class DiprolFacade {
 			estContra.setSaldoAtual(estContra.getSaldoAnterior() + estContra.getQuantidade());
 		} 
 		
-		estoqueDAO.salvarEstoque(estoque, estContra);
+		return estContra;
 	}
 
 }

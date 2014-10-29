@@ -17,6 +17,7 @@ import javax.faces.context.FacesContext;
 import javax.servlet.http.HttpServletRequest;
 
 import org.apache.log4j.Logger;
+import org.primefaces.event.SelectEvent;
 
 import br.com.sixinf.diprol.dao.ClienteDAO;
 import br.com.sixinf.diprol.dao.EstoqueDAO;
@@ -50,13 +51,16 @@ public class EstoqueBean implements Serializable {
 	private boolean mostraCampoPermuta = false;
 	private boolean botaoConfirmaAtivo = false;
 	private List<Campanha> campanhasPermuta;
+	private List<Cliente> clientesPesquisa;
+	private String parPesquisaCliente;
+	private Cliente clienteSelecionadoPesquisa;
 	
 	@ManagedProperty(value="#{segurancaBean}")
 	private SegurancaBean segurancaBean;
 	
 	@PostConstruct
 	public void init() {
-		campanhas = EstoqueDAO.getInstance().buscarCampanhasAtivas();
+		/*campanhas = EstoqueDAO.getInstance().buscarCampanhasAtivas();
 		if (campanhas == null ||
 				campanhas.isEmpty()) {
 			FacesMessage m = new FacesMessage(
@@ -64,7 +68,7 @@ public class EstoqueBean implements Serializable {
 						"Não existem campanhas ativas para movimentação");
 			FacesContext.getCurrentInstance().addMessage(null, m);
 			return;
-		}
+		}*/
 		
 		campanhas = EstoqueDAO.getInstance().buscarCampanhasAtivasNoPeriodo(new Date());
 		if (campanhas == null ||
@@ -91,6 +95,8 @@ public class EstoqueBean implements Serializable {
 		botaoConfirmaAtivo = true;
 		
 		estoque = new Estoque();
+		
+		clientesPesquisa = new ArrayList<Cliente>();
 	}
 	
 	public List<Campanha> getCampanhas() {
@@ -205,6 +211,30 @@ public class EstoqueBean implements Serializable {
 		this.campanhasPermuta = campanhasPermuta;
 	}
 
+	public List<Cliente> getClientesPesquisa() {
+		return clientesPesquisa;
+	}
+
+	public void setClientesPesquisa(List<Cliente> clientesPesquisa) {
+		this.clientesPesquisa = clientesPesquisa;
+	}
+
+	public String getParPesquisaCliente() {
+		return parPesquisaCliente;
+	}
+
+	public void setParPesquisaCliente(String parPesquisaCliente) {
+		this.parPesquisaCliente = parPesquisaCliente;
+	}
+
+	public Cliente getClienteSelecionadoPesquisa() {
+		return clienteSelecionadoPesquisa;
+	}
+
+	public void setClienteSelecionadoPesquisa(Cliente clienteSelecionadoPesquisa) {
+		this.clienteSelecionadoPesquisa = clienteSelecionadoPesquisa;
+	}
+
 	/**
 	 * 
 	 * @param event
@@ -243,7 +273,7 @@ public class EstoqueBean implements Serializable {
 			
 			DiprolFacade.getInstance().salvarEstoque(
 					estoque, ufDestino, codigoCEF, codigoCEFContra,
-						segurancaBean.getUsuario().getCpf());
+						segurancaBean.getUsuario().getCpf(), null);
 			
 			FacesMessage m = new FacesMessage("Registro salvo com sucesso!");
 			FacesContext.getCurrentInstance().addMessage(null, m);
@@ -284,11 +314,11 @@ public class EstoqueBean implements Serializable {
 			return;
 		}
 		
-		campanhasPermuta = EstoqueDAO.getInstance().buscarCampanhasAtivasFuturas(estoque.getCampanha()); 
+		campanhasPermuta = EstoqueDAO.getInstance().buscarCampanhasAtivasMenosAtual(estoque.getCampanha());
 		if (campanhasPermuta == null) {
 			FacesMessage m = new FacesMessage(
-					FacesMessage.SEVERITY_ERROR, "Não existem campanhas futuras cadastradas", 
-						"Não existem campanhas futuras cadastradas");
+					FacesMessage.SEVERITY_ERROR, "Não existem campanhas fechadas cadastradas", 
+						"Não existem campanhas fechadas cadastradas");
 			FacesContext.getCurrentInstance().addMessage(null, m);
 			return;
 		}
@@ -325,11 +355,10 @@ public class EstoqueBean implements Serializable {
 				codigoCEFContra = "07.000000-0";
 			else 
 				codigoCEFContra = "10.000000-0";
-			
-			
+									
 			DiprolFacade.getInstance().salvarEstoque(
 					estoque, ufDestino, codCEF, codigoCEFContra, 
-					segurancaBean.getUsuario().getCpf());
+					segurancaBean.getUsuario().getCpf(), campanhaPermuta);
 			
 			FacesMessage m = new FacesMessage("Registro salvo com sucesso!");
 			FacesContext.getCurrentInstance().addMessage(null, m);
@@ -348,6 +377,31 @@ public class EstoqueBean implements Serializable {
 			FacesContext.getCurrentInstance().addMessage(null, m);
 		}
 		
+	}
+	
+	/**
+	 * 
+	 */
+	public void pesquisarCliente(){
+		clientesPesquisa = ClienteDAO.getInstance().buscarClientesPorFiltroRazaoSocial(parPesquisaCliente);
+	}
+	
+	/**
+	 * 
+	 */
+	public void pesquisaSelecionado(){
+		if (clienteSelecionadoPesquisa != null) {
+			this.codCEF = clienteSelecionadoPesquisa.getCodCEF();
+			
+			this.parPesquisaCliente = null;
+			this.clienteSelecionadoPesquisa = null;
+			this.clientesPesquisa = null;
+		}
+	}
+	
+	public void onRowDblClckSelect(final SelectEvent event) {
+	    clienteSelecionadoPesquisa = (Cliente) event.getObject();
+		pesquisaSelecionado();
 	}
 	
 }

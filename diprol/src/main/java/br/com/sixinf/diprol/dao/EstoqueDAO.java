@@ -134,7 +134,7 @@ public class EstoqueDAO  extends BridgeBaseDAO {
 	 * @param dataAtual
 	 * @return
 	 */
-	public List<Campanha> buscarCampanhasAtivasFuturas(Campanha capanhaAtual) {
+	public List<Campanha> buscarCampanhasAtivasMenosAtual(Campanha capanhaAtual) {
 		EntityManager em = AdministradorPersistencia.getEntityManager();
 		
 		List<Campanha> list = null;
@@ -142,17 +142,48 @@ public class EstoqueDAO  extends BridgeBaseDAO {
 			StringBuilder hql = new StringBuilder();
 			hql.append("select c from Campanha c ");
 			hql.append("where c.status = 'A' ");
-			hql.append("and c.dataInicio >= :dataInicio ");
+			hql.append("and c.id != :codCampanhaAtual ");
+			hql.append("order by c.codCampanha");
 												
 			TypedQuery<Campanha> q = em.createQuery(hql.toString(), Campanha.class);
-			q.setParameter("dataInicio", capanhaAtual.getDataTermino());
+			q.setParameter("codCampanhaAtual", capanhaAtual.getCodCampanha());
 			
 			list = q.getResultList();
 			
 		} catch (NoResultException e) {
 			
 		} catch (Exception e) {
-			LOG.error("Erro ao buscar Campanhas futuras ativas", e);
+			LOG.error("Erro ao buscar Campanhas ativas menos atual", e);
+		} finally {
+            em.close();
+        }
+		return list;
+	}
+	
+	/**
+	 * 
+	 * @return
+	 */
+	public List<Campanha> buscarCampanhasAtivasEncerradas() {
+		EntityManager em = AdministradorPersistencia.getEntityManager();
+		
+		List<Campanha> list = null;
+		try {
+			StringBuilder hql = new StringBuilder();
+			hql.append("select c from Campanha c ");
+			hql.append("where c.status = 'A' ");
+			hql.append("and c.dataTermino < :dataCampanha ");
+			hql.append("order by c.codCampanha");
+												
+			TypedQuery<Campanha> q = em.createQuery(hql.toString(), Campanha.class);
+			q.setParameter("dataCampanha", new Date());
+			
+			list = q.getResultList();
+			
+		} catch (NoResultException e) {
+			
+		} catch (Exception e) {
+			LOG.error("Erro ao buscar Campanhas encerradas ativas", e);
 		} finally {
             em.close();
         }
@@ -208,6 +239,7 @@ public class EstoqueDAO  extends BridgeBaseDAO {
 			StringBuilder hql = new StringBuilder();
 			hql.append("select m from Movimento m ");
 			hql.append("where m.codMovimento = :codMovimento ");
+			hql.append("order by m.codMovimento");
 												
 			TypedQuery<Movimento> q = em.createQuery(hql.toString(), Movimento.class);
 			q.setParameter("codMovimento", codMovimento);
@@ -224,13 +256,15 @@ public class EstoqueDAO  extends BridgeBaseDAO {
 		return o;
 	}
 	
+		
 	/**
 	 * 
 	 * @param estoque
 	 * @param estoqueContra
 	 * @throws LoggerException
 	 */
-	public void salvarEstoque(Estoque estoque, Estoque estoqueContra) throws LoggerException {
+	public void salvarEstoque(Estoque estoque, Estoque estoqueContra, 
+			Estoque estoqueDevolucao, Estoque estContraDevolucao) throws LoggerException {
 		EntityManager em = AdministradorPersistencia.getEntityManager();
 		EntityTransaction t = em.getTransaction();
 		
@@ -242,11 +276,17 @@ public class EstoqueDAO  extends BridgeBaseDAO {
 			if (estoqueContra != null)
 				em.persist(estoqueContra);
 			
+			if (estoqueDevolucao != null)
+				em.persist(estoqueDevolucao);
+			
+			if (estContraDevolucao != null)
+				em.persist(estContraDevolucao);
+			
 			
 			t.commit();
 		} catch (Exception e) {
 			t.rollback();
-			throw new LoggerException("Erro ao salvar estoque", e, LOG);
+			throw new LoggerException("Erro ao salvar estoque devolucao", e, LOG);
 		} finally {
             em.close();
         }

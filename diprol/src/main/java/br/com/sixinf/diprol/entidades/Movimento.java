@@ -54,6 +54,9 @@ public class Movimento implements Serializable, Entidade {
 	@Column(name = "permuta")
 	private Character permuta;
 	
+	@Column(name = "cod_movto_permuta")
+	private Integer codMovimentoPermuta;
+	
 	public Integer getCodMovimento() {
 		return codMovimento;
 	}
@@ -124,6 +127,14 @@ public class Movimento implements Serializable, Entidade {
 
 	public void setPermuta(Character permuta) {
 		this.permuta = permuta;
+	}
+
+	public Integer getCodMovimentoPermuta() {
+		return codMovimentoPermuta;
+	}
+
+	public void setCodMovimentoPermuta(Integer codMovimentoPermuta) {
+		this.codMovimentoPermuta = codMovimentoPermuta;
 	}
 
 	@Override

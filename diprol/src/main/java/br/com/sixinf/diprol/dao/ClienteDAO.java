@@ -180,7 +180,7 @@ public class ClienteDAO extends BridgeBaseDAO {
 	private void preencheQueryParameter(Query q, Map<String, Object> filters) {
 		if (filters.containsKey("globalFilter")) {
 			q.setParameter("codigoCEF", "=" + filters.get("globalFilter"));
-			q.setParameter("titulo", "%" + filters.get("globalFilter") + "%");
+			q.setParameter("razaoSocial", "%" + filters.get("globalFilter") + "%");
 			q.setParameter("descricaoResumida", "%" + filters.get("globalFilter") + "%");
 		} else {
 			for (String str : filters.keySet()) {
@@ -192,4 +192,36 @@ public class ClienteDAO extends BridgeBaseDAO {
 		}
 	}
 
+	/**
+	 * 
+	 * @param parametroFiltro
+	 * @return
+	 */
+	public List<Cliente> buscarClientesPorFiltroRazaoSocial(String parametroFiltro) {
+		EntityManager em = AdministradorPersistencia.getEntityManager();
+		
+		List<Cliente> list = null;
+		try {
+			
+			StringBuilder hql = new StringBuilder();
+			hql.append("select c from Cliente c ");
+			hql.append("where c.status = 'A' ");
+			hql.append("and lower( c.razaoSocial ) like lower( :razaoSocial ) ");
+			
+			TypedQuery<Cliente> q = em.createQuery(hql.toString(), Cliente.class);
+			
+			q.setParameter("razaoSocial", "%" + parametroFiltro + "%");
+			
+			list = q.getResultList();
+			
+		} catch (NoResultException e) {
+			
+		} catch (Exception e) {
+			LOG.error("Erro ao buscar clientes por filtro razao social", e);
+		} finally {
+            em.close();
+        }
+		
+		return list;
+	}
 }
