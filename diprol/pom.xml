@@ -59,7 +59,7 @@
         <dependency>
         	<groupId>org.primefaces</groupId>
         	<artifactId>primefaces</artifactId>
-        	<version>5.0</version>
+        	<version>5.1</version>
         </dependency>
         <dependency>
         	<groupId>br.com.sixinf</groupId>
@@ -95,6 +95,11 @@
         	<groupId>org.slf4j</groupId>
         	<artifactId>slf4j-simple</artifactId>
         	<version>1.5.11</version>
+        </dependency>
+        <dependency>
+        	<groupId>org.primefaces.extensions</groupId>
+        	<artifactId>primefaces-extensions</artifactId>
+        	<version>2.1.0</version>
         </dependency>
     </dependencies>
 

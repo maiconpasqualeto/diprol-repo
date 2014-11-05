@@ -4,12 +4,14 @@
 package br.com.sixinf.diprol.facade;
 
 import java.util.Date;
+import java.util.List;
 
 import br.com.sixinf.diprol.dao.ClienteDAO;
 import br.com.sixinf.diprol.dao.EstoqueDAO;
-import br.com.sixinf.diprol.dao.SegurancaDAO;
+import br.com.sixinf.diprol.dao.FinanceiroDAO;
 import br.com.sixinf.diprol.entidades.Campanha;
 import br.com.sixinf.diprol.entidades.Cliente;
+import br.com.sixinf.diprol.entidades.ContaMovimento;
 import br.com.sixinf.diprol.entidades.Estoque;
 import br.com.sixinf.diprol.entidades.Movimento;
 import br.com.sixinf.ferramentas.dao.DAOException;
@@ -29,14 +31,14 @@ public class DiprolFacade {
 		return facade;
 	}
 	
-	private SegurancaDAO segurancaDAO;
+	private FinanceiroDAO financeiroDAO;
 	private ClienteDAO clienteDAO;
 	private EstoqueDAO estoqueDAO;
 	
 	
 	
 	public DiprolFacade() {
-		segurancaDAO = SegurancaDAO.getInstance();
+		financeiroDAO = FinanceiroDAO.getInstance();
 		clienteDAO = ClienteDAO.getInstance();
 		estoqueDAO = EstoqueDAO.getInstance();
 	}
@@ -174,6 +176,24 @@ public class DiprolFacade {
 		} 
 		
 		return estContra;
+	}
+	
+	/**
+	 * 
+	 * @param contasMovimento
+	 * @throws LoggerException 
+	 */
+	public void salvarMovimentosPrevisao(ContaMovimento[] contasMovimento) throws LoggerException{
+		financeiroDAO.alterarPrevisaoMovimentos(contasMovimento);
+	}
+	
+	/**
+	 * 
+	 * @param contasMovimento
+	 * @throws LoggerException 
+	 */
+	public void salvarValoreRealizadosMovimentos(List<ContaMovimento> contasMovimento) throws LoggerException{
+		financeiroDAO.alterarValoresRealizadosMovimentos(contasMovimento);
 	}
 
 }
