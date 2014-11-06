@@ -32,7 +32,7 @@
 				</div>
 			</div>
 				
-			<h:form id="formLista" class="form-inline" role="form">
+			<h:form id="formLista" class="form-horizontal" role="form">
 			
 				<p:growl id="msgs" />
 				
@@ -44,25 +44,88 @@
 				</div>
 			
 				<div class="container well">
-					<div class="row">
 						<div class="form-group">
-							<label class="col-sm-4" for="txtCodCEF">Código CEF</label>
-							<div class="col-sm-4">
-								<p:inputMask id="txtCodCEF" value="#{cadastroClienteBean.codigoCEF}" 
-										validatorMessage="Código CEF inválido" label="Código CEF" 
-										mask="99.999999-9" >
-								</p:inputMask>
-							</div>							
-						</div>
-						<div class="form-group">
-							<div class="col-sm-4">
+							<label class="col-sm-2 control-label" for="txtCodigoCEF" >Código CEF</label>
+							<div class="col-sm-3">
+								<div class="input-group">
+									<p:inputMask id="txtCodigoCEF" value="#{cadastroClienteBean.codigoCEF}" 
+											validatorMessage="Código CEF inválido" label="Código CEF" 
+											mask="99.999999-9" styleClass="form-control">
+									</p:inputMask>
+									<span class="input-group-btn">
+								    	<button class="btn btn-primary" data-toggle="modal" data-target="#modalCEF" type="button" 
+								    			title="Pesquisar Cliente">
+										  <span class="glyphicon glyphicon-search"></span>
+										</button>
+								    </span>
+							    </div>
+							</div>				
+							<div class="col-sm-2">
 								<h:commandButton value="Confirma" actionListener="#{cadastroClienteBean.pesquisar}" styleClass="btn btn-success" >
 									<f:ajax render="formLista" execute="@form msgs" />
 								</h:commandButton>								
 							</div>
+										
 						</div>
+						
+						
+						<!-- DIALOG Pesquisar Lotérica -->
+						<div class="modal fade" id="modalCEF" tabindex="-1" role="dialog"
+							aria-labelledby="modalCEFLabel" aria-hidden="true">
+							<div class="modal-dialog">
+								<div class="modal-content">
+									<div class="modal-header">
+										<button type="button" class="close" data-dismiss="modal">
+											<span aria-hidden="true">x</span><span class="sr-only">Fechar</span>
+										</button>
+										<h4 class="modal-title" id="myModalLabel">Pesquisar Lotérica</h4>
+									</div>
+									<div class="modal-body">
+										<div class="row">
+											<div class="col-sm-5">
+												<p:inputText id="txtParPesquisa" value="#{cadastroClienteBean.parPesquisaCliente}" 
+													placeholder="Digite nome para pesquisa" styleClass="form-control fullwidth"/>
+											</div>
+											<div class="col-sm-2">
+												<p:commandButton value="Pesquisar" process="@this txtParPesquisa" update="divClientes" 
+													styleClass="btn btn-primary" actionListener="#{cadastroClienteBean.pesquisarCliente}"/>
+											</div>
+										</div>
+										<hr />
+										<h:panelGroup id="divClientes" layout="block">
+											<p:dataTable id="tblCliente" value="#{cadastroClienteBean.clientesPesquisa}" var="cliente"
+													selectionMode="single" selection="#{cadastroClienteBean.clienteSelecionadoPesquisa}" 
+													rowKey="#{cliente.codCEF}" scrollable="true" scrollHeight="200" scrollRows="8"
+													emptyMessage="Sem registros" >
+													
+												<p:ajax event="rowDblselect" listener="#{cadastroClienteBean.onRowDblClckSelect}" 
+	    											process="@this" update=":formLista:txtParPesquisa :formLista:divClientes :formLista:txtCodigoCEF" 
+	    											global="false" oncomplete="$('#modalCEF').modal('hide')" />
+													
+												<p:column headerText="Código CEF">
+													<h:outputText value="#{cliente.codCEF}" />
+												</p:column>
+												<p:column headerText="Lotérica">
+													<h:outputText value="#{cliente.razaoSocial}" />
+												</p:column>
+											</p:dataTable>
+										</h:panelGroup>
+									</div>
+									<div class="modal-footer">
+										<button type="button" class="btn btn-primary" data-dismiss="modal">Fechar</button>
+										<p:commandButton value="Confirmar" actionListener="#{cadastroClienteBean.pesquisaSelecionado}"
+												process="tblCliente @this" update="txtParPesquisa divClientes txtCodigoCEF" 
+												styleClass="btn btn-success">
+											<f:passThroughAttribute name="data-dismiss" value="modal"/>
+										</p:commandButton>
+									</div>
+								</div>
+							</div>
+						</div>
+						<!-- FIM DIALOG -->
+						
+						
 					</div>
-				</div>
 			
 			</h:form>
 				

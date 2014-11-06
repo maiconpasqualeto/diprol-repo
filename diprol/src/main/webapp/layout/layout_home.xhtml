@@ -20,6 +20,14 @@
 		<ui:insert name="defs" >
 			<ui:include src="definicoes.xhtml" />
 		</ui:insert>
+		<script type='text/javascript'>
+		$(function(){
+		    $('.wrapper').css({'height': (($(window).height()-105))+'px'});
+		    $(window).resize(function(){
+		    	$('.wrapper').css({'height': (($(window).height()-105))+'px'});
+		    });
+		});
+		</script>
 	</h:head>
 	<h:body>
 	
@@ -35,7 +43,7 @@
 	  				
 	    <footer>
 	    	<div class="text-center">
-	    		<p>&#169; SiX Tecnologia da Informação 2014</p>
+	    		<p>&#169; SiX Tecnologia da Informação 2014 - <a href="http://www.sixinf.com.br" target="_blank" rel="nofollow">www.sixinf.com.br</a></p>
 	    	</div>
    	    </footer>
    	    

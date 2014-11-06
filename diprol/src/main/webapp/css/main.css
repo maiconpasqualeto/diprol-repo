@@ -5,7 +5,7 @@
    ========================================================================== */
 
 .wrapper{
-	min-height: 540px;
+	--min-height: 540px;
 }
 
 hr { border-color: #CCC -moz-use-text-color -moz-use-text-color }

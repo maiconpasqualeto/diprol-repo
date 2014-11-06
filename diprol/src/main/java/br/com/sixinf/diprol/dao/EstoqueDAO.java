@@ -192,6 +192,36 @@ public class EstoqueDAO  extends BridgeBaseDAO {
 	
 	/**
 	 * 
+	 * @return
+	 */
+	public List<Campanha> buscarCampanhasAtivasPosteriores(Campanha campanhaAtual) {
+		EntityManager em = AdministradorPersistencia.getEntityManager();
+		
+		List<Campanha> list = null;
+		try {
+			StringBuilder hql = new StringBuilder();
+			hql.append("select c from Campanha c ");
+			hql.append("where c.status = 'A' ");
+			hql.append("and c.dataInicio > :dataCampanha ");
+			hql.append("order by c.codCampanha");
+												
+			TypedQuery<Campanha> q = em.createQuery(hql.toString(), Campanha.class);
+			q.setParameter("dataCampanha", campanhaAtual.getDataInicio());
+			
+			list = q.getResultList();
+			
+		} catch (NoResultException e) {
+			
+		} catch (Exception e) {
+			LOG.error("Erro ao buscar Campanhas Posteriores", e);
+		} finally {
+            em.close();
+        }
+		return list;
+	}
+	
+	/**
+	 * 
 	 * @param c
 	 * @param uf
 	 * @param codigoCEF

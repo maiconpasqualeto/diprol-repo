@@ -127,7 +127,9 @@ public class ContaMovimento  implements Serializable, Entidade {
 	}
 	
 	public String getPrevistoFormatado(){
-		return DiprolHelper.getMoneyFormatterInstance().format(previsto);
+		if (previsto != null)
+			return DiprolHelper.getMoneyFormatterInstance().format(previsto);
+		return "";
 	}
 
 	@Override

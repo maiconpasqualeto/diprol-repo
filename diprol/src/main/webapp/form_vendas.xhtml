@@ -33,7 +33,7 @@
 				</div>
 			</div>
 			
-			<h:form id="formEstoque" prependId="false" class="form-horizontal" role="form">
+			<h:form id="formEstoque" prependId="false" class="form-horizontal" role="form" onkeypress="return event.keyCode != 13;">
 								
 				<p:growl id="msgs" />
 				
@@ -41,8 +41,6 @@
 				<div class="container">
 					<div class="btn-toolbar pull-right push-down-20">
 						<h:button value="Voltar" styleClass="btn btn-primary" outcome="principal.xhtml" />
-						<p:commandButton actionListener="#{estoqueBean.confirmaVenda}" rendered="#{estoqueBean.botaoConfirmaAtivo}"
-							value="Confirma" styleClass="btn btn-success" update="formEstoque" />
 					</div>
 				</div>
 
@@ -67,7 +65,7 @@
 								mask="99.999999-9" class="form-control fullwidth" required="true"/>
 						</div>
 						<div class="col-sm-1">
-							<button class="btn btn-primary" data-toggle="modal" data-target="#modalCEF" type="button">
+							<button class="btn btn-primary" data-toggle="modal" data-target="#modalCEF" type="button" title="Pesquisar Cliente">
 							  Pesquisar
 							</button>
 						</div>
@@ -136,13 +134,12 @@
 									itemLabel="#{mov.movimento}" itemValue="#{mov}"  />								
 							</h:selectOneMenu>							
 						</div>
-						<div class="col-sm-1">
+						<div class="col-sm-2">
 							<p:commandButton id="btnConfirmaInicio" actionListener="#{estoqueBean.confirmaInicioVendas}" 
 								value="Confirma" styleClass="btn btn-primary" rendered="#{estoqueBean.botaoConfirmaAtivo}"
 							 	process="@this cmbMovimento txtCodigoCEF cmbCampanha" update="divForm msgs"/>
 						</div>
 					</div>
-					
 					<hr/>
 					<h:panelGroup layout="block" rendered="#{estoqueBean.mostraCampos}">
 						<div class="form-group">
@@ -195,6 +192,17 @@
 									class="form-control fullwidth" />
 							</div>
 						</h:panelGroup>
+						
+						<hr/>
+						
+						<div class="form-group">
+							<div class="col-sm-2 control-label">
+								<p:commandButton actionListener="#{estoqueBean.confirmaVenda}" rendered="#{estoqueBean.botaoConfirmaAtivo}"
+							value="Confirma" styleClass="btn btn-success" update="formEstoque" />
+							</div>
+						</div>
+						
+						
 					</h:panelGroup>	
 				</h:panelGroup>
 				

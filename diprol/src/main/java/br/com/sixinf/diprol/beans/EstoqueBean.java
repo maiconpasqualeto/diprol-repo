@@ -95,6 +95,7 @@ public class EstoqueBean implements Serializable {
 		botaoConfirmaAtivo = true;
 		
 		estoque = new Estoque();
+		estoque.setDataEnvio(new Date());
 		
 		clientesPesquisa = new ArrayList<Cliente>();
 	}
@@ -279,6 +280,7 @@ public class EstoqueBean implements Serializable {
 			FacesContext.getCurrentInstance().addMessage(null, m);
 			
 			estoque = new Estoque();
+			estoque.setDataEnvio(new Date());
 			
 		} catch (Exception e) {
 			Logger.getLogger(getClass()).error("Erro ao gravar venda", e);
@@ -314,11 +316,11 @@ public class EstoqueBean implements Serializable {
 			return;
 		}
 		
-		campanhasPermuta = EstoqueDAO.getInstance().buscarCampanhasAtivasMenosAtual(estoque.getCampanha());
+		campanhasPermuta = EstoqueDAO.getInstance().buscarCampanhasAtivasPosteriores(estoque.getCampanha());
 		if (campanhasPermuta == null) {
 			FacesMessage m = new FacesMessage(
-					FacesMessage.SEVERITY_ERROR, "Não existem campanhas fechadas cadastradas", 
-						"Não existem campanhas fechadas cadastradas");
+					FacesMessage.SEVERITY_ERROR, "Não existem campanhas cadastradas para permuta", 
+						"Não existem campanhas cadastradas para permuta");
 			FacesContext.getCurrentInstance().addMessage(null, m);
 			return;
 		}
@@ -349,7 +351,13 @@ public class EstoqueBean implements Serializable {
 	 */
 	public void confirmaVenda() {
 		try {
-			
+			if (!mostraCampos) {
+				FacesMessage m = new FacesMessage(
+						FacesMessage.SEVERITY_ERROR, "Nenhum registro lançado", 
+							"Nenhum registro lançado");
+				FacesContext.getCurrentInstance().addMessage(null, m);
+				return;
+			}
 			String codigoCEFContra = "";
 			if (ufDestino.equals("MS"))
 				codigoCEFContra = "07.000000-0";
@@ -363,7 +371,14 @@ public class EstoqueBean implements Serializable {
 			FacesMessage m = new FacesMessage("Registro salvo com sucesso!");
 			FacesContext.getCurrentInstance().addMessage(null, m);
 			
+			Campanha c = estoque.getCampanha();
+			Movimento mv = estoque.getMovimento();
+			
 			estoque = new Estoque();
+			estoque.setDataEnvio(new Date());
+			estoque.setCampanha(c);
+			estoque.setMovimento(mv);
+			
 			codCEF = null;
 			campanhaPermuta = null;
 			mostraCampos = false;
@@ -399,6 +414,10 @@ public class EstoqueBean implements Serializable {
 		}
 	}
 	
+	/**
+	 * 
+	 * @param event
+	 */
 	public void onRowDblClckSelect(final SelectEvent event) {
 	    clienteSelecionadoPesquisa = (Cliente) event.getObject();
 		pesquisaSelecionado();

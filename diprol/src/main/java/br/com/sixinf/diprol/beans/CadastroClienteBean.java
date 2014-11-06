@@ -8,6 +8,7 @@ import java.io.InputStream;
 import java.io.Serializable;
 import java.net.HttpURLConnection;
 import java.net.URL;
+import java.util.List;
 
 import javax.annotation.PostConstruct;
 import javax.faces.application.FacesMessage;
@@ -15,6 +16,7 @@ import javax.faces.bean.ManagedBean;
 import javax.faces.bean.ViewScoped;
 import javax.faces.context.FacesContext;
 
+import org.primefaces.event.SelectEvent;
 import org.primefaces.json.JSONException;
 import org.primefaces.json.JSONObject;
 
@@ -38,6 +40,10 @@ public class CadastroClienteBean implements Serializable{
 	private Cliente cliente; 
 	private boolean novo = false;
 	private String canalAtendimento = "";
+	
+	private List<Cliente> clientesPesquisa;
+	private String parPesquisaCliente;
+	private Cliente clienteSelecionadoPesquisa;
 	
 	//private LazyDataModel<Cliente> dataModel;
 	
@@ -81,6 +87,38 @@ public class CadastroClienteBean implements Serializable{
 
 	public void setCanalAtendimento(String canalAtendimento) {
 		this.canalAtendimento = canalAtendimento;
+	}
+
+	public String getParPesquisaCliente() {
+		return parPesquisaCliente;
+	}
+
+	public void setParPesquisaCliente(String parPesquisaCliente) {
+		this.parPesquisaCliente = parPesquisaCliente;
+	}
+
+	public Cliente getClienteSelecionadoPesquisa() {
+		return clienteSelecionadoPesquisa;
+	}
+
+	public void setClienteSelecionadoPesquisa(Cliente clienteSelecionadoPesquisa) {
+		this.clienteSelecionadoPesquisa = clienteSelecionadoPesquisa;
+	}
+
+	public boolean isNovo() {
+		return novo;
+	}
+
+	public void setNovo(boolean novo) {
+		this.novo = novo;
+	}
+
+	public List<Cliente> getClientesPesquisa() {
+		return clientesPesquisa;
+	}
+
+	public void setClientesPesquisa(List<Cliente> clientesPesquisa) {
+		this.clientesPesquisa = clientesPesquisa;
 	}
 
 	public void pesquisar() throws IOException {
@@ -194,5 +232,34 @@ public class CadastroClienteBean implements Serializable{
 				// se der exceção o sistema não para
 			}
 		}
+	}
+	
+	/**
+	 * 
+	 */
+	public void pesquisarCliente(){
+		clientesPesquisa = ClienteDAO.getInstance().buscarClientesPorFiltroRazaoSocial(parPesquisaCliente);
+	}
+	
+	/**
+	 * 
+	 */
+	public void pesquisaSelecionado(){
+		if (clienteSelecionadoPesquisa != null) {
+			this.codigoCEF = clienteSelecionadoPesquisa.getCodCEF();
+			
+			this.parPesquisaCliente = null;
+			this.clienteSelecionadoPesquisa = null;
+			this.clientesPesquisa = null;
+		}
+	}
+	
+	/**
+	 * 
+	 * @param event
+	 */
+	public void onRowDblClckSelect(final SelectEvent event) {
+	    clienteSelecionadoPesquisa = (Cliente) event.getObject();
+		pesquisaSelecionado();
 	}
 }

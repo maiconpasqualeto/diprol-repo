@@ -52,7 +52,9 @@ public class FinanceiroDAO extends BridgeBaseDAO {
 		try {
 			StringBuilder hql = new StringBuilder();
 			hql.append("select c from Conta c ");
+			hql.append("inner join fetch c.contaGrupo cg ");
 			hql.append("where c.tipo = :tipoConta ");
+			hql.append("order by cg.grupoConta, c.conta ");
 															
 			TypedQuery<Conta> q = em.createQuery(hql.toString(), Conta.class);
 			q.setParameter("tipoConta", tipoConta.getTipo());

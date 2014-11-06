@@ -4,6 +4,7 @@
 package br.com.sixinf.diprol.beans;
 
 import java.io.Serializable;
+import java.math.BigDecimal;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.GregorianCalendar;
@@ -195,6 +196,9 @@ public class FinanceiroBean implements Serializable {
 	 * 
 	 */
 	public void confirmaPrevisao(){
+		for (int i=0; i<contasMovimento.length; i++) 
+			contasMovimento[i] = new ContaMovimento();
+		
 		List<ContaMovimento> movs = FinanceiroDAO.getInstance().buscarValorDozeMeses(conta, Integer.valueOf(ano));
 		for (ContaMovimento c : movs) {
 			switch (c.getMes()) {
@@ -245,6 +249,13 @@ public class FinanceiroBean implements Serializable {
 	 */
 	public void salvarPrevisao(){
 		try {
+			if (!renderPrevisao) {
+				FacesMessage m = new FacesMessage(
+						FacesMessage.SEVERITY_ERROR, "Não existem previsões para gravação", "Não existem previsões para gravação");
+				FacesContext.getCurrentInstance().addMessage(null, m);
+				return;
+			}
+			
 			Date dataLancamento = GregorianCalendar.getInstance().getTime();
 			
 			for (int i=0; i<contasMovimento.length; i++) {
@@ -256,6 +267,8 @@ public class FinanceiroBean implements Serializable {
 					c.setUsuarioCpf(segurancaBean.getUsuario().getCpf());
 					c.setMes(i+1); 
 				}
+				if (c.getPrevisto() == null)
+					c.setPrevisto(BigDecimal.ZERO);
 			}
 			
 			DiprolFacade.getInstance().salvarMovimentosPrevisao(contasMovimento);
@@ -271,6 +284,7 @@ public class FinanceiroBean implements Serializable {
 			FacesMessage m = new FacesMessage(
 					FacesMessage.SEVERITY_ERROR, "Erro ao gravar previsao", "Erro ao gravar previsao");
 			FacesContext.getCurrentInstance().addMessage(null, m);
+			renderPrevisao = false;
 		}
 		
 	}
@@ -298,6 +312,14 @@ public class FinanceiroBean implements Serializable {
 	 */
 	public void salvarRealizado(){
 		try {
+			
+			if (!renderRealizado) {
+				FacesMessage m = new FacesMessage(
+						FacesMessage.SEVERITY_ERROR, "Nenhuma despesa realizada foi lançada", 
+							"Nenhuma despesa realizada foi lançada");
+				FacesContext.getCurrentInstance().addMessage(null, m);
+				return;
+			}
 			
 			DiprolFacade.getInstance().salvarValoreRealizadosMovimentos(contasMovimentoRealizado);
 			
