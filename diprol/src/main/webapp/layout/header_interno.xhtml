@@ -19,6 +19,8 @@
 		    <p:graphicImage url="/img/progress.gif" />
 		</p:dialog>
 
+		<h:form>
+
 		<div class="navbar navbar-default navbar-static-top" role="navigation">
 			<div class="container">
 				<div class="navbar-header">
@@ -28,7 +30,7 @@
 							class="icon-bar"></span> <span class="icon-bar"></span> <span
 							class="icon-bar"></span>
 					</button>
-					<a class="navbar-brand" href="${request.contextPath}/principal.xhtml">Diprol</a>
+					<a class="navbar-brand" href="${request.contextPath}/auth/principal.xhtml">Diprol</a>
 				</div>
 				<div class="navbar-collapse collapse">
 					<ul class="nav navbar-nav navbar-right">
@@ -113,13 +115,16 @@
 						</li>
 						
 						<li>
-							<a href="index.xhtml">Sair</a>
+							<p:commandLink value="Sair" ajax="false" action="#{segurancaBean.logout}"/>
+							<!-- <a href="/index.xhtml">Sair</a> -->
 						</li>
 					</ul>
 				</div>
 				<!--/.navbar-collapse -->
 			</div>
 		</div>
+		
+		</h:form>
 		
 	</ui:composition>
 	<!-- Fim composição -->

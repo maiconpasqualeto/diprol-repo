@@ -8,6 +8,8 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 
+import javax.faces.application.FacesMessage;
+import javax.faces.context.FacesContext;
 import javax.security.auth.Subject;
 import javax.security.auth.callback.Callback;
 import javax.security.auth.callback.CallbackHandler;
@@ -19,7 +21,8 @@ import javax.security.auth.spi.LoginModule;
 
 import org.apache.log4j.Logger;
 
-import br.com.sixinf.ferramentas.log.LoggerException;
+import br.com.sixinf.diprol.dao.SegurancaDAO;
+import br.com.sixinf.diprol.entidades.Usuario;
 
 /**
  * @author maicon
@@ -52,10 +55,41 @@ public class DiprolLoginModule implements LoginModule {
 	    	
 	    	handler.handle(callbacks);
 	    	
-	    	String name = ((NameCallback) callbacks[0]).getName();
+	    	String cpf = ((NameCallback) callbacks[0]).getName();
 	        String password = String.valueOf(((PasswordCallback) callbacks[1]).getPassword());
 	        
-	        if (name != null &&
+	        Usuario u = SegurancaDAO.getInstance().buscarUsuarioPorCpf(cpf);
+			
+			if (u == null) {
+				FacesMessage m = new FacesMessage(
+						FacesMessage.SEVERITY_ERROR, "Usuário não cadastrado", "Usuário não cadastrado");
+				FacesContext.getCurrentInstance().addMessage(null, m);
+				
+				throw new LoginException("Usuário não cadastrado");
+			}
+			
+			if (!u.getStatus().equals('A')) {
+				FacesMessage m = new FacesMessage(
+						FacesMessage.SEVERITY_ERROR, "Usuário desativado, acesso negado", "Usuário desativado, acesso negado");
+				FacesContext.getCurrentInstance().addMessage(null, m);
+				
+				throw new LoginException("Usuário desativado, acesso negado");
+			}
+			
+			if (!password.equals(u.getSenha())) {
+				
+				FacesMessage m = new FacesMessage(
+						FacesMessage.SEVERITY_ERROR, "Senha inválida", "Senha inválida");
+				FacesContext.getCurrentInstance().addMessage(null, m);
+				
+				throw new LoginException("Senha inválida");
+			} else {
+				login = u.getCpf();
+				userGroups = new ArrayList<String>();
+				userGroups.add("user");
+			}
+			
+	        /*if (name != null &&
 	                name.equals("123") &&
 	                password != null &&
 	                password.equals("123")) {
@@ -65,7 +99,7 @@ public class DiprolLoginModule implements LoginModule {
 				userGroups.add("user");
 				
             } else 
-            	throw new LoginException("Erro de autenticação");
+            	throw new LoginException("Erro de autenticação");*/
 	    	
 	    	
 	    } catch (IOException e) {

@@ -10,10 +10,12 @@ import javax.annotation.PostConstruct;
 import javax.faces.application.FacesMessage;
 import javax.faces.bean.ManagedBean;
 import javax.faces.bean.SessionScoped;
-import javax.faces.bean.ViewScoped;
 import javax.faces.context.FacesContext;
+import javax.servlet.ServletException;
+import javax.servlet.http.HttpServletRequest;
 
-import br.com.sixinf.diprol.dao.SegurancaDAO;
+import org.apache.log4j.Logger;
+
 import br.com.sixinf.diprol.entidades.Usuario;
 import br.com.sixinf.ferramentas.Utilitarios;
 
@@ -41,6 +43,23 @@ public class SegurancaBean implements Serializable {
 	public void setUsuario(Usuario usuario) {
 		this.usuario = usuario;
 	}
+	
+	/**
+	 * 
+	 * @return
+	 */
+	private HttpServletRequest getRequest() {  
+        return (HttpServletRequest) FacesContext.getCurrentInstance().getExternalContext().getRequest();  
+    }
+	
+	/**
+	 * 
+	 * @return
+	 */
+	private FacesContext getContext() {  
+        FacesContext context = FacesContext.getCurrentInstance();  
+        return context;  
+    } 
 
 	public void logar() throws IOException {
 		if (!Utilitarios.validaCpf(usuario.getCpf())) {
@@ -50,9 +69,19 @@ public class SegurancaBean implements Serializable {
 			FacesContext.getCurrentInstance().addMessage(null, m);
 			
 			return;
-		}			
+		}
 		
-		Usuario u = SegurancaDAO.getInstance().buscarUsuarioPorCpf(usuario.getCpf());
+		try {
+			
+			if (getContext().getExternalContext().getUserPrincipal() == null)
+				getRequest().login(usuario.getCpf(), usuario.getSenha());
+		
+		} catch (ServletException ex) {
+						
+			return;			
+		}
+		
+		/*Usuario u = SegurancaDAO.getInstance().buscarUsuarioPorCpf(usuario.getCpf());
 		
 		if (u == null) {
 			FacesMessage m = new FacesMessage(
@@ -79,8 +108,24 @@ public class SegurancaBean implements Serializable {
 			FacesContext.getCurrentInstance().addMessage(null, m);
 			
 			return;
-		}
-		FacesContext.getCurrentInstance().getExternalContext().redirect("principal.xhtml"); 
+		}*/
+		FacesContext.getCurrentInstance().getExternalContext().redirect("auth/principal.xhtml"); 
+	}
+	
+	/**
+	 * 
+	 */
+	public String logout(){
+		try {  
+            getRequest().logout();  
+              
+        } catch (ServletException e) {  
+            Logger.getLogger(getClass()).error("Erro no logout", e);
+        }  
+          
+        usuario = new Usuario();
+        
+        return "/index.xhtml";
 	}
 		
 }
