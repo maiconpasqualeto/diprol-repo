@@ -2,7 +2,7 @@
 
 <Context>
 
-	 <Resource 
+	<Resource 
 		name="jdbc/JudokasDS"
       	auth="Container"
         type="javax.sql.DataSource"
@@ -17,5 +17,10 @@
 		maxIdle="1"
 		removeAbandonedTimeout="60"
 		logAbandoned="true"/>  
+		
+	<Realm className="org.apache.catalina.realm.JAASRealm" 
+	    appName="DiprolLogin"
+	    userClassNames="br.com.sixinf.diprol.seguranca.UserPrincipal"
+	    roleClassNames="br.com.sixinf.diprol.seguranca.RolePrincipal" />
 
 </Context>
