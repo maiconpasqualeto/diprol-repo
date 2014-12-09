@@ -1,0 +1,75 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE html>
+
+<html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:p="http://primefaces.org/ui"
+	xmlns:f="http://java.sun.com/jsf/core">
+
+<h:head>
+
+</h:head>
+<h:body>
+	<!-- Na composição tudo que está fora da tag é ignorado -->
+	<ui:composition template="/layout/layout_interno.xhtml">
+
+		<ui:define name="principal">
+		
+			<!--  ==========  -->
+		    <!--  = Breadcrumbs =  -->
+		    <!--  ==========  -->
+	        <div class="container">
+	        	<div class="row">
+        			<div class="darker-stripe">
+						<ul class="breadcrumb">
+							<li>
+								Relatórios
+								<span class="icon-chevron-right"></span>
+							</li>
+							<li class="active">Listagem de Clientes</li>
+						</ul>
+					</div>
+				</div>
+			</div>
+		
+			<h:form id="formRelCli" class="form-horizontal" role="form">
+			
+				<p:growl id="msgs" />
+				
+				<div class="container">
+					<div class="btn-toolbar pull-right push-down-20">
+						<h:button value="Voltar" styleClass="btn btn-primary" outcome="principal.xhtml" />
+						
+					</div>
+				</div>
+				
+				<h:panelGroup layout="block" id="divForm" class="container well">
+				
+					<div class="form-group">
+						
+						<p:outputLabel value="Classificação" for="cmbClassifica" styleClass="col-sm-2  control-label" />
+						<div class="col-sm-3">
+							<h:selectOneMenu id="cmbClassifica" class="form-control"
+									value="#{relatoriosBean.classificacao}">
+								<f:selectItems value="#{relatoriosBean.classificacoes}" />
+							</h:selectOneMenu>
+						</div>
+						<div class="col-sm-2">
+							<h:commandButton value="Confirma" actionListener="#{cadastroClienteBean.pesquisar}" styleClass="btn btn-success" >
+								<f:ajax render="formLista" execute="@form msgs" />
+							</h:commandButton>								
+						</div>
+					</div>
+					
+				</h:panelGroup>
+				
+			</h:form>
+			
+		</ui:define>
+	</ui:composition>
+	<!-- Fim composição -->
+
+</h:body>
+
+</html>

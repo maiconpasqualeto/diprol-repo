@@ -101,6 +101,11 @@
         	<artifactId>primefaces-extensions</artifactId>
         	<version>2.1.0</version>
         </dependency>
+        <dependency>
+        	<groupId>net.sf.jasperreports</groupId>
+        	<artifactId>jasperreports</artifactId>
+        	<version>5.6.1</version>
+        </dependency>
     </dependencies>
 
     <repositories>
