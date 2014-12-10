@@ -226,11 +226,13 @@ public class DiprolFacade {
 	
 	/**
 	 * 
+	 * @param nomeReport 
 	 * @param atletasImpressao
 	 * @return
 	 * @throws LoggerException 
 	 */
-	public DefaultStreamedContent geraReport() throws LoggerException{
+	public DefaultStreamedContent geraReport(String nomeReport, 
+			Map<String, Object> parametros) throws LoggerException{
 		
 		InputStream is = null;
 		ByteArrayOutputStream baos = new ByteArrayOutputStream();
@@ -238,12 +240,11 @@ public class DiprolFacade {
 				.getExternalContext();
 		ServletContext contextS = (ServletContext) externalContext.getContext();
 		String arquivo = contextS
-				.getRealPath("/resources/reports/carteirinhas.jasper");
+				.getRealPath("/resources/reports/" + nomeReport + ".jasper");
 		
 		
 		try {
-			Map<String, Object> parametros = new HashMap<String, Object>();
-						
+			
 			JasperPrint print = JasperFillManager.fillReport(arquivo, parametros, 
 					DiprolHelper.getConnection());
 			
@@ -263,8 +264,7 @@ public class DiprolFacade {
 			Logger.getLogger(getClass()).error("Erro ao gerar relatório jasper", e);
 		}		
 		
-		return new DefaultStreamedContent(is, "application/pdf", "carteirinhas_" + 
-				new SimpleDateFormat("yyyy_MM_dd").format(new Date()) + ".pdf");
+		return new DefaultStreamedContent(is, "application/pdf", nomeReport + ".pdf");
 	}
 
 }

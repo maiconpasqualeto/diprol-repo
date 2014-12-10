@@ -7,7 +7,9 @@ import java.io.IOException;
 import java.io.Serializable;
 import java.sql.SQLException;
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 import javax.annotation.PostConstruct;
 import javax.faces.bean.ManagedBean;
@@ -56,8 +58,15 @@ public class RelatoriosBean implements Serializable {
 		this.classificacoes = classificacoes;
 	}
 	
-	public StreamedContent printReport() throws JRException, IOException, ClassNotFoundException, SQLException, LoggerException {  
+	public StreamedContent printClientes() throws 
+		JRException, IOException, ClassNotFoundException, SQLException, LoggerException {  
+		Map<String, Object> parametros = new HashMap<String, Object>();
 		
-		return DiprolFacade.getInstance().geraReport();
+		if ( "ALFABÉTICA".equals(classificacao) )
+			parametros.put("sort", "c.razao_social");
+		else if ( "CÓDIGO CEF".equals(classificacao) )
+			parametros.put("sort", "c.cod_cef");
+		
+		return DiprolFacade.getInstance().geraReport("clientes", parametros);
     }
 }

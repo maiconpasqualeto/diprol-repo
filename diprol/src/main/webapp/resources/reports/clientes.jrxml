@@ -1,11 +1,18 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="Blank_A4" pageWidth="595" pageHeight="842" columnWidth="555" leftMargin="20" rightMargin="20" topMargin="20" bottomMargin="20" whenResourceMissingType="Empty" uuid="8a513972-c25e-4e17-8ce7-1ed15d3a9ff4">
 	<property name="com.jaspersoft.studio.data.defaultdataadapter" value="Diprol Adapter "/>
-	<property name="ireport.zoom" value="2.5937424601000028"/>
+	<property name="ireport.zoom" value="3.7974983358324272"/>
 	<property name="ireport.x" value="0"/>
-	<property name="ireport.y" value="0"/>
+	<property name="ireport.y" value="97"/>
+	<style name="cabecalho" forecolor="#000000" fill="Solid" pattern="">
+		<pen lineWidth="1.0"/>
+		<box leftPadding="3">
+			<bottomPen lineWidth="1.0"/>
+		</box>
+	</style>
 	<parameter name="sort" class="java.lang.String">
 		<parameterDescription><![CDATA[]]></parameterDescription>
+		<defaultValueExpression><![CDATA["c.cidade"]]></defaultValueExpression>
 	</parameter>
 	<queryString>
 		<![CDATA[SELECT c.canal_atendimento,
@@ -30,43 +37,43 @@ ORDER BY c.canal_atendimento, $P!{sort}]]>
 		<groupExpression><![CDATA[$F{canal_atendimento}]]></groupExpression>
 		<groupHeader>
 			<band height="44">
-				<textField>
+				<textField isBlankWhenNull="true">
 					<reportElement x="0" y="6" width="400" height="13" uuid="57cf866d-e626-4b2d-b995-628611d069ab"/>
 					<textElement>
 						<font isBold="true"/>
 					</textElement>
-					<textFieldExpression><![CDATA["Canal de Atendimento: " + $F{canal_atendimento}]]></textFieldExpression>
+					<textFieldExpression><![CDATA["Canal de Atendimento: " + ($F{canal_atendimento} != null ? $F{canal_atendimento} : "")]]></textFieldExpression>
 				</textField>
 				<staticText>
-					<reportElement x="0" y="29" width="140" height="12" uuid="6af92750-fb2b-4e14-acee-918dbdc71c2c"/>
+					<reportElement style="cabecalho" x="0" y="31" width="139" height="12" uuid="6af92750-fb2b-4e14-acee-918dbdc71c2c"/>
 					<textElement>
 						<font isBold="true"/>
 					</textElement>
 					<text><![CDATA[Cidade]]></text>
 				</staticText>
 				<staticText>
-					<reportElement x="140" y="29" width="172" height="12" uuid="13e893ac-6679-416f-bc52-67af761017f4"/>
+					<reportElement style="cabecalho" x="139" y="31" width="173" height="12" uuid="13e893ac-6679-416f-bc52-67af761017f4"/>
 					<textElement>
 						<font isBold="true"/>
 					</textElement>
 					<text><![CDATA[Razão Social]]></text>
 				</staticText>
 				<staticText>
-					<reportElement x="312" y="29" width="73" height="12" uuid="7adde5c6-9856-4907-9365-3d01f62f9d00"/>
+					<reportElement style="cabecalho" x="312" y="31" width="74" height="12" uuid="7adde5c6-9856-4907-9365-3d01f62f9d00"/>
 					<textElement>
 						<font isBold="true"/>
 					</textElement>
 					<text><![CDATA[Codigo CEF]]></text>
 				</staticText>
 				<staticText>
-					<reportElement x="385" y="29" width="87" height="12" uuid="17206a07-cb61-4f35-a741-a5e1ae1b58ec"/>
+					<reportElement style="cabecalho" x="386" y="31" width="86" height="12" uuid="17206a07-cb61-4f35-a741-a5e1ae1b58ec"/>
 					<textElement>
 						<font isBold="true"/>
 					</textElement>
 					<text><![CDATA[Contato]]></text>
 				</staticText>
 				<staticText>
-					<reportElement x="472" y="29" width="83" height="12" uuid="d7439f20-d32c-426a-9028-26515a31e22f"/>
+					<reportElement style="cabecalho" x="472" y="31" width="83" height="12" uuid="d7439f20-d32c-426a-9028-26515a31e22f"/>
 					<textElement>
 						<font isBold="true"/>
 					</textElement>
@@ -79,7 +86,7 @@ ORDER BY c.canal_atendimento, $P!{sort}]]>
 		<band splitType="Stretch"/>
 	</background>
 	<title>
-		<band height="48" splitType="Stretch">
+		<band height="46" splitType="Stretch">
 			<staticText>
 				<reportElement x="16" y="14" width="240" height="24" uuid="6066060d-5878-4ec7-8cf6-0613eb9b6072"/>
 				<textElement>
@@ -92,7 +99,7 @@ ORDER BY c.canal_atendimento, $P!{sort}]]>
 				<imageExpression><![CDATA["/home/maicon/git/diprol-repo/diprol/src/main/webapp/img/logo_diprol.jpg"]]></imageExpression>
 			</image>
 			<line>
-				<reportElement x="3" y="45" width="552" height="1" forecolor="#999999" uuid="6f47d7b9-fe30-465e-bd00-b230ce8ffe55">
+				<reportElement x="0" y="45" width="555" height="1" forecolor="#999999" uuid="6f47d7b9-fe30-465e-bd00-b230ce8ffe55">
 					<property name="local_mesure_unitheight" value="pixel"/>
 					<property name="com.jaspersoft.studio.unit.height" value="px"/>
 				</reportElement>
@@ -113,29 +120,45 @@ ORDER BY c.canal_atendimento, $P!{sort}]]>
 				</reportElement>
 			</frame>
 			<textField isBlankWhenNull="true">
-				<reportElement x="0" y="0" width="140" height="12" uuid="2c7ea351-9916-4e7d-a188-16854456cda8"/>
+				<reportElement x="0" y="0" width="139" height="12" uuid="2c7ea351-9916-4e7d-a188-16854456cda8"/>
 				<textFieldExpression><![CDATA[$F{cidade}]]></textFieldExpression>
 			</textField>
 			<textField isBlankWhenNull="true">
-				<reportElement x="385" y="0" width="87" height="12" uuid="222fbdb2-8d39-40e6-a4bc-2ce5728c2172"/>
+				<reportElement x="386" y="0" width="86" height="12" uuid="222fbdb2-8d39-40e6-a4bc-2ce5728c2172"/>
 				<textFieldExpression><![CDATA[$F{contato}]]></textFieldExpression>
 			</textField>
 			<textField isBlankWhenNull="true">
-				<reportElement x="140" y="0" width="172" height="12" uuid="cbeeac2b-4db6-4572-bc28-6e20ea0716a5"/>
+				<reportElement x="139" y="0" width="173" height="12" uuid="cbeeac2b-4db6-4572-bc28-6e20ea0716a5"/>
 				<textFieldExpression><![CDATA[$F{razao_social}]]></textFieldExpression>
 			</textField>
 			<textField isBlankWhenNull="true">
-				<reportElement x="472" y="0" width="83" height="12" uuid="3de47df5-9ec0-4793-aa8e-b9dbc76d1bf7"/>
+				<reportElement x="472" y="1" width="83" height="11" uuid="3de47df5-9ec0-4793-aa8e-b9dbc76d1bf7"/>
 				<textFieldExpression><![CDATA["(" + $F{telefone_ddd1} + ") " + ($F{telefone1} != null ? $F{telefone1} : "")]]></textFieldExpression>
 			</textField>
 			<textField isBlankWhenNull="true">
-				<reportElement x="312" y="0" width="73" height="12" uuid="ca61dc99-fb81-41f5-840b-7a45a78c210a"/>
+				<reportElement x="312" y="0" width="74" height="12" uuid="ca61dc99-fb81-41f5-840b-7a45a78c210a"/>
 				<textFieldExpression><![CDATA[$F{cod_cef}]]></textFieldExpression>
 			</textField>
 		</band>
 	</detail>
 	<pageFooter>
-		<band height="4" splitType="Stretch"/>
+		<band height="47" splitType="Stretch">
+			<textField>
+				<reportElement x="435" y="4" width="80" height="20" uuid="bc9148cc-0f00-475d-a513-839c0f02a553"/>
+				<textElement textAlignment="Right"/>
+				<textFieldExpression><![CDATA["Página "+$V{PAGE_NUMBER}+" /"]]></textFieldExpression>
+			</textField>
+			<textField evaluationTime="Report">
+				<reportElement x="515" y="4" width="40" height="20" uuid="2f065f76-27cc-46b2-b98e-3ff2d23eae94"/>
+				<textFieldExpression><![CDATA[" " + $V{PAGE_NUMBER}]]></textFieldExpression>
+			</textField>
+			<line>
+				<reportElement x="0" y="2" width="555" height="1" forecolor="#999999" uuid="d3daf112-4feb-4022-86cd-78079b68965a">
+					<property name="local_mesure_unitheight" value="pixel"/>
+					<property name="com.jaspersoft.studio.unit.height" value="px"/>
+				</reportElement>
+			</line>
+		</band>
 	</pageFooter>
 	<summary>
 		<band splitType="Stretch"/>

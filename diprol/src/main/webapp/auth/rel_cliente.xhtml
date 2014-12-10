@@ -56,9 +56,10 @@
 							</h:selectOneMenu>
 						</div>
 						<div class="col-sm-2">
-							<h:commandButton value="Confirma" actionListener="#{cadastroClienteBean.pesquisar}" styleClass="btn btn-success" >
-								<f:ajax render="formLista" execute="@form msgs" />
-							</h:commandButton>								
+							<p:commandButton value="Confirma" process="@this cmbClassifica" id="btnImprimir" 
+					    			ajax="false" update="growImpressao" styleClass="btn btn-success">
+				                <p:fileDownload value="#{relatoriosBean.printClientes()}" />
+			               	</p:commandButton>
 						</div>
 					</div>
 					
