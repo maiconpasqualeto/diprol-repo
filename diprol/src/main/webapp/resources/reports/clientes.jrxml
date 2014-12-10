@@ -1,0 +1,143 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="Blank_A4" pageWidth="595" pageHeight="842" columnWidth="555" leftMargin="20" rightMargin="20" topMargin="20" bottomMargin="20" whenResourceMissingType="Empty" uuid="8a513972-c25e-4e17-8ce7-1ed15d3a9ff4">
+	<property name="com.jaspersoft.studio.data.defaultdataadapter" value="Diprol Adapter "/>
+	<property name="ireport.zoom" value="2.5937424601000028"/>
+	<property name="ireport.x" value="0"/>
+	<property name="ireport.y" value="0"/>
+	<parameter name="sort" class="java.lang.String">
+		<parameterDescription><![CDATA[]]></parameterDescription>
+	</parameter>
+	<queryString>
+		<![CDATA[SELECT c.canal_atendimento,
+	c.cidade,
+	c.razao_social,
+	c.cod_cef,
+	c.contato,
+	c.telefone_ddd1,
+	c.telefone1
+FROM cliente c
+group by c.canal_atendimento, c.cidade, c.razao_social, c.cod_cef
+ORDER BY c.canal_atendimento, $P!{sort}]]>
+	</queryString>
+	<field name="cidade" class="java.lang.String"/>
+	<field name="razao_social" class="java.lang.String"/>
+	<field name="cod_cef" class="java.lang.String"/>
+	<field name="contato" class="java.lang.String"/>
+	<field name="telefone_ddd1" class="java.lang.String"/>
+	<field name="telefone1" class="java.lang.String"/>
+	<field name="canal_atendimento" class="java.lang.String"/>
+	<group name="canal_atendimento">
+		<groupExpression><![CDATA[$F{canal_atendimento}]]></groupExpression>
+		<groupHeader>
+			<band height="44">
+				<textField>
+					<reportElement x="0" y="6" width="400" height="13" uuid="57cf866d-e626-4b2d-b995-628611d069ab"/>
+					<textElement>
+						<font isBold="true"/>
+					</textElement>
+					<textFieldExpression><![CDATA["Canal de Atendimento: " + $F{canal_atendimento}]]></textFieldExpression>
+				</textField>
+				<staticText>
+					<reportElement x="0" y="29" width="140" height="12" uuid="6af92750-fb2b-4e14-acee-918dbdc71c2c"/>
+					<textElement>
+						<font isBold="true"/>
+					</textElement>
+					<text><![CDATA[Cidade]]></text>
+				</staticText>
+				<staticText>
+					<reportElement x="140" y="29" width="172" height="12" uuid="13e893ac-6679-416f-bc52-67af761017f4"/>
+					<textElement>
+						<font isBold="true"/>
+					</textElement>
+					<text><![CDATA[Razão Social]]></text>
+				</staticText>
+				<staticText>
+					<reportElement x="312" y="29" width="73" height="12" uuid="7adde5c6-9856-4907-9365-3d01f62f9d00"/>
+					<textElement>
+						<font isBold="true"/>
+					</textElement>
+					<text><![CDATA[Codigo CEF]]></text>
+				</staticText>
+				<staticText>
+					<reportElement x="385" y="29" width="87" height="12" uuid="17206a07-cb61-4f35-a741-a5e1ae1b58ec"/>
+					<textElement>
+						<font isBold="true"/>
+					</textElement>
+					<text><![CDATA[Contato]]></text>
+				</staticText>
+				<staticText>
+					<reportElement x="472" y="29" width="83" height="12" uuid="d7439f20-d32c-426a-9028-26515a31e22f"/>
+					<textElement>
+						<font isBold="true"/>
+					</textElement>
+					<text><![CDATA[Telefone]]></text>
+				</staticText>
+			</band>
+		</groupHeader>
+	</group>
+	<background>
+		<band splitType="Stretch"/>
+	</background>
+	<title>
+		<band height="48" splitType="Stretch">
+			<staticText>
+				<reportElement x="16" y="14" width="240" height="24" uuid="6066060d-5878-4ec7-8cf6-0613eb9b6072"/>
+				<textElement>
+					<font size="20" isBold="true"/>
+				</textElement>
+				<text><![CDATA[Relação de Clientes]]></text>
+			</staticText>
+			<image>
+				<reportElement x="442" y="5" width="94" height="38" uuid="d1e18fc8-ff95-4358-aa47-61e55158d5c3"/>
+				<imageExpression><![CDATA["/home/maicon/git/diprol-repo/diprol/src/main/webapp/img/logo_diprol.jpg"]]></imageExpression>
+			</image>
+			<line>
+				<reportElement x="3" y="45" width="552" height="1" forecolor="#999999" uuid="6f47d7b9-fe30-465e-bd00-b230ce8ffe55">
+					<property name="local_mesure_unitheight" value="pixel"/>
+					<property name="com.jaspersoft.studio.unit.height" value="px"/>
+				</reportElement>
+			</line>
+		</band>
+	</title>
+	<pageHeader>
+		<band splitType="Stretch"/>
+	</pageHeader>
+	<columnHeader>
+		<band splitType="Stretch"/>
+	</columnHeader>
+	<detail>
+		<band height="12" splitType="Stretch">
+			<frame>
+				<reportElement mode="Opaque" x="0" y="0" width="555" height="12" backcolor="#CCCCCC" uuid="569c265a-6f39-43f9-b62f-a5432eb7214e">
+					<printWhenExpression><![CDATA[($V{REPORT_COUNT} % 2) == 0]]></printWhenExpression>
+				</reportElement>
+			</frame>
+			<textField isBlankWhenNull="true">
+				<reportElement x="0" y="0" width="140" height="12" uuid="2c7ea351-9916-4e7d-a188-16854456cda8"/>
+				<textFieldExpression><![CDATA[$F{cidade}]]></textFieldExpression>
+			</textField>
+			<textField isBlankWhenNull="true">
+				<reportElement x="385" y="0" width="87" height="12" uuid="222fbdb2-8d39-40e6-a4bc-2ce5728c2172"/>
+				<textFieldExpression><![CDATA[$F{contato}]]></textFieldExpression>
+			</textField>
+			<textField isBlankWhenNull="true">
+				<reportElement x="140" y="0" width="172" height="12" uuid="cbeeac2b-4db6-4572-bc28-6e20ea0716a5"/>
+				<textFieldExpression><![CDATA[$F{razao_social}]]></textFieldExpression>
+			</textField>
+			<textField isBlankWhenNull="true">
+				<reportElement x="472" y="0" width="83" height="12" uuid="3de47df5-9ec0-4793-aa8e-b9dbc76d1bf7"/>
+				<textFieldExpression><![CDATA["(" + $F{telefone_ddd1} + ") " + ($F{telefone1} != null ? $F{telefone1} : "")]]></textFieldExpression>
+			</textField>
+			<textField isBlankWhenNull="true">
+				<reportElement x="312" y="0" width="73" height="12" uuid="ca61dc99-fb81-41f5-840b-7a45a78c210a"/>
+				<textFieldExpression><![CDATA[$F{cod_cef}]]></textFieldExpression>
+			</textField>
+		</band>
+	</detail>
+	<pageFooter>
+		<band height="4" splitType="Stretch"/>
+	</pageFooter>
+	<summary>
+		<band splitType="Stretch"/>
+	</summary>
+</jasperReport>
