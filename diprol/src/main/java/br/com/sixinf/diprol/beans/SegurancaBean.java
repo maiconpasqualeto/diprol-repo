@@ -17,6 +17,7 @@ import javax.servlet.http.HttpServletRequest;
 import org.apache.log4j.Logger;
 
 import br.com.sixinf.diprol.entidades.Usuario;
+import br.com.sixinf.diprol.seguranca.UserPrincipal;
 import br.com.sixinf.ferramentas.Utilitarios;
 
 /**
@@ -75,7 +76,10 @@ public class SegurancaBean implements Serializable {
 			
 			if (getContext().getExternalContext().getUserPrincipal() == null)
 				getRequest().login(usuario.getCpf(), usuario.getSenha());
-		
+			
+			UserPrincipal up = (UserPrincipal) getContext().getExternalContext().getUserPrincipal();
+			this.usuario = up.getUsuario();
+			
 		} catch (ServletException ex) {
 						
 			return;			
@@ -126,6 +130,23 @@ public class SegurancaBean implements Serializable {
         usuario = new Usuario();
         
         return "/index.xhtml";
+	}
+	
+	/**
+	 * 
+	 * @return
+	 */
+	public String valdaPermissaoCasatroUsuario(){
+		if ( !"ADMIN".equals(usuario.getPerfil()) ) {
+			FacesMessage m = new FacesMessage(
+					FacesMessage.SEVERITY_ERROR, "USUÁRIO NÃO TEM PERMISSÃO PARA ESSA TRANSAÇÃO", 
+						"USUÁRIO NÃO TEM PERMISSÃO PARA ESSA TRANSAÇÃO");
+			FacesContext.getCurrentInstance().addMessage(null, m);
+			
+			return "";
+		}
+		
+		return "form_usuario.xhtml?faces-redirect=true";
 	}
 		
 }

@@ -5,7 +5,9 @@ package br.com.sixinf.diprol.dao;
 
 
 import javax.persistence.EntityManager;
+import javax.persistence.EntityTransaction;
 import javax.persistence.NoResultException;
+import javax.persistence.Query;
 import javax.persistence.TypedQuery;
 
 import org.apache.log4j.Logger;
@@ -61,5 +63,39 @@ public class SegurancaDAO extends BridgeBaseDAO {
             em.close();
         }
 		return obj;
+	}
+	
+	/**
+	 * 
+	 * @param cpf
+	 * @param senha
+	 */
+	public void alterarSenhaUsuario(String cpf, String senha) {
+		EntityManager em = AdministradorPersistencia.getEntityManager();
+		EntityTransaction t = em.getTransaction();
+		
+		try {
+			StringBuilder hql = new StringBuilder();
+			hql.append("update Usuario u ");
+			hql.append("set u.senha = :senha ");
+			hql.append("where u.cpf = :cpf ");
+			
+	        Query q = em.createQuery(hql.toString());
+	        
+	        q.setParameter("senha", senha);
+	        q.setParameter("cpf", cpf);
+	        
+	        t.begin();
+	        	        
+	        q.executeUpdate();
+	        
+	        t.commit();
+	        
+		} catch (Exception e) {
+			t.rollback();
+			LOG.error("Erro ao alterar senha usuario", e);
+		} finally {
+	        em.close();
+	    }
 	}
 }

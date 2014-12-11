@@ -34,7 +34,7 @@ public class DiprolLoginModule implements LoginModule {
 	private CallbackHandler handler;
 	private UserPrincipal userPrincipal;
 	private RolePrincipal rolePrincipal;
-	private String login;
+	private Usuario usuario;
 	private List<String> userGroups;
 	
 	@Override
@@ -84,7 +84,8 @@ public class DiprolLoginModule implements LoginModule {
 				
 				throw new LoginException("Senha inválida");
 			} else {
-				login = u.getCpf();
+				usuario = u;
+				u.setSenha(null);
 				userGroups = new ArrayList<String>();
 				userGroups.add("user");
 			}
@@ -114,7 +115,7 @@ public class DiprolLoginModule implements LoginModule {
 	
 	@Override
 	public boolean commit() throws LoginException {
-		userPrincipal = new UserPrincipal(login);
+		userPrincipal = new UserPrincipal(usuario);
 	    subject.getPrincipals().add(userPrincipal);
 
 	    if (userGroups != null && userGroups.size() > 0) {

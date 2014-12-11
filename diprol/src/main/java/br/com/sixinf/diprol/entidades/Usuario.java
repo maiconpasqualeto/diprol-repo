@@ -32,6 +32,9 @@ public class Usuario implements Entidade, Serializable {
 	@Column(name = "senha")
 	private String senha;
 	
+	@Column(name = "perfil")
+	private String perfil;
+	
 	@Column(name = "status")
 	private Character status;
 		
@@ -65,6 +68,14 @@ public class Usuario implements Entidade, Serializable {
 
 	public void setStatus(Character status) {
 		this.status = status;
+	}
+
+	public String getPerfil() {
+		return perfil;
+	}
+
+	public void setPerfil(String perfil) {
+		this.perfil = perfil;
 	}
 
 	@Override

@@ -47,8 +47,8 @@
 					
 					<div class="form-group">
 						<p:outputLabel value="CPF" for="txtCpf" styleClass="col-sm-2 control-label" />
-						<div class="col-sm-3">
-							<p:inputMask id="txtCpf" mask="999.999.999-99" value="#{usuarioBean.usuario.cpf}" 
+						<div class="col-sm-2">
+							<p:inputMask id="txtCpf" mask="999.999.999-99" value="#{usuarioBean.cpf}" 
 								placeholder="CPF" class="form-control" required="true" label="CPF" 
 								requiredMessage="CPF é obrigatório" converter="inputMaskConverter">
 							</p:inputMask>
@@ -56,9 +56,9 @@
 						<div class="col-sm-2">
 							<p:commandButton id="btnConfInicioUsuario" actionListener="#{usuarioBean.confirmaCpfUsuario}" 
 								value="Confirma" styleClass="btn btn-primary" 
-							 	process="@this" update="divForm msgs"/>
+							 	process="@this txtCpf" update="divForm msgs"/>
 						</div>
-					</div>					
+					</div>
 					
 					<hr/>
 					
@@ -76,7 +76,16 @@
 						<div class="form-group">
 							<p:outputLabel value="Senha" for="txtSenha" styleClass="col-sm-2 control-label" />
 							<div class="col-sm-4">
-								<p:password id="txtSenha" redisplay="true"
+								<p:password id="txtSenha" redisplay="true" match="txtConfirmaSenha"
+									value="#{usuarioBean.usuario.senha}" required="true"
+									class="form-control fullwidth" />
+							</div>
+						</div>
+						
+						<div class="form-group">
+							<p:outputLabel value="Confirma Senha" for="txtConfirmaSenha" styleClass="col-sm-2 control-label" />
+							<div class="col-sm-4">
+								<p:password id="txtConfirmaSenha" redisplay="true" required="true"
 									value="#{usuarioBean.usuario.senha}" 
 									class="form-control fullwidth" />
 							</div>
@@ -89,7 +98,7 @@
 										value="#{usuarioBean.usuario.perfil}">
 									<f:selectItem itemValue="" itemLabel="Selecione o perfil" />
 									<f:selectItem itemValue="ADMIN" itemLabel="Administrador" />
-									<f:selectItem itemValue="USUARIO" itemLabel="Usuario" />
+									<f:selectItem itemValue="OPERADOR" itemLabel="Operador" />
 								</h:selectOneMenu>
 							</div>
 						</div>
@@ -103,6 +112,15 @@
 									<f:selectItem itemValue="A" itemLabel="Ativo" />
 									<f:selectItem itemValue="D" itemLabel="Inativo" />
 								</h:selectOneMenu>
+							</div>
+						</div>
+						
+						<hr/>
+						
+						<div class="form-group">
+							<div class="col-sm-2 control-label">
+								<p:commandButton actionListener="#{usuarioBean.salvar}"
+							value="Confirma" styleClass="btn btn-success" update="formUsuario" />
 							</div>
 						</div>
 					

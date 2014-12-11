@@ -20,6 +20,8 @@
 		</p:dialog>
 
 		<h:form>
+		
+		<p:growl id="msg" />
 
 		<div class="navbar navbar-default navbar-static-top" role="navigation">
 			<div class="container">
@@ -106,10 +108,12 @@
 							</a>
 							<ul class="dropdown-menu" role="menu">
 								<li>
-									<a href="#">Senha</a>
+									<p:commandLink value="Senha" action="#{usuarioBean.direcionaAlterarSenha}"
+										ajax="false"/>
 								</li>
 								<li>
-									<a href="form_usuario.xhtml">Usuário</a>
+									<p:commandLink value="Usuário" action="#{segurancaBean.valdaPermissaoCasatroUsuario}"
+										ajax="false"/>
 								</li>																
 							</ul>
 						</li>

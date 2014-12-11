@@ -1,0 +1,98 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE html>
+
+<html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:p="http://primefaces.org/ui"
+	xmlns:f="http://java.sun.com/jsf/core">
+
+<h:head>
+
+</h:head>
+<h:body>
+	<!-- Na composição tudo que está fora da tag é ignorado -->
+	<ui:composition template="/layout/layout_interno.xhtml">
+
+		<ui:define name="principal">
+		
+			<!--  ==========  -->
+		    <!--  = Breadcrumbs =  -->
+		    <!--  ==========  -->
+	        <div class="container">
+	        	<div class="row">
+        			<div class="darker-stripe">
+						<ul class="breadcrumb">
+							<li>
+								Configurações
+								<span class="icon-chevron-right"></span>
+							</li>
+							<li class="active">Alterar Senha</li>
+						</ul>
+					</div>
+				</div>
+			</div>
+			
+			<h:form id="formAlteraSenha" class="form-horizontal" role="form">
+								
+				<p:growl id="msgs" />
+				
+				<div class="container">
+					<div class="btn-toolbar pull-right push-down-20">
+						<h:button value="Voltar" styleClass="btn btn-primary" outcome="principal.xhtml" />
+					</div>
+				</div>
+
+				<h:panelGroup layout="block" id="divForm" class="container well">
+					
+					<div class="form-group">
+						<p:outputLabel value="CPF" for="txtCpf" styleClass="col-sm-2 control-label" />
+						<div class="col-sm-2">
+							<p:inputMask id="txtCpf" mask="999.999.999-99" value="#{usuarioBean.alteraSenhaCpf}" 
+								placeholder="CPF" class="form-control" label="CPF" disabled="true">
+							</p:inputMask>
+						</div>						
+					</div>
+										
+					<div class="form-group">
+						<p:outputLabel value="Senha" for="txtSenha" styleClass="col-sm-2 control-label" />
+						<div class="col-sm-2">
+							<p:password id="txtSenha" redisplay="true" match="txtConfirmaSenha"
+								value="#{usuarioBean.alteraSenhaPass}" required="true"
+								class="form-control fullwidth" />
+						</div>
+					</div>
+					
+					<div class="form-group">
+						<p:outputLabel value="Confirma Senha" for="txtConfirmaSenha" styleClass="col-sm-2 control-label" />
+						<div class="col-sm-2">
+							<p:password id="txtConfirmaSenha" redisplay="true" required="true"
+								value="#{usuarioBean.alteraSenhaPass}" 
+								class="form-control fullwidth" />
+						</div>
+					</div>
+					
+					<hr/>
+					
+					<div class="form-group">
+						<div class="col-sm-2 control-label">
+							<p:commandButton actionListener="#{usuarioBean.confirmaAlterarSenha}"
+								value="Confirma" styleClass="btn btn-success" update="formAlteraSenha" />
+						</div>
+					</div>
+					
+					
+				</h:panelGroup>
+				
+				
+				
+
+			</h:form>
+			
+		</ui:define>
+	</ui:composition>
+	<!-- Fim composição -->
+
+</h:body>
+
+</html>

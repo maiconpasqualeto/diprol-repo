@@ -5,26 +5,36 @@ package br.com.sixinf.diprol.seguranca;
 
 import java.security.Principal;
 
+import br.com.sixinf.diprol.entidades.Usuario;
+
 /**
  * @author maicon
  *
  */
 public class UserPrincipal implements Principal {
 
-	private String name;
+	private Usuario usuario;
 
-	public UserPrincipal(String name) {
+	public UserPrincipal(Usuario usuario) {
 		super();
-		this.name = name;
+		this.usuario = usuario;
 	}
-
-	public void setName(String name) {
-		this.name = name;
+	
+	public void setName(String cpf) {
+		this.usuario.setCpf(cpf);
 	}
 
 	@Override
 	public String getName() {
-		return name;
+		return usuario.getCpf();
+	}
+
+	public Usuario getUsuario() {
+		return usuario;
+	}
+
+	public void setUsuario(Usuario usuario) {
+		this.usuario = usuario;
 	}
 
 }
