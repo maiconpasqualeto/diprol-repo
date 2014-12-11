@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!-- Created with Jaspersoft Studio version 5.6.2.final using JasperReports Library version 5.6.1  -->
-<!-- 2014-12-11T11:06:48 -->
+<!-- 2014-12-11T13:37:14 -->
 <jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="Blank_A4" pageWidth="595" pageHeight="842" columnWidth="555" leftMargin="20" rightMargin="20" topMargin="20" bottomMargin="20" whenResourceMissingType="Empty" uuid="8a513972-c25e-4e17-8ce7-1ed15d3a9ff4">
 	<property name="com.jaspersoft.studio.data.defaultdataadapter" value="Diprol Adapter "/>
 	<property name="ireport.zoom" value="3.7974983358324272"/>
@@ -98,7 +98,7 @@ ORDER BY c.canal_atendimento, $P!{sort}]]>
 			</staticText>
 			<image>
 				<reportElement x="442" y="5" width="94" height="38" uuid="d1e18fc8-ff95-4358-aa47-61e55158d5c3"/>
-				<imageExpression><![CDATA["/home/maicon/git/diprol-repo/diprol/src/main/webapp/img/logo_diprol.jpg"]]></imageExpression>
+				<imageExpression><![CDATA["../../img/logo_diprol.jpg"]]></imageExpression>
 			</image>
 			<line>
 				<reportElement x="0" y="45" width="555" height="1" forecolor="#999999" uuid="6f47d7b9-fe30-465e-bd00-b230ce8ffe55">

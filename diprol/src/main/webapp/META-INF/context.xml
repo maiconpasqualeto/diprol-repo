@@ -3,7 +3,7 @@
 <Context>
 
 	<Resource 
-		name="jdbc/JudokasDS"
+		name="jdbc/DiprolDS"
       	auth="Container"
         type="javax.sql.DataSource"
         factory="org.apache.tomcat.dbcp.dbcp.BasicDataSourceFactory"

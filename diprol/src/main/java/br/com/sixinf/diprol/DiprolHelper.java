@@ -34,7 +34,7 @@ public class DiprolHelper {
 		
 		InitialContext initialContext = new InitialContext();
 		DataSource ds = (DataSource)initialContext.lookup(
-		    "java:comp/env/jdbc/JudokasDS");
+		    "java:comp/env/jdbc/DiprolDS");
 		Connection conn = ds.getConnection();
 		
 		/*Class.forName( "org.postgresql.Driver" );
