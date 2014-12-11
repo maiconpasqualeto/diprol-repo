@@ -1,4 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
+<!-- Created with Jaspersoft Studio version 5.6.2.final using JasperReports Library version 5.6.1  -->
+<!-- 2014-12-11T11:06:48 -->
 <jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="Blank_A4" pageWidth="595" pageHeight="842" columnWidth="555" leftMargin="20" rightMargin="20" topMargin="20" bottomMargin="20" whenResourceMissingType="Empty" uuid="8a513972-c25e-4e17-8ce7-1ed15d3a9ff4">
 	<property name="com.jaspersoft.studio.data.defaultdataadapter" value="Diprol Adapter "/>
 	<property name="ireport.zoom" value="3.7974983358324272"/>
@@ -52,28 +54,28 @@ ORDER BY c.canal_atendimento, $P!{sort}]]>
 					<text><![CDATA[Cidade]]></text>
 				</staticText>
 				<staticText>
-					<reportElement style="cabecalho" x="139" y="31" width="173" height="12" uuid="13e893ac-6679-416f-bc52-67af761017f4"/>
+					<reportElement style="cabecalho" x="139" y="31" width="167" height="12" uuid="13e893ac-6679-416f-bc52-67af761017f4"/>
 					<textElement>
 						<font isBold="true"/>
 					</textElement>
 					<text><![CDATA[Razão Social]]></text>
 				</staticText>
 				<staticText>
-					<reportElement style="cabecalho" x="312" y="31" width="74" height="12" uuid="7adde5c6-9856-4907-9365-3d01f62f9d00"/>
+					<reportElement style="cabecalho" x="306" y="31" width="74" height="12" uuid="7adde5c6-9856-4907-9365-3d01f62f9d00"/>
 					<textElement>
 						<font isBold="true"/>
 					</textElement>
 					<text><![CDATA[Codigo CEF]]></text>
 				</staticText>
 				<staticText>
-					<reportElement style="cabecalho" x="386" y="31" width="86" height="12" uuid="17206a07-cb61-4f35-a741-a5e1ae1b58ec"/>
+					<reportElement style="cabecalho" x="380" y="31" width="86" height="12" uuid="17206a07-cb61-4f35-a741-a5e1ae1b58ec"/>
 					<textElement>
 						<font isBold="true"/>
 					</textElement>
 					<text><![CDATA[Contato]]></text>
 				</staticText>
 				<staticText>
-					<reportElement style="cabecalho" x="472" y="31" width="83" height="12" uuid="d7439f20-d32c-426a-9028-26515a31e22f"/>
+					<reportElement style="cabecalho" x="466" y="31" width="89" height="12" uuid="d7439f20-d32c-426a-9028-26515a31e22f"/>
 					<textElement>
 						<font isBold="true"/>
 					</textElement>
@@ -124,20 +126,20 @@ ORDER BY c.canal_atendimento, $P!{sort}]]>
 				<textFieldExpression><![CDATA[$F{cidade}]]></textFieldExpression>
 			</textField>
 			<textField isBlankWhenNull="true">
-				<reportElement x="386" y="0" width="86" height="12" uuid="222fbdb2-8d39-40e6-a4bc-2ce5728c2172"/>
-				<textFieldExpression><![CDATA[$F{contato}]]></textFieldExpression>
-			</textField>
-			<textField isBlankWhenNull="true">
-				<reportElement x="139" y="0" width="173" height="12" uuid="cbeeac2b-4db6-4572-bc28-6e20ea0716a5"/>
+				<reportElement x="139" y="0" width="167" height="12" uuid="cbeeac2b-4db6-4572-bc28-6e20ea0716a5"/>
 				<textFieldExpression><![CDATA[$F{razao_social}]]></textFieldExpression>
 			</textField>
 			<textField isBlankWhenNull="true">
-				<reportElement x="472" y="1" width="83" height="11" uuid="3de47df5-9ec0-4793-aa8e-b9dbc76d1bf7"/>
-				<textFieldExpression><![CDATA["(" + $F{telefone_ddd1} + ") " + ($F{telefone1} != null ? $F{telefone1} : "")]]></textFieldExpression>
+				<reportElement x="306" y="0" width="74" height="12" uuid="ca61dc99-fb81-41f5-840b-7a45a78c210a"/>
+				<textFieldExpression><![CDATA[$F{cod_cef}]]></textFieldExpression>
 			</textField>
 			<textField isBlankWhenNull="true">
-				<reportElement x="312" y="0" width="74" height="12" uuid="ca61dc99-fb81-41f5-840b-7a45a78c210a"/>
-				<textFieldExpression><![CDATA[$F{cod_cef}]]></textFieldExpression>
+				<reportElement x="380" y="0" width="86" height="12" uuid="222fbdb2-8d39-40e6-a4bc-2ce5728c2172"/>
+				<textFieldExpression><![CDATA[$F{contato}]]></textFieldExpression>
+			</textField>
+			<textField isBlankWhenNull="true">
+				<reportElement x="466" y="0" width="89" height="12" uuid="3de47df5-9ec0-4793-aa8e-b9dbc76d1bf7"/>
+				<textFieldExpression><![CDATA[$F{telefone1} != null ? ("(" + $F{telefone_ddd1} + ") " +  $F{telefone1}) : ""]]></textFieldExpression>
 			</textField>
 		</band>
 	</detail>
