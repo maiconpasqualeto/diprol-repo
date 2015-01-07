@@ -29,7 +29,7 @@ public class Conta implements Entidade, Serializable {
 	private static final long serialVersionUID = 1L;
 
 	@Id
-	@SequenceGenerator(name="seqConta", sequenceName="estoque_cod_conta_seq", allocationSize=1)
+	@SequenceGenerator(name="seqConta", sequenceName="conta_cod_conta_seq", allocationSize=1)
 	@GeneratedValue(strategy=GenerationType.SEQUENCE, generator="seqConta")
 	@Column(name="cod_conta")
 	private Long codConta;
@@ -67,7 +67,7 @@ public class Conta implements Entidade, Serializable {
 	public void setContaGrupo(ContaGrupo contaGrupo) {
 		this.contaGrupo = contaGrupo;
 	}
-
+	
 	public Character getTipo() {
 		return tipo;
 	}

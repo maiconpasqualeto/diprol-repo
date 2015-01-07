@@ -244,4 +244,87 @@ public class FinanceiroDAO extends BridgeBaseDAO {
             em.close();
         }
 	}
+	
+	/**
+	 * 
+	 * @return
+	 */ 
+	public List<Conta> buscarContasPorGrupo(ContaGrupo contaGrupo) {
+		EntityManager em = AdministradorPersistencia.getEntityManager();
+		
+		List<Conta> list = null;
+		try {
+			StringBuilder hql = new StringBuilder();
+			hql.append("select c from Conta c ");
+			hql.append("inner join c.contaGrupo cg ");
+			hql.append("where cg.codGrupoConta = :codGrupoConta ");
+			hql.append("order by c.conta ");
+															
+			TypedQuery<Conta> q = em.createQuery(hql.toString(), Conta.class);
+			q.setParameter("codGrupoConta", contaGrupo.getCodGrupoConta());
+			
+			list = q.getResultList();
+			
+		} catch (NoResultException e) {
+			
+		} catch (Exception e) {
+			Logger.getLogger(getClass()).error("Erro ao buscar as contas por grupo", e);
+		} finally {
+            em.close();
+        }
+		return list;
+	}
+	
+	/**
+	 * @throws LoggerException 
+	 * 
+	 */
+	public void salvarPlanoDeContas(ContaGrupo contaGrupo, List<Conta> contas) throws LoggerException {
+		
+		EntityManager em = AdministradorPersistencia.getEntityManager();
+		EntityTransaction t = em.getTransaction();
+		
+		try {
+			t.begin();
+			
+			if (contaGrupo.getCodGrupoConta() == null)
+				em.persist(contaGrupo);
+			else 
+				em.merge(contaGrupo);
+			
+			for (Conta c : contas) {
+			
+				if (c.getCodConta() != null) {
+					
+					StringBuilder hql = new StringBuilder();
+					hql.append("update Conta c ");
+					hql.append("set c.conta = :conta, ");
+					hql.append("c.tipo = :tipo ");
+					hql.append("where c.codConta = :codConta ");
+					
+			        Query q = em.createQuery(hql.toString());
+			        
+			        q.setParameter("conta", c.getConta());
+			        q.setParameter("tipo", c.getTipo());
+			        q.setParameter("codConta", c.getCodConta());
+			        
+			        q.executeUpdate();
+			        
+				} else 
+					if ( !c.getConta().isEmpty() ) {
+						
+						c.setContaGrupo(contaGrupo);
+						em.persist(c);
+					
+				}
+			}
+			
+			t.commit();
+		} catch (Exception e) {
+			t.rollback();
+			throw new LoggerException("Erro ao gravar valores realizados", e, Logger.getLogger(getClass()));
+		} finally {
+            em.close();
+        }
+	}
 }
