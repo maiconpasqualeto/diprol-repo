@@ -244,4 +244,34 @@ public class FinanceiroDAO extends BridgeBaseDAO {
             em.close();
         }
 	}
+	
+	/**
+	 * 
+	 * @return
+	 */ 
+	public List<Conta> buscarContasPorGrupo(ContaGrupo contaGrupo) {
+		EntityManager em = AdministradorPersistencia.getEntityManager();
+		
+		List<Conta> list = null;
+		try {
+			StringBuilder hql = new StringBuilder();
+			hql.append("select c from Conta c ");
+			hql.append("inner join c.contaGrupo cg ");
+			hql.append("where cg.codGrupoConta = :codGrupoConta ");
+			hql.append("order by c.conta ");
+															
+			TypedQuery<Conta> q = em.createQuery(hql.toString(), Conta.class);
+			q.setParameter("codGrupoConta", contaGrupo.getCodGrupoConta());
+			
+			list = q.getResultList();
+			
+		} catch (NoResultException e) {
+			
+		} catch (Exception e) {
+			Logger.getLogger(getClass()).error("Erro ao buscar as contas por grupo", e);
+		} finally {
+            em.close();
+        }
+		return list;
+	}
 }

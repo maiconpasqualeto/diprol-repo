@@ -67,7 +67,7 @@ public class Conta implements Entidade, Serializable {
 	public void setContaGrupo(ContaGrupo contaGrupo) {
 		this.contaGrupo = contaGrupo;
 	}
-
+	
 	public Character getTipo() {
 		return tipo;
 	}
