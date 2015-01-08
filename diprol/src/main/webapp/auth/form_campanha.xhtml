@@ -60,12 +60,12 @@
 						</div>
 						<div class="col-sm-1">
 							<p:commandButton id="btnConfirma" actionListener="#{cadastroCampanhaBean.confirmaCampanha}" 
-								value="Confirma" styleClass="btn btn-primary" 
+								value="Confirma" styleClass="btn btn-success" disabled="#{cadastroCampanhaBean.mostraCampos}"
 							 	process="@this cmbCampanha" update="divForm msgs"/>
 						</div>
 						<div class="col-sm-1">
 							<p:commandButton id="btnNovo" actionListener="#{cadastroCampanhaBean.novaCampanha}" 
-								value="Novo" styleClass="btn btn-primary" 
+								value="Novo" styleClass="btn btn-primary" disabled="#{cadastroCampanhaBean.mostraCampos}"
 							 	process="@this" update="divForm msgs"/>
 						</div>
 					</div>					

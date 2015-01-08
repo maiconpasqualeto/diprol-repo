@@ -47,7 +47,7 @@
 						<p:outputLabel value="Grupo conta" for="cmbGrupoConta" styleClass="col-sm-2 control-label" />
 						<div class="col-sm-3">
 							<h:selectOneMenu id="cmbGrupoConta" class="form-control" converter="entidadeConverter" 
-									value="#{planoBean.contaGrupo}" required="true">
+									value="#{planoBean.contaGrupo}" required="true" disabled="#{planoBean.mostraCampos}">
 								<f:selectItem itemValue="#{null}" itemLabel="" />
 								<f:selectItems var="cg" value="#{planoBean.grupos}" 
 									itemValue="#{cg}" itemLabel="#{cg.grupoConta}"/>
@@ -80,7 +80,7 @@
 							</div>
 							
 							<div class="form-group">
-								<div class="col-sm-3">
+								<div class="col-sm-8">
 									<p:outputLabel value="Conta" styleClass="control-label" />
 								</div>
 								<div class="col-sm-2">					
@@ -88,20 +88,26 @@
 								</div>
 							</div>
 							
-							<ui:repeat var="c" value="#{planoBean.contas}">
-								<div class="form-group">
-									<div class="col-sm-3">
-										<p:inputText id="txtConta" value="#{c.conta}"  class="form-control" />								
+							<h:panelGroup id="divContas" layout="block">
+								<ui:repeat var="c" value="#{planoBean.contas}">
+									<div class="form-group">
+										<div class="col-sm-8">
+											<p:inputText id="txtConta" value="#{c.conta}"  class="form-control" />								
+										</div>
+										<div class="col-sm-2">
+											<h:selectOneMenu id="cmbTipo" value="#{c.tipo}"  class="form-control">
+												<f:selectItem itemLabel="" />
+												<f:selectItem itemLabel="Despesa" itemValue="D" />
+												<f:selectItem itemLabel="Receita" itemValue="R" />
+											</h:selectOneMenu>								
+										</div>
 									</div>
-									<div class="col-sm-2">
-										<h:selectOneMenu id="cmbTipo" value="#{c.tipo}"  class="form-control">
-											<f:selectItem itemLabel="" />
-											<f:selectItem itemLabel="Despesa" itemValue="D" />
-											<f:selectItem itemLabel="Receita" itemValue="R" />
-										</h:selectOneMenu>								
-									</div>
-								</div>
-							</ui:repeat>						
+								</ui:repeat>
+							</h:panelGroup>
+							
+							<p:commandButton actionListener="#{planoBean.maisContas}" 
+									value="mais..." styleClass="btn btn-warning" update="divPlano" 
+									process="@this divContas"/>
 							
 							<hr/>
 							

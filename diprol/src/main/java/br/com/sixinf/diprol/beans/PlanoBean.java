@@ -66,6 +66,14 @@ public class PlanoBean implements Serializable {
 	/**
 	 * 
 	 */
+	public void maisContas() {
+		for (int i=0; i<6; i++)
+			contas.add(new Conta());
+	}
+	
+	/**
+	 * 
+	 */
 	public void salvarPlano() {
 		try {
 			int i = 1;

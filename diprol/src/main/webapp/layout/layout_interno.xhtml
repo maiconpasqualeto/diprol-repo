@@ -22,9 +22,9 @@
 		</ui:insert>
 		<script type='text/javascript'>
 		$(function(){
-		    $('.wrapper').css({'height': (($(window).height()-105))+'px'});
+		    $('.wrapper').css({'min-height': (($(window).height()-105))+'px'});
 		    $(window).resize(function(){
-		    	$('.wrapper').css({'height': (($(window).height()-105))+'px'});
+		    	$('.wrapper').css({'min-height': (($(window).height()-105))+'px'});			    
 		    });
 		});
 		</script>
@@ -37,7 +37,7 @@
 			</ui:insert>
 	    </header>
 		
-		<div class="wrapper">
+		<div id="divWrapper" class="wrapper">
 	  		<ui:insert name="principal" />
 	  	</div>
 	  	
