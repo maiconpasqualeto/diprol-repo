@@ -327,4 +327,5 @@ public class FinanceiroDAO extends BridgeBaseDAO {
             em.close();
         }
 	}
+	
 }
