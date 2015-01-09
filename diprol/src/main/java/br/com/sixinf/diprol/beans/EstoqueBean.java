@@ -307,6 +307,8 @@ public class EstoqueBean implements Serializable {
 	 * 
 	 */
 	public void confirmaInicioVendas(){
+		mostraCampos = false;
+		
 		Cliente c = ClienteDAO.getInstance().buscarClientePorCodigo(codCEF);
 		if (c == null) {
 			FacesMessage m = new FacesMessage(
@@ -316,14 +318,33 @@ public class EstoqueBean implements Serializable {
 			return;
 		}
 		
-		campanhasPermuta = EstoqueDAO.getInstance().buscarCampanhasAtivasPosteriores(estoque.getCampanha());
-		if (campanhasPermuta == null) {
-			FacesMessage m = new FacesMessage(
-					FacesMessage.SEVERITY_ERROR, "Não existem campanhas cadastradas para permuta", 
-						"Não existem campanhas cadastradas para permuta");
-			FacesContext.getCurrentInstance().addMessage(null, m);
-			return;
-		}
+		if (estoque.getMovimento().getCodMovimento().intValue() == 13) {
+			
+			campanhasPermuta = EstoqueDAO.getInstance().buscarCampanhasAtivasEncerradas();
+			
+			if (campanhasPermuta == null || 
+					campanhasPermuta.isEmpty()) {
+				FacesMessage m = new FacesMessage(
+						FacesMessage.SEVERITY_ERROR, "Não existem campanhas FECHADAS cadastradas", 
+							"Não existem campanhas FECHADAS cadastradas");
+				FacesContext.getCurrentInstance().addMessage(null, m);
+				return;
+			}
+		} else {
+			
+			campanhasPermuta = EstoqueDAO.getInstance().buscarCampanhasAtivasPosteriores(estoque.getCampanha());
+			
+			if (campanhasPermuta == null || 
+					campanhasPermuta.isEmpty()) {
+				FacesMessage m = new FacesMessage(
+						FacesMessage.SEVERITY_ERROR, "Não existem campanhas ABERTAS cadastradas", 
+							"Não existem campanhas ABERTAS cadastradas");
+				FacesContext.getCurrentInstance().addMessage(null, m);
+				return;
+			}
+		} 
+		
+		
 		
 		if ( 'S' == estoque.getMovimento().getPermuta().charValue() ) 
 			mostraCampoPermuta = true;

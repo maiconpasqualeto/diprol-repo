@@ -4,6 +4,7 @@
 package br.com.sixinf.diprol.beans;
 
 import java.io.Serializable;
+import java.math.BigDecimal;
 import java.util.Date;
 import java.util.List;
 
@@ -96,9 +97,20 @@ public class CadastroCampanhaBean implements Serializable {
 				return;
 			}
 			
-			if (campanha.getCodCampanha() == null)
+			if (campanha.getCodCampanha() == null) {
+				campanha.setQtdeRecebida(BigDecimal.ZERO);
+				campanha.setQtdeReforco(BigDecimal.ZERO);
+				campanha.setQtdeDevolvida(BigDecimal.ZERO);
+				campanha.setSicap(BigDecimal.ZERO);
+				campanha.setVendaAlternativa(BigDecimal.ZERO);
+				campanha.setDevolucaoAutorizada(BigDecimal.ZERO);
+				campanha.setValorUnitario(BigDecimal.ZERO);
+				campanha.setValorCampanha(BigDecimal.ZERO);
+				campanha.setComissaoPercentual(BigDecimal.ZERO);
+				campanha.setComissaoCampanha(BigDecimal.ZERO);
+				campanha.setSaldoCampanha(BigDecimal.ZERO);
 				CampanhaDAO.getInstance().adicionar(campanha);
-			else 
+			} else 
 				CampanhaDAO.getInstance().alterar(campanha);
 			
 			FacesMessage m = new FacesMessage("Registro salvo com sucesso!");

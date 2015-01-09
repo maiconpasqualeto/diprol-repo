@@ -1,6 +1,4 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<!-- Created with Jaspersoft Studio version 5.6.2.final using JasperReports Library version 5.6.1  -->
-<!-- 2014-12-11T16:45:54 -->
 <jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="Blank_A4" pageWidth="595" pageHeight="842" columnWidth="555" leftMargin="20" rightMargin="20" topMargin="20" bottomMargin="20" whenResourceMissingType="Empty" uuid="8a513972-c25e-4e17-8ce7-1ed15d3a9ff4">
 	<property name="com.jaspersoft.studio.data.defaultdataadapter" value="Diprol Adapter "/>
 	<property name="ireport.zoom" value="3.7974983358324272"/>
@@ -25,16 +23,16 @@
 	c.telefone_ddd1,
 	c.telefone1
 FROM cliente c
-group by c.canal_atendimento, c.cidade, c.razao_social, c.cod_cef
-ORDER BY c.canal_atendimento, $P!{sort}]]>
+group by c.uf, c.canal_atendimento, c.cidade, c.razao_social, c.cod_cef
+ORDER BY c.uf, c.canal_atendimento, $P!{sort}]]>
 	</queryString>
+	<field name="canal_atendimento" class="java.lang.String"/>
 	<field name="cidade" class="java.lang.String"/>
 	<field name="razao_social" class="java.lang.String"/>
 	<field name="cod_cef" class="java.lang.String"/>
 	<field name="contato" class="java.lang.String"/>
 	<field name="telefone_ddd1" class="java.lang.String"/>
 	<field name="telefone1" class="java.lang.String"/>
-	<field name="canal_atendimento" class="java.lang.String"/>
 	<group name="canal_atendimento">
 		<groupExpression><![CDATA[$F{canal_atendimento}]]></groupExpression>
 		<groupHeader>

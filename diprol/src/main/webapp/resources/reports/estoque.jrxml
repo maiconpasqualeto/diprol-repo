@@ -1,0 +1,216 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="estoque" language="groovy" pageWidth="842" pageHeight="595" orientation="Landscape" columnWidth="832" leftMargin="5" rightMargin="5" topMargin="20" bottomMargin="20" uuid="f5e92e74-07b9-4ef2-b40a-00c8f674f23d">
+	<property name="ireport.zoom" value="1.2100000000000009"/>
+	<property name="ireport.x" value="0"/>
+	<property name="ireport.y" value="0"/>
+	<parameter name="par_cod_campanha" class="java.lang.Integer">
+		<defaultValueExpression><![CDATA[]]></defaultValueExpression>
+	</parameter>
+	<parameter name="par_uf" class="java.lang.String">
+		<defaultValueExpression><![CDATA[]]></defaultValueExpression>
+	</parameter>
+	<queryString>
+		<![CDATA[SELECT
+     estoque_resumo."cod_campanha" AS estoque_resumo_cod_campanha,
+     estoque_resumo."campanha" AS estoque_resumo_campanha,
+     estoque_resumo."uf" AS estoque_resumo_uf,
+     estoque_resumo."cod_cef" AS estoque_resumo_cod_cef,
+     estoque_resumo."cod_cef_contrapartida" AS estoque_resumo_cod_cef_contrapartida,
+     estoque_resumo."razao_social" AS estoque_resumo_razao_social,
+     estoque_resumo."cidade" AS estoque_resumo_cidade,
+     estoque_resumo."canal_atendimento" AS estoque_resumo_canal_atendimento,
+     estoque_resumo."data_movimento" AS estoque_resumo_data_movimento,
+     estoque_resumo."saldo_anterior" AS estoque_resumo_saldo_anterior,
+     estoque_resumo."entrada" AS estoque_resumo_entrada,
+     estoque_resumo."reforco" AS estoque_resumo_reforco,
+     estoque_resumo."fatura" AS estoque_resumo_fatura,
+     estoque_resumo."a_vista" AS estoque_resumo_a_vista,
+     estoque_resumo."v_gratis" AS estoque_resumo_v_gratis,
+     estoque_resumo."nota" AS estoque_resumo_nota,
+     estoque_resumo."balcao" AS estoque_resumo_balcao,
+     estoque_resumo."devolucao" AS estoque_resumo_devolucao,
+     estoque_resumo."devolucao_sem_troc" AS estoque_resumo_devolucao_sem_troc,
+     estoque_resumo."transferencia" AS estoque_resumo_transferencia,
+     estoque_resumo."pre_venda" AS estoque_resumo_pre_venda,
+     estoque_resumo."saida_estoque" AS estoque_resumo_saida_estoque,
+     estoque_resumo."saldo_atual" AS estoque_resumo_saldo_atual
+FROM
+     "public"."estoque_resumo" estoque_resumo
+where
+     estoque_resumo_cod_campanha = $P{par_cod_campanha} and
+     estoque_resumo_uf = $P{par_uf}]]>
+	</queryString>
+	<field name="estoque_resumo_cod_campanha" class="java.lang.Integer"/>
+	<field name="estoque_resumo_campanha" class="java.lang.String"/>
+	<field name="estoque_resumo_uf" class="java.lang.String"/>
+	<field name="estoque_resumo_cod_cef" class="java.lang.String"/>
+	<field name="estoque_resumo_cod_cef_contrapartida" class="java.lang.String"/>
+	<field name="estoque_resumo_razao_social" class="java.lang.String"/>
+	<field name="estoque_resumo_cidade" class="java.lang.String"/>
+	<field name="estoque_resumo_canal_atendimento" class="java.lang.String"/>
+	<field name="estoque_resumo_data_movimento" class="java.sql.Date"/>
+	<field name="estoque_resumo_saldo_anterior" class="java.lang.Integer"/>
+	<field name="estoque_resumo_entrada" class="java.lang.Integer"/>
+	<field name="estoque_resumo_reforco" class="java.lang.Integer"/>
+	<field name="estoque_resumo_fatura" class="java.lang.Integer"/>
+	<field name="estoque_resumo_a_vista" class="java.lang.Integer"/>
+	<field name="estoque_resumo_v_gratis" class="java.lang.Integer"/>
+	<field name="estoque_resumo_nota" class="java.lang.Integer"/>
+	<field name="estoque_resumo_balcao" class="java.lang.Integer"/>
+	<field name="estoque_resumo_devolucao" class="java.lang.Integer"/>
+	<field name="estoque_resumo_devolucao_sem_troc" class="java.lang.Integer"/>
+	<field name="estoque_resumo_transferencia" class="java.lang.Integer"/>
+	<field name="estoque_resumo_pre_venda" class="java.lang.Integer"/>
+	<field name="estoque_resumo_saida_estoque" class="java.lang.Integer"/>
+	<field name="estoque_resumo_saldo_atual" class="java.lang.Integer"/>
+	<field name="campanha_cod_campanha" class="java.lang.Integer"/>
+	<field name="campanha_campanha" class="java.lang.String"/>
+	<background>
+		<band splitType="Stretch"/>
+	</background>
+	<title>
+		<band height="47" splitType="Stretch">
+			<line>
+				<reportElement x="0" y="46" width="802" height="1" forecolor="#999999" uuid="cfdf74f4-cf05-4cea-94a9-5eceb4454390">
+					<property name="local_mesure_unitheight" value="pixel"/>
+					<property name="com.jaspersoft.studio.unit.height" value="px"/>
+				</reportElement>
+			</line>
+			<image>
+				<reportElement x="697" y="4" width="94" height="38" uuid="869249f0-0044-4af5-ac3e-a93133fd36d1"/>
+				<imageExpression><![CDATA["../../img/logo_diprol.jpg"]]></imageExpression>
+			</image>
+			<staticText>
+				<reportElement x="3" y="4" width="415" height="32" uuid="5a1e58df-5cfc-46cf-bc3b-1c3d8cfe6985"/>
+				<textElement>
+					<font size="20" isBold="true"/>
+				</textElement>
+				<text><![CDATA[Movimentação de Estoque - DIPROL]]></text>
+			</staticText>
+		</band>
+	</title>
+	<pageHeader>
+		<band height="35" splitType="Stretch"/>
+	</pageHeader>
+	<columnHeader>
+		<band height="20" splitType="Stretch">
+			<staticText>
+				<reportElement x="0" y="0" width="70" height="20" uuid="9d65a4f8-120c-4fdd-96fb-0b46ee4e49ab"/>
+				<text><![CDATA[estoque_resumo_data_movimento]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="70" y="0" width="60" height="20" uuid="87d9b686-9436-4638-925f-6b5f7e53aff6"/>
+				<text><![CDATA[estoque_resumo_entrada]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="130" y="0" width="60" height="20" uuid="e20de629-3d02-491e-b114-804334479da4"/>
+				<text><![CDATA[estoque_resumo_saida_estoque]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="190" y="0" width="60" height="20" uuid="2b8c38de-e1c9-4a66-b2dd-23b90cabd3b1"/>
+				<text><![CDATA[estoque_resumo_reforco]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="250" y="0" width="60" height="20" uuid="0e446111-40b5-40b6-b961-6acf357a452e"/>
+				<text><![CDATA[estoque_resumo_fatura]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="310" y="0" width="60" height="20" uuid="080bb2af-02c1-4249-b03a-2ae3abd3052a"/>
+				<text><![CDATA[estoque_resumo_a_vista]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="370" y="0" width="60" height="20" uuid="1bb876cd-424d-4d28-bde1-b3473d5c02f4"/>
+				<text><![CDATA[estoque_resumo_v_gratis]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="430" y="0" width="60" height="20" uuid="5651cf40-6704-418c-aa3b-a864082077d0"/>
+				<text><![CDATA[estoque_resumo_nota]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="490" y="0" width="60" height="20" uuid="28825245-b204-48d7-8518-78a05d8fa905"/>
+				<text><![CDATA[estoque_resumo_balcao]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="550" y="0" width="60" height="20" uuid="4d254b2f-19ad-46b0-bdb2-4bfa8c0805c0"/>
+				<text><![CDATA[estoque_resumo_devolucao]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="610" y="0" width="60" height="20" uuid="4ba9aada-0d83-46df-b24a-add5a056ec87"/>
+				<text><![CDATA[estoque_resumo_devolucao_sem_troc]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="670" y="0" width="70" height="20" uuid="74dbde77-12fb-49a1-9890-c505ec6ceb78"/>
+				<text><![CDATA[estoque_resumo_transferencia]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="740" y="0" width="92" height="20" uuid="3b7cc07b-844d-4a88-9796-3eadad671904"/>
+				<text><![CDATA[estoque_resumo_saldo_atual]]></text>
+			</staticText>
+		</band>
+	</columnHeader>
+	<detail>
+		<band height="20" splitType="Stretch">
+			<textField>
+				<reportElement x="0" y="0" width="70" height="20" uuid="4539f3fd-a39c-4de6-a193-91a8fab4bc2e"/>
+				<textFieldExpression><![CDATA[$F{estoque_resumo_data_movimento}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="70" y="0" width="60" height="20" uuid="09810f4e-42a5-4547-908d-2046768ce11c"/>
+				<textFieldExpression><![CDATA[$F{estoque_resumo_entrada}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="130" y="0" width="60" height="20" uuid="48bd2a62-9d73-48bd-b1fe-7ad63ea0519f"/>
+				<textFieldExpression><![CDATA[$F{estoque_resumo_saida_estoque}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="190" y="0" width="60" height="20" uuid="4e97c591-1b3a-4014-be80-5004e0f5467e"/>
+				<textFieldExpression><![CDATA[$F{estoque_resumo_reforco}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="250" y="0" width="60" height="20" uuid="88e84639-5177-4a8f-b5de-1f2a3a68d816"/>
+				<textFieldExpression><![CDATA[$F{estoque_resumo_fatura}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="310" y="0" width="60" height="20" uuid="ec220f7e-87f1-4cce-8cdc-067917b5f430"/>
+				<textFieldExpression><![CDATA[$F{estoque_resumo_a_vista}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="370" y="0" width="60" height="20" uuid="3fa8f623-88b8-4d0f-8e73-5b4afed819f5"/>
+				<textFieldExpression><![CDATA[$F{estoque_resumo_v_gratis}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="430" y="0" width="60" height="20" uuid="ab099475-6c63-445e-9fbd-9463a2e741f4"/>
+				<textFieldExpression><![CDATA[$F{estoque_resumo_nota}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="490" y="0" width="60" height="20" uuid="ca0992eb-839f-404a-8f59-d02d50a6e7a7"/>
+				<textFieldExpression><![CDATA[$F{estoque_resumo_balcao}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="550" y="0" width="60" height="20" uuid="c5cd4ce8-f599-4a0a-9181-eaf35c5327f5"/>
+				<textFieldExpression><![CDATA[$F{estoque_resumo_devolucao}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="610" y="0" width="60" height="20" uuid="64383dfa-c9d4-4ba2-a1e0-bd5b12f8fc77"/>
+				<textFieldExpression><![CDATA[$F{estoque_resumo_devolucao_sem_troc}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="670" y="0" width="70" height="20" uuid="4493fceb-4d71-4b64-83b7-9688501a547f"/>
+				<textFieldExpression><![CDATA[$F{estoque_resumo_transferencia}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="740" y="0" width="92" height="20" uuid="3a2012c2-1ee8-4a84-9ded-b4951d9e9d62"/>
+				<textFieldExpression><![CDATA[$F{estoque_resumo_saldo_atual}]]></textFieldExpression>
+			</textField>
+		</band>
+	</detail>
+	<columnFooter>
+		<band height="21" splitType="Stretch"/>
+	</columnFooter>
+	<pageFooter>
+		<band height="54" splitType="Stretch"/>
+	</pageFooter>
+	<summary>
+		<band height="42" splitType="Stretch"/>
+	</summary>
+</jasperReport>
