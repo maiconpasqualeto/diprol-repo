@@ -81,6 +81,11 @@ hr { border-color: #CCC -moz-use-text-color -moz-use-text-color }
 	width: 100%;
 }
 
+.radio-table {
+	border-spacing: 5px;
+    border-collapse: separate; 
+}
+
 @media (min-width: 767px) {
 	.caret-right {
 		width: 0;

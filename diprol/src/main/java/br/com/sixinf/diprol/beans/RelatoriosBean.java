@@ -22,7 +22,7 @@ import net.sf.jasperreports.engine.JRException;
 
 import org.primefaces.model.StreamedContent;
 
-import br.com.sixinf.diprol.dao.EstoqueDAO;
+import br.com.sixinf.diprol.dao.CampanhaDAO;
 import br.com.sixinf.diprol.entidades.Campanha;
 import br.com.sixinf.diprol.facade.DiprolFacade;
 import br.com.sixinf.ferramentas.log.LoggerException;
@@ -51,7 +51,7 @@ public class RelatoriosBean implements Serializable {
 			classificacoes.add(new SelectItem("ALFABÉTICA"));
 			classificacoes.add(new SelectItem("CÓDIGO CEF"));
 		} else if (uri.contains("rel_estoque.xhtml")) {
-			
+			campanhas = CampanhaDAO.getInstance().buscarTodasCampanhas();
 		}
 	}
 
@@ -97,11 +97,33 @@ public class RelatoriosBean implements Serializable {
 
 	/**
 	 * 
+	 * @return
+	 * @throws JRException
+	 * @throws IOException
+	 * @throws ClassNotFoundException
+	 * @throws SQLException
+	 * @throws LoggerException
 	 */
-	public void confirmaCampanha() {
+	public StreamedContent printRelEstoque() throws 
+		JRException, IOException, ClassNotFoundException, SQLException, LoggerException {
 		
+		Map<String, Object> parametros = new HashMap<String, Object>();
+		parametros.put("par_cod_campanha", campanha.getCodCampanha());
+		parametros.put("par_uf", "MS");
+		parametros.put("par_campanha", campanha.getCampanha());
+		
+		return DiprolFacade.getInstance().geraReport("estoque", parametros);
 	}
 	
+	/**
+	 * 
+	 * @return
+	 * @throws JRException
+	 * @throws IOException
+	 * @throws ClassNotFoundException
+	 * @throws SQLException
+	 * @throws LoggerException
+	 */
 	public StreamedContent printClientes() throws 
 		JRException, IOException, ClassNotFoundException, SQLException, LoggerException {  
 		Map<String, Object> parametros = new HashMap<String, Object>();

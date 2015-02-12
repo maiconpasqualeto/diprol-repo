@@ -16,6 +16,12 @@
 
 		<ui:define name="principal">
 		
+			<style type="text/css">
+				.ui-radiobutton-box {
+					box-sizing: content-box !important;
+				}
+			</style>
+		
 			<!--  ==========  -->
 		    <!--  = Breadcrumbs =  -->
 		    <!--  ==========  -->
@@ -26,17 +32,14 @@
 							<li>Estoque 
 								<span class="icon-chevron-right"></span>
 							</li>
-							<li>Campanha
-								<span class="icon-chevron-right"></span>
-							</li>
-							<li class="active">Abertura</li>
+							<li class="active">Relatórios</li>
 						</ul>
 					</div>
 				</div>
 			</div>
 			
 			<h:form id="formRel" class="form-horizontal" role="form" onkeypress="return event.keyCode != 13;">
-								
+				
 				<p:growl id="msgs" />
 				
 								
@@ -47,45 +50,32 @@
 				</div>
 
 				<h:panelGroup layout="block" id="divForm" class="container well">
-					
-					<div class="form-group">
-						<p:outputLabel value="Campanha" for="cmbCampanha" styleClass="col-sm-2 control-label" />
+									
+					<h:panelGroup id="divCampanha" layout="block" styleClass="form-group">
+						<p:outputLabel value="Campanha" for="cmbCampanha" styleClass="col-sm-1 control-label" />
 						<div class="col-sm-3">
 							<h:selectOneMenu id="cmbCampanha" class="form-control" converter="entidadeConverter" 
-									value="#{relatoriosBean.campanha}">
+									value="#{relatoriosBean.campanha}" required="true">
 								<f:selectItem itemValue="#{null}" itemLabel="" />
 								<f:selectItems var="camp" value="#{relatoriosBean.campanhas}" 
 									itemValue="#{camp}" itemLabel="#{camp.campanha}"/>
 							</h:selectOneMenu>
 						</div>
-						<div class="col-sm-1">
-							<p:commandButton id="btnConfirma" actionListener="#{relatoriosBean.confirmaCampanha}" 
-								value="Confirma" styleClass="btn btn-success"
-							 	process="@this cmbCampanha" update="divForm msgs"/>
-						</div>
-					</div>					
+					</h:panelGroup>
+						
+					<p:selectOneRadio layout="grid" columns="1" value="#{relatoriosBean.tipoMovimento}" 
+							styleClass="radio-table">
+						<f:selectItem itemLabel="Movimento DIPROL" itemValue="DIPROL"/>
+						<f:selectItem itemLabel="Movimento LOTÉRICAS" itemValue="LOTERICAS"/>
+					</p:selectOneRadio>
 					
 					<hr/>
 					
-					<h:panelGroup id="divEstoque" layout="block" >
-						
-						<p:selectOneRadio layout="grid" columns="1" value="#{relatoriosBean.tipoMovimento}">
-							<f:selectItem itemLabel="Movimento DIPROL" itemValue="DIPROL"/>
-							<f:selectItem itemLabel="Movimento LOTÉRICAS" itemValue="LOTERICAS"/>
-						</p:selectOneRadio>
-						
-						<hr/>
-						
-						<div class="form-group">
-							<div class="col-sm-2 control-label">
-								<p:commandButton actionListener="#{cadastroCampanhaBean.confirmaCadastroCampanha}" 
-									value="Confirma" styleClass="btn btn-success" update="formCampanha" 
-									process="@this divCampanha"/>
-							</div>
-						</div>
-						
-						
-					</h:panelGroup>	
+					<p:commandButton value="Confirma" id="btnImprimir" 
+			    			ajax="false" update="growImpressao" styleClass="btn btn-success">
+		                <p:fileDownload value="#{relatoriosBean.printRelEstoque()}" />
+	               	</p:commandButton>
+											
 				</h:panelGroup>
 				
 				
