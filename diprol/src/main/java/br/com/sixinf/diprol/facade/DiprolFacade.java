@@ -3,15 +3,11 @@
  */
 package br.com.sixinf.diprol.facade;
 
-import java.awt.Image;
 import java.io.ByteArrayInputStream;
 import java.io.ByteArrayOutputStream;
 import java.io.InputStream;
 import java.sql.SQLException;
-import java.text.SimpleDateFormat;
-import java.util.ArrayList;
 import java.util.Date;
-import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
@@ -19,16 +15,12 @@ import javax.faces.context.ExternalContext;
 import javax.faces.context.FacesContext;
 import javax.naming.NamingException;
 import javax.servlet.ServletContext;
-import javax.swing.ImageIcon;
 
 import net.sf.jasperreports.engine.JRException;
 import net.sf.jasperreports.engine.JRExporterParameter;
 import net.sf.jasperreports.engine.JasperFillManager;
 import net.sf.jasperreports.engine.JasperPrint;
-import net.sf.jasperreports.engine.data.JRBeanCollectionDataSource;
 import net.sf.jasperreports.engine.export.JRPdfExporter;
-import net.sf.jasperreports.export.OutputStreamExporterOutput;
-import net.sf.jasperreports.export.SimplePdfExporterConfiguration;
 
 import org.apache.log4j.Logger;
 import org.primefaces.model.DefaultStreamedContent;
@@ -49,6 +41,7 @@ import br.com.sixinf.ferramentas.log.LoggerException;
  * @author maicon
  *
  */
+@SuppressWarnings("deprecation")
 public class DiprolFacade {
 	
 	private static DiprolFacade facade;

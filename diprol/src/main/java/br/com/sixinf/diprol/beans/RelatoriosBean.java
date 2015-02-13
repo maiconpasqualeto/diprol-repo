@@ -107,12 +107,19 @@ public class RelatoriosBean implements Serializable {
 	public StreamedContent printRelEstoque() throws 
 		JRException, IOException, ClassNotFoundException, SQLException, LoggerException {
 		
-		Map<String, Object> parametros = new HashMap<String, Object>();
-		parametros.put("par_cod_campanha", campanha.getCodCampanha());
-		parametros.put("par_uf", "MS");
-		parametros.put("par_campanha", campanha.getCampanha());
+		StreamedContent sc = null; 
+				
+		if (campanha.getStatus().equals('F')) {
 		
-		return DiprolFacade.getInstance().geraReport("estoque", parametros);
+			Map<String, Object> parametros = new HashMap<String, Object>();
+			parametros.put("par_cod_campanha", campanha.getCodCampanha());
+			parametros.put("par_campanha", campanha.getCampanha());
+			
+			sc = DiprolFacade.getInstance().geraReport("estoque", parametros);
+		}
+		
+		
+		return sc;
 	}
 	
 	/**

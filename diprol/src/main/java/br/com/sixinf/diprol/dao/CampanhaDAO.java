@@ -40,7 +40,7 @@ public class CampanhaDAO extends BridgeBaseDAO {
 		try {
 			StringBuilder hql = new StringBuilder();
 			hql.append("select c from Campanha c ");
-			//hql.append("where c.status = 'A' ");
+			hql.append("order by c.campanha ");
 												
 			TypedQuery<Campanha> q = em.createQuery(hql.toString(), Campanha.class);
 			
