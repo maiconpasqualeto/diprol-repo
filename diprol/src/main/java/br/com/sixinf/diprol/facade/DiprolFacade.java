@@ -6,6 +6,7 @@ package br.com.sixinf.diprol.facade;
 import java.io.ByteArrayInputStream;
 import java.io.ByteArrayOutputStream;
 import java.io.InputStream;
+import java.math.BigDecimal;
 import java.sql.SQLException;
 import java.util.Date;
 import java.util.List;
@@ -26,6 +27,7 @@ import org.apache.log4j.Logger;
 import org.primefaces.model.DefaultStreamedContent;
 
 import br.com.sixinf.diprol.DiprolHelper;
+import br.com.sixinf.diprol.dao.CampanhaDAO;
 import br.com.sixinf.diprol.dao.ClienteDAO;
 import br.com.sixinf.diprol.dao.EstoqueDAO;
 import br.com.sixinf.diprol.dao.FinanceiroDAO;
@@ -258,6 +260,39 @@ public class DiprolFacade {
 		}		
 		
 		return new DefaultStreamedContent(is, "application/pdf", nomeReport + ".pdf");
+	}
+	
+	/**
+	 * 
+	 * @param campanha
+	 */
+	public void calcularFechamentoCampanha(Campanha campanha) {
+		Object[] somatorios = CampanhaDAO.getInstance().calcularFechamentoCampanha(campanha);
+				
+		Long entrada = (Long) somatorios[0];
+		Long saida = (Long) somatorios[1];
+		BigDecimal qtdeRecebida = new BigDecimal(entrada - saida);				
+		BigDecimal reforco = new BigDecimal((Long) somatorios[2]);
+		
+		BigDecimal devolucao = new BigDecimal((Long) somatorios[3]);
+		BigDecimal saldoAtual = new BigDecimal((Long) somatorios[4]);
+		BigDecimal qtdeDevolvida = devolucao.add(saldoAtual);		
+		BigDecimal sicap = new BigDecimal((Long)somatorios[5]);
+		
+		BigDecimal vendaAlternativa = qtdeRecebida.add(reforco).subtract(devolucao).subtract(sicap);		
+		BigDecimal comissaoFaturada = sicap.multiply(campanha.getComissaoPercentual().divide(new BigDecimal(100)));
+		BigDecimal aPagarEmReais = vendaAlternativa.multiply(campanha.getValorUnitario());
+		BigDecimal saldo = aPagarEmReais.subtract(comissaoFaturada);
+		
+		campanha.setQtdeRecebida(qtdeRecebida);
+		campanha.setQtdeReforco(reforco);
+		campanha.setQtdeDevolvida(qtdeDevolvida);
+		campanha.setSicap(sicap);
+		campanha.setVendaAlternativa(vendaAlternativa);
+		campanha.setComissaoCampanha(comissaoFaturada);
+		campanha.setValorCampanha(aPagarEmReais);
+		campanha.setSaldoCampanha(saldo);
+		
 	}
 
 }

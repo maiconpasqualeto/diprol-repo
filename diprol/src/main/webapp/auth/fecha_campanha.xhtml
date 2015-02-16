@@ -1,0 +1,196 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE html>
+
+<html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:p="http://primefaces.org/ui"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:pe="http://primefaces.org/ui/extensions">
+
+<h:head>
+
+</h:head>
+<h:body>
+	<!-- Na composição tudo que está fora da tag é ignorado -->
+	<ui:composition template="/layout/layout_interno.xhtml">
+
+		<ui:define name="principal">
+			
+		
+			<!--  ==========  -->
+		    <!--  = Breadcrumbs =  -->
+		    <!--  ==========  -->
+	        <div class="container">
+	        	<div class="row">
+        			<div class="darker-stripe">
+						<ul class="breadcrumb">
+							<li>Estoque 
+								<span class="icon-chevron-right"></span>
+							</li>
+							<li class="active">Relatórios</li>
+						</ul>
+					</div>
+				</div>
+			</div>
+			
+			<h:form id="formFechaCampanha" class="form-horizontal" role="form" onkeypress="return event.keyCode != 13;">
+				
+				<p:growl id="msgs" />
+				
+								
+				<div class="container">
+					<div class="btn-toolbar pull-right push-down-20">
+						<h:button value="Voltar" styleClass="btn btn-primary" outcome="principal.xhtml" />
+					</div>
+				</div>
+
+				<h:panelGroup layout="block" id="divForm" class="container well">
+									
+					<div class="form-group">
+						<p:outputLabel value="Campanha" for="cmbCampanha" styleClass="col-sm-2 control-label" />
+						<div class="col-sm-3">
+							<h:selectOneMenu id="cmbCampanha" class="form-control" converter="entidadeConverter" 
+									value="#{fechaCampanhaBean.campanha}" required="true">
+								<f:selectItem itemValue="#{null}" itemLabel="" />
+								<f:selectItems var="camp" value="#{fechaCampanhaBean.campanhas}" 
+									itemValue="#{camp}" itemLabel="#{camp.campanha}"/>
+							</h:selectOneMenu>
+						</div>
+						<div class="col-sm-1">
+							<p:commandButton id="btnConfirma" actionListener="#{fechaCampanhaBean.confirma}" 
+								value="Confirma" styleClass="btn btn-success" 
+							 	process="@this cmbCampanha" update="divForm msgs"/>
+						</div>
+					</div>
+										
+					<hr/>
+					
+					<h:panelGroup id="divFechaCampanha" layout="block" rendered="#{fechaCampanhaBean.mostraCampos}">
+						
+						<div class="row formrow">
+							<label class="col-sm-1" >Campanha</label>
+							<div class="col-sm-2">
+								<p:inputText id="txtCampanhaNome" disabled="true"
+									value="#{fechaCampanhaBean.campanha.campanha}"
+									class="form-control fullwidth" />
+							</div>
+							<label class="col-sm-1">Período</label>
+							<div class="col-sm-3">
+								<p:inputText id="txtPeriodo" disabled="true"
+									value="#{fechaCampanhaBean.periodo}"
+									styleClass="form-control fullwidth" />
+							</div>
+						</div>
+						
+						<div class="row formrow">
+							<label class="col-sm-1">Qtde Recebida</label>
+							<div class="col-sm-2">
+								<p:inputText id="txtQtdRecebida" disabled="true"
+									value="#{fechaCampanhaBean.campanha.qtdeRecebida}"
+									class="form-control fullwidth" />
+							</div>
+							<label class="col-sm-1">Reforço</label>
+							<div class="col-sm-2">
+								<p:inputText id="txtReforco" disabled="true"
+									value="#{fechaCampanhaBean.campanha.qtdeReforco}"
+									class="form-control fullwidth" />
+							</div>
+							<label class="col-sm-1">Qtde Devolvida</label>
+							<div class="col-sm-2">
+								<p:inputText id="txtQtdeDevolvida" disabled="true"
+									value="#{fechaCampanhaBean.campanha.qtdeDevolvida}"
+									class="form-control fullwidth" />
+							</div>
+						</div>
+						
+						<div class="row formrow">
+							<label class="col-sm-1">SICAP</label>
+							<div class="col-sm-2">
+								<p:inputText id="txtSicap" disabled="true"
+									value="#{fechaCampanhaBean.campanha.sicap}"
+									class="form-control fullwidth" />
+							</div>
+							<p:outputLabel for="txtPercentual" value="Percentual" styleClass="col-sm-1" />
+							<div class="col-sm-2">
+								<pe:inputNumber id="txtPercentual" value="#{fechaCampanhaBean.campanha.comissaoPercentual}" 
+										required="true" decimalSeparator="," thousandSeparator="" decimalPlaces="2" 
+										styleClass="form-control-numeric" requiredMessage="Percentual é obrigatório"
+										validatorMessage="O percentual deve ser maior que zero" >
+									<f:validateDoubleRange minimum="0.01" />
+								</pe:inputNumber>
+							</div>
+							<label class="col-sm-1" >Comissão Faturado</label>
+							<div class="col-sm-2">
+								<p:inputText id="txtComFaturado" disabled="true"
+									value="#{fechaCampanhaBean.campanha.comissaoCampanha}"
+									class="form-control fullwidth" />
+							</div>
+						</div>
+						
+						<div class="row formrow">
+							<label class="col-sm-1">Venda Alternativa</label>
+							<div class="col-sm-2">
+								<p:inputText id="txtVendaAlterantiva" disabled="true"
+									value="#{fechaCampanhaBean.campanha.vendaAlternativa}"
+									class="form-control fullwidth" />
+							</div>
+							<p:outputLabel for="txtValorUnitario" value="Valor Unitário" styleClass="col-sm-1" />
+							<div class="col-sm-2">
+								<pe:inputNumber id="txtValorUnitario" value="#{fechaCampanhaBean.campanha.valorUnitario}" 
+										symbol="R$ " symbolPosition="p" decimalSeparator="," thousandSeparator="" 
+										styleClass="form-control-numeric" required="true"/>											
+							</div>
+							<label class="col-sm-1" >A pagar em reais</label>
+							<div class="col-sm-2">
+								<p:inputText id="txtPagarReais" disabled="true"
+									value="#{fechaCampanhaBean.campanha.valorCampanhaFormatado}"
+									class="form-control fullwidth" />
+							</div>
+						</div>
+						
+						
+						<div class="row formrow">
+							<label class="col-sm-1">SALDO</label>
+							<div class="col-sm-3">
+								<p:inputText id="txtSaldo" disabled="true"
+									value="#{fechaCampanhaBean.campanha.saldoCampanhaFormatado}"
+									class="form-control fullwidth" />
+							</div>
+							<p:outputLabel for="txtDevolucao" value="Devolução Autorizada" styleClass="col-sm-1" />
+							<div class="col-sm-3">
+								<pe:inputNumber id="txtDevolucao" decimalPlaces="0" thousandSeparator="" 
+										value="#{fechaCampanhaBean.campanha.devolucaoAutorizada}"
+										class="form-control-numeric" >
+									<f:validateLongRange minimum="1"/>
+								</pe:inputNumber>
+							</div>
+						</div>
+												
+					
+						<p:commandButton id="btnCalcula" actionListener="#{fechaCampanhaBean.calcula}" 
+							value="Calcula" styleClass="btn btn-primary"
+						 	process="divFechaCampanha" update="divForm msgs"/>
+						
+						<p:commandButton id="btnConfirmaFechar" actionListener="#{fechaCampanhaBean.confirmaFechar}" 
+							value="Confirma" styleClass="btn btn-success push-right-10"
+						 	process="divFechaCampanha" update="divForm msgs"/>
+						 	
+					 	<p:commandButton id="btnVolta" actionListener="#{fechaCampanhaBean.voltar}" 
+							value="Volta" styleClass="btn btn-primary push-right-10"
+						 	process="@this" update="divForm msgs"/>
+						 	
+					</h:panelGroup>
+					
+					
+				</h:panelGroup>
+				
+			</h:form>
+			
+		</ui:define>
+	</ui:composition>
+	<!-- Fim composição -->
+
+</h:body>
+
+</html>

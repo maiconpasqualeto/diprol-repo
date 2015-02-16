@@ -32,7 +32,7 @@ public class DiprolListener implements ServletContextListener {
 			Logger.getLogger(DiprolListener.class).error(e);
 		}
 		
-		
+		System.getProperties().put("org.apache.el.parser.COERCE_TO_ZERO", "false");
 		
 	}
 

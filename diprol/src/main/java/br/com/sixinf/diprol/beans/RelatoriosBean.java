@@ -109,7 +109,7 @@ public class RelatoriosBean implements Serializable {
 		
 		StreamedContent sc = null; 
 				
-		if (campanha.getStatus().equals('F')) {
+		if (campanha.getSituacaoCampanha().equals("F")) {
 		
 			Map<String, Object> parametros = new HashMap<String, Object>();
 			parametros.put("par_cod_campanha", campanha.getCodCampanha());
@@ -117,7 +117,6 @@ public class RelatoriosBean implements Serializable {
 			
 			sc = DiprolFacade.getInstance().geraReport("estoque", parametros);
 		}
-		
 		
 		return sc;
 	}

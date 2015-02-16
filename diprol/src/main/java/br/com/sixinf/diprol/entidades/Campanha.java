@@ -15,6 +15,7 @@ import javax.persistence.Id;
 import javax.persistence.SequenceGenerator;
 import javax.persistence.Table;
 
+import br.com.sixinf.diprol.DiprolHelper;
 import br.com.sixinf.ferramentas.persistencia.Entidade;
 
 /**
@@ -226,6 +227,18 @@ public class Campanha implements Serializable, Entidade {
 
 	public void setSituacaoCampanha(String situacaoCampanha) {
 		this.situacaoCampanha = situacaoCampanha;
+	}
+	
+	public String getValorCampanhaFormatado() {
+		if(valorCampanha != null)
+			return DiprolHelper.getMoneyFormatterInstance().format(valorCampanha.floatValue());
+		return "";
+	}
+	
+	public String getSaldoCampanhaFormatado() {
+		if(saldoCampanha != null)
+			return DiprolHelper.getMoneyFormatterInstance().format(saldoCampanha.floatValue());
+		return "";
 	}
 
 	@Override

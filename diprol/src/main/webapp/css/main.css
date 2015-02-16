@@ -36,6 +36,7 @@ hr { border-color: #CCC -moz-use-text-color -moz-use-text-color }
 
 .push-down-60 { margin-bottom: 60px; }
 
+.push-right-10 { margin-left: 10px}
 
 .fullwidth{
 	width:100% !important;
@@ -73,9 +74,7 @@ hr { border-color: #CCC -moz-use-text-color -moz-use-text-color }
 	padding: 0 !important;
 }
 
-.form-control{
-	background-color: white !important;
-}
+
 
 .calendar input[type="text"] { 
 	width: 100%;
@@ -84,6 +83,12 @@ hr { border-color: #CCC -moz-use-text-color -moz-use-text-color }
 .radio-table {
 	border-spacing: 5px;
     border-collapse: separate; 
+}
+
+.form-control-numeric input[type="text"] {
+	width:100% !important;
+	max-width: 100%;
+	@extend .form-control;
 }
 
 @media (min-width: 767px) {

@@ -7,7 +7,6 @@ import java.util.List;
 import java.util.Map;
 
 import org.primefaces.model.LazyDataModel;
-import org.primefaces.model.SortMeta;
 import org.primefaces.model.SortOrder;
 
 import br.com.sixinf.diprol.dao.ClienteDAO;
