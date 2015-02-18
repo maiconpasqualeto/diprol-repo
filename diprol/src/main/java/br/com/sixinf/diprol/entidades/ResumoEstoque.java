@@ -72,7 +72,7 @@ public class ResumoEstoque implements Entidade, Serializable {
 	private Integer fatura;
 	
 	@Column(name = "a_vista")
-	private Integer aVista;
+	private Integer avista;
 	
 	@Column(name = "v_gratis")
 	private Integer gratis;
@@ -86,7 +86,7 @@ public class ResumoEstoque implements Entidade, Serializable {
 	@Column(name = "devolucao")
 	private Integer devolucao;
 	
-	@Column(name = "devolucao_s_troca")
+	@Column(name = "devolucao_sem_troc")
 	private Integer devolucaoSemTroca;
 	
 	@Column(name = "transferencia")
@@ -213,12 +213,12 @@ public class ResumoEstoque implements Entidade, Serializable {
 		this.fatura = fatura;
 	}
 
-	public Integer getaVista() {
-		return aVista;
+	public Integer getAvista() {
+		return avista;
 	}
 
-	public void setaVista(Integer aVista) {
-		this.aVista = aVista;
+	public void setAvista(Integer avista) {
+		this.avista = avista;
 	}
 
 	public Integer getGratis() {

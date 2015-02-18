@@ -8,7 +8,10 @@ import java.io.ByteArrayOutputStream;
 import java.io.InputStream;
 import java.math.BigDecimal;
 import java.sql.SQLException;
+import java.text.DateFormat;
+import java.text.SimpleDateFormat;
 import java.util.Date;
+import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
@@ -36,6 +39,7 @@ import br.com.sixinf.diprol.entidades.Cliente;
 import br.com.sixinf.diprol.entidades.ContaMovimento;
 import br.com.sixinf.diprol.entidades.Estoque;
 import br.com.sixinf.diprol.entidades.Movimento;
+import br.com.sixinf.diprol.entidades.ResumoEstoque;
 import br.com.sixinf.ferramentas.dao.DAOException;
 import br.com.sixinf.ferramentas.log.LoggerException;
 
@@ -293,6 +297,138 @@ public class DiprolFacade {
 		campanha.setValorCampanha(aPagarEmReais);
 		campanha.setSaldoCampanha(saldo);
 		
+	}
+	
+	/**
+	 * 
+	 * @param campanha
+	 * @throws LoggerException 
+	 */
+	public void geraCalculoResumoEstoque(Campanha campanha) throws LoggerException {
+		List<Estoque> estoques = estoqueDAO.buscarEstoquesFechamentoResumo(campanha);
+		Map<String, ResumoEstoque> resumos = new HashMap<String, ResumoEstoque>();
+		
+		DateFormat df = new SimpleDateFormat("dd/MM/yyyy");
+		
+		for (Estoque e : estoques) {
+			String strDataMovimento = df.format(e.getDataMovimento());
+			String chave = e.getUf() + strDataMovimento + e.getCodCEF();
+			ResumoEstoque re = resumos.get(chave);
+			if (re == null) {
+				re = new ResumoEstoque();
+				re.setCodCampanha(campanha.getCodCampanha());
+				re.setUf(e.getUf());
+				re.setCampanha(campanha.getCampanha());
+				re.setCodCef(e.getCodCEF());
+				re.setCodCefContrapartida(e.getCodCEFContrapartida());
+				re.setDataMovimento(e.getDataMovimento());
+				
+				if ( "07.000000-0".equals(e.getCodCEF())) {
+					re.setRazaoSocial("Diprol MS");
+					re.setCanalAtendimento("Campo Grande");
+					re.setCidade("Campo Grande");
+					
+				} else if ( "10.000000-0".equals(e.getCodCEF())) {
+						re.setRazaoSocial("Diprol MT");
+						re.setCanalAtendimento("Cuiabá");
+						re.setCidade("Cuiabá");
+				} else {
+					Cliente c = ClienteDAO.getInstance().buscarClientePorCodigo(e.getCodCEF());
+					if (c != null) {
+						re.setRazaoSocial(c.getRazaoSocial());
+						re.setCanalAtendimento(c.getCanalAtendimento());
+						re.setCidade(c.getCidade());
+					}
+				}
+				re.setSaldoAnterior(0);
+				re.setEntrada(0);
+				re.setReforco(0);
+				re.setFatura(0);
+				re.setAvista(0);
+				re.setGratis(0);
+				re.setNota(0);
+				re.setBalcao(0);
+				re.setDevolucao(0);
+				re.setDevolucaoSemTroca(0);
+				re.setTransferencia(0);
+				re.setPreVenda(0);
+				re.setSaidaEstoque(0);
+				re.setSaldoAtual(0);
+				re.setSaldoAnterior(e.getSaldoAnterior());
+				re.setSaldoAtual(e.getSaldoAnterior());
+				
+				resumos.put(chave, re);
+			}
+			
+			
+			if (e.getMovimento().getCodMovimento().equals(1) ||
+					e.getMovimento().getCodMovimento().equals(4)) {
+				
+				re.setEntrada(re.getEntrada() + e.getQuantidade());
+				
+			} else if (e.getMovimento().getCodMovimento().equals(23)) {
+				
+				re.setReforco(re.getReforco() + e.getQuantidade());
+				
+			} else if (e.getMovimento().getCodMovimento().equals(23)) {
+				
+				re.setReforco(re.getReforco() + e.getQuantidade());
+				
+			} else if (e.getMovimento().getCodMovimento().equals(5) ||
+					e.getMovimento().getCodMovimento().equals(6)) {
+				
+				re.setFatura(re.getFatura() + e.getQuantidade());
+				
+			} else if (e.getMovimento().getCodMovimento().equals(9) ||
+					e.getMovimento().getCodMovimento().equals(10)) {
+				
+				re.setAvista(re.getAvista() + e.getQuantidade());
+				
+			} else if (e.getMovimento().getCodMovimento().equals(7) ||
+					e.getMovimento().getCodMovimento().equals(8)) {
+				
+				re.setGratis(re.getGratis() + e.getQuantidade());
+				
+			} else if (e.getMovimento().getCodMovimento().equals(11) ||
+					e.getMovimento().getCodMovimento().equals(12)) {
+				
+				re.setNota(re.getNota() + e.getQuantidade());
+				
+			} else if (e.getMovimento().getCodMovimento().equals(21) ||
+					e.getMovimento().getCodMovimento().equals(22)) {
+				
+				re.setBalcao(re.getBalcao() + e.getQuantidade());
+				
+			} else if (e.getMovimento().getCodMovimento().equals(13) ||
+					e.getMovimento().getCodMovimento().equals(14) ||
+					e.getMovimento().getCodMovimento().equals(15) ||
+					e.getMovimento().getCodMovimento().equals(16)) {
+				
+				re.setDevolucao(re.getDevolucao() + e.getQuantidade());
+				
+			} else if (e.getMovimento().getCodMovimento().equals(17) ||
+					e.getMovimento().getCodMovimento().equals(18) ||
+					e.getMovimento().getCodMovimento().equals(19) ||
+					e.getMovimento().getCodMovimento().equals(20)) {
+				
+				re.setDevolucaoSemTroca(re.getDevolucaoSemTroca() + e.getQuantidade());
+				
+			} else if (e.getMovimento().getCodMovimento().equals(3)) {
+				
+				re.setTransferencia(re.getTransferencia() + e.getQuantidade());
+				
+			} else if (e.getMovimento().getCodMovimento().equals(2)) {
+				
+				re.setSaidaEstoque(re.getSaidaEstoque() + e.getQuantidade());
+				
+			}
+			
+			re.setSaldoAtual(re.getSaldoAtual() + e.getQuantidade());
+			
+		}
+		
+		EstoqueDAO.getInstance().atualizaResumoEstoque(
+				campanha, resumos.values());
 	}
 
 }

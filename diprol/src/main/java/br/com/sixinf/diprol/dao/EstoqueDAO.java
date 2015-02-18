@@ -3,12 +3,14 @@
  */
 package br.com.sixinf.diprol.dao;
 
+import java.util.Collection;
 import java.util.Date;
 import java.util.List;
 
 import javax.persistence.EntityManager;
 import javax.persistence.EntityTransaction;
 import javax.persistence.NoResultException;
+import javax.persistence.Query;
 import javax.persistence.TypedQuery;
 
 import org.apache.log4j.Logger;
@@ -16,6 +18,7 @@ import org.apache.log4j.Logger;
 import br.com.sixinf.diprol.entidades.Campanha;
 import br.com.sixinf.diprol.entidades.Estoque;
 import br.com.sixinf.diprol.entidades.Movimento;
+import br.com.sixinf.diprol.entidades.ResumoEstoque;
 import br.com.sixinf.ferramentas.dao.BridgeBaseDAO;
 import br.com.sixinf.ferramentas.dao.HibernateBaseDAOImp;
 import br.com.sixinf.ferramentas.log.LoggerException;
@@ -317,6 +320,72 @@ public class EstoqueDAO  extends BridgeBaseDAO {
 		} catch (Exception e) {
 			t.rollback();
 			throw new LoggerException("Erro ao salvar estoque devolucao", e, LOG);
+		} finally {
+            em.close();
+        }
+	}
+	
+	/**
+	 * 
+	 * @return
+	 */
+	public List<Estoque> buscarEstoquesFechamentoResumo(Campanha c) {
+		EntityManager em = AdministradorPersistencia.getEntityManager();
+		List<Estoque> lista = null;
+		try {
+			StringBuilder hql = new StringBuilder();
+			hql.append("select e from Estoque e ");
+			hql.append("inner join e.campanha c ");
+			hql.append("join fetch e.movimento m ");
+			hql.append("where c.codCampanha = :codCampanha ");
+			hql.append("order by e.dataMovimento ");
+												
+			TypedQuery<Estoque> q = em.createQuery(hql.toString(), Estoque.class);
+			q.setParameter("codCampanha", c.getCodCampanha());
+			
+			lista = q.getResultList();
+			
+		} catch (NoResultException e) {
+			
+		} catch (Exception e) {
+			LOG.error("Erro ao buscar estoques para fechamento resumo", e);
+		} finally {
+            em.close();
+        }
+		return lista;
+	}
+	
+	/**
+	 * 
+	 * @param resumos
+	 * @throws LoggerException 
+	 */
+	public void atualizaResumoEstoque(
+			Campanha campanha, Collection<ResumoEstoque> resumos) throws LoggerException {
+		
+		EntityManager em = AdministradorPersistencia.getEntityManager();
+		EntityTransaction t = em.getTransaction();
+		
+		try {
+			t.begin();
+			
+			StringBuilder hql = new StringBuilder();
+			hql.append("delete ResumoEstoque re ");
+			hql.append("where re.codCampanha = :codCampanha ");
+			
+	        Query q = em.createQuery(hql.toString());
+	        
+	        q.setParameter("codCampanha", campanha.getCodCampanha());
+	        
+	        q.executeUpdate();
+			
+			for (ResumoEstoque re : resumos)
+				em.persist(re);
+			
+			t.commit();
+		} catch (Exception e) {
+			t.rollback();
+			throw new LoggerException("Erro ao gravar resumos estoque", e, Logger.getLogger(getClass()));
 		} finally {
             em.close();
         }

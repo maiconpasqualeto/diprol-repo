@@ -109,14 +109,15 @@ public class RelatoriosBean implements Serializable {
 		
 		StreamedContent sc = null; 
 				
-		if (campanha.getSituacaoCampanha().equals("F")) {
+		if (campanha.getSituacaoCampanha() == null ||
+				!campanha.getSituacaoCampanha().equals("F")) 
+			DiprolFacade.getInstance().geraCalculoResumoEstoque(campanha);
 		
-			Map<String, Object> parametros = new HashMap<String, Object>();
-			parametros.put("par_cod_campanha", campanha.getCodCampanha());
-			parametros.put("par_campanha", campanha.getCampanha());
-			
-			sc = DiprolFacade.getInstance().geraReport("estoque", parametros);
-		}
+		Map<String, Object> parametros = new HashMap<String, Object>();
+		parametros.put("par_cod_campanha", campanha.getCodCampanha());
+		parametros.put("par_campanha", campanha.getCampanha());
+		
+		sc = DiprolFacade.getInstance().geraReport("estoque", parametros);
 		
 		return sc;
 	}
