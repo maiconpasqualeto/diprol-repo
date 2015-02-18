@@ -1,11 +1,17 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!-- Created with Jaspersoft Studio version 5.6.2.final using JasperReports Library version 5.6.1  -->
 <!-- 2015-02-18T15:46:13 -->
-<jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="estoque" pageWidth="842" pageHeight="595" orientation="Landscape" columnWidth="832" leftMargin="5" rightMargin="5" topMargin="20" bottomMargin="20" uuid="f5e92e74-07b9-4ef2-b40a-00c8f674f23d">
-	<property name="ireport.zoom" value="1.2100000000000009"/>
-	<property name="ireport.x" value="39"/>
-	<property name="ireport.y" value="0"/>
+<jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="estoque_lotericas" pageWidth="842" pageHeight="595" orientation="Landscape" columnWidth="832" leftMargin="5" rightMargin="5" topMargin="20" bottomMargin="20" uuid="84fa0b6b-9220-4c8d-9eb7-51a909a4a5f7">
 	<property name="com.jaspersoft.studio.data.defaultdataadapter" value="Diprol Adapter"/>
+	<property name="com.jaspersoft.studio.unit." value="pixel"/>
+	<property name="com.jaspersoft.studio.unit.pageHeight" value="pixel"/>
+	<property name="com.jaspersoft.studio.unit.pageWidth" value="pixel"/>
+	<property name="com.jaspersoft.studio.unit.topMargin" value="pixel"/>
+	<property name="com.jaspersoft.studio.unit.bottomMargin" value="pixel"/>
+	<property name="com.jaspersoft.studio.unit.leftMargin" value="pixel"/>
+	<property name="com.jaspersoft.studio.unit.rightMargin" value="pixel"/>
+	<property name="com.jaspersoft.studio.unit.columnWidth" value="pixel"/>
+	<property name="com.jaspersoft.studio.unit.columnSpacing" value="pixel"/>
 	<parameter name="par_cod_campanha" class="java.lang.Integer"/>
 	<parameter name="par_campanha" class="java.lang.String"/>
 	<queryString language="SQL">
@@ -13,13 +19,15 @@
 	 estoque_resumo."uf" AS estoque_resumo_uf,
 	 estoque_resumo."cod_campanha" AS estoque_resumo_cod_campanha,
      estoque_resumo."campanha" AS estoque_resumo_campanha,
+    estoque_resumo."cod_cef" AS estoque_resumo_cod_cef,
      estoque_resumo."data_movimento" AS estoque_resumo_data_movimento,
      estoque_resumo."saldo_anterior" AS estoque_resumo_saldo_anterior,
      estoque_resumo."entrada" AS estoque_resumo_entrada,
      estoque_resumo."reforco" AS estoque_resumo_reforco,
      estoque_resumo."fatura" AS estoque_resumo_fatura,
      estoque_resumo."a_vista" AS estoque_resumo_a_vista,
-     estoque_resumo."v_gratis" AS estoque_resumo_v_gratis,
+     estoque_resumo."v_gratis" AS estoque_resumo_v_gratis, 
+     estoque_resumo."razao_social" AS  estoque_resumo_razao_social,
      estoque_resumo."nota" AS estoque_resumo_nota,
      estoque_resumo."balcao" AS estoque_resumo_balcao,
      estoque_resumo."devolucao" AS estoque_resumo_devolucao,
@@ -27,14 +35,20 @@
      estoque_resumo."transferencia" AS estoque_resumo_transferencia,
      estoque_resumo."pre_venda" AS estoque_resumo_pre_venda,
      estoque_resumo."saida_estoque" AS estoque_resumo_saida_estoque,
-     estoque_resumo."saldo_atual" AS estoque_resumo_saldo_atual
+     estoque_resumo."saldo_atual" AS estoque_resumo_saldo_atual,
+     estoque_resumo."canal_atendimento" AS estoque_resumo_canal_atendimento
 FROM
      "public"."estoque_resumo" estoque_resumo
 WHERE
-     estoque_resumo."cod_campanha" = $P{par_cod_campanha}
+     estoque_resumo."cod_campanha" =  $P{par_cod_campanha} 
+ AND
+     estoque_resumo."cod_cef" <> '07.000000-0' 
+  AND
+     estoque_resumo."cod_cef" <> '10.000000-0'
  GROUP BY
- 	 estoque_resumo."uf",
      estoque_resumo."campanha",
+   	 estoque_resumo."uf",
+     estoque_resumo."canal_atendimento",
      estoque_resumo."cod_campanha",
      estoque_resumo."data_movimento",
      estoque_resumo."saldo_anterior",
@@ -50,15 +64,18 @@ WHERE
      estoque_resumo."transferencia",
      estoque_resumo."pre_venda",
      estoque_resumo."saida_estoque",
-     estoque_resumo."saldo_atual"
+     estoque_resumo."saldo_atual",
+     estoque_resumo."cod_cef",
+     estoque_resumo."razao_social"
  ORDER BY
      estoque_resumo."campanha",
      estoque_resumo."uf",
-     estoque_resumo."data_movimento"]]>
+     estoque_resumo."canal_atendimento"]]>
 	</queryString>
+	<field name="estoque_resumo_uf" class="java.lang.String"/>
 	<field name="estoque_resumo_cod_campanha" class="java.lang.Integer"/>
 	<field name="estoque_resumo_campanha" class="java.lang.String"/>
-	<field name="estoque_resumo_uf" class="java.lang.String"/>
+	<field name="estoque_resumo_cod_cef" class="java.lang.String"/>
 	<field name="estoque_resumo_data_movimento" class="java.sql.Date"/>
 	<field name="estoque_resumo_saldo_anterior" class="java.lang.Integer"/>
 	<field name="estoque_resumo_entrada" class="java.lang.Integer"/>
@@ -74,53 +91,40 @@ WHERE
 	<field name="estoque_resumo_pre_venda" class="java.lang.Integer"/>
 	<field name="estoque_resumo_saida_estoque" class="java.lang.Integer"/>
 	<field name="estoque_resumo_saldo_atual" class="java.lang.Integer"/>
-	<variable name="total_entrada" class="java.lang.Integer" resetType="Group" resetGroup="grupo-uf" calculation="Sum">
-		<variableExpression><![CDATA[$F{estoque_resumo_entrada}]]></variableExpression>
-	</variable>
-	<variable name="total_saida" class="java.lang.Integer" resetType="Group" resetGroup="grupo-uf" calculation="Sum">
-		<variableExpression><![CDATA[$F{estoque_resumo_saida_estoque}]]></variableExpression>
-	</variable>
-	<variable name="total_reforco" class="java.lang.Integer" resetType="Group" resetGroup="grupo-uf" calculation="Sum">
-		<variableExpression><![CDATA[$F{estoque_resumo_reforco}]]></variableExpression>
-	</variable>
-	<variable name="total_fatura" class="java.lang.Integer" resetType="Group" resetGroup="grupo-uf" calculation="Sum">
+	<field name="estoque_resumo_canal_atendimento" class="java.lang.String"/>
+	<field name="estoque_resumo_razao_social" class="java.lang.String"/>
+	<variable name="total_fatura" class="java.lang.Integer" resetType="Group" resetGroup="Group_uf_canal_atend" calculation="Sum">
 		<variableExpression><![CDATA[$F{estoque_resumo_fatura}]]></variableExpression>
 	</variable>
-	<variable name="total_a_vista" class="java.lang.Integer" resetType="Group" resetGroup="grupo-uf" calculation="Sum">
+	<variable name="total_a_vista" class="java.lang.Integer" resetType="Group" resetGroup="Group_uf_canal_atend" calculation="Sum">
 		<variableExpression><![CDATA[$F{estoque_resumo_a_vista}]]></variableExpression>
 	</variable>
-	<variable name="total_v_gratis" class="java.lang.Integer" resetType="Group" resetGroup="grupo-uf" calculation="Sum">
+	<variable name="total_v_gratis" class="java.lang.Integer" resetType="Group" resetGroup="Group_uf_canal_atend" calculation="Sum">
 		<variableExpression><![CDATA[$F{estoque_resumo_v_gratis}]]></variableExpression>
 	</variable>
-	<variable name="total_nota" class="java.lang.Integer" resetType="Group" resetGroup="grupo-uf">
+	<variable name="total_nota" class="java.lang.Integer" resetType="Group" resetGroup="Group_uf_canal_atend">
 		<variableExpression><![CDATA[$F{estoque_resumo_nota}]]></variableExpression>
 	</variable>
-	<variable name="total_balcao" class="java.lang.Integer" resetType="Group" resetGroup="grupo-uf" calculation="Sum">
+	<variable name="total_balcao" class="java.lang.Integer" resetType="Group" resetGroup="Group_uf_canal_atend" calculation="Sum">
 		<variableExpression><![CDATA[$F{estoque_resumo_balcao}]]></variableExpression>
 	</variable>
-	<variable name="total_devolucao" class="java.lang.Integer" resetType="Group" resetGroup="grupo-uf" calculation="Sum">
+	<variable name="total_devolucao" class="java.lang.Integer" resetType="Group" resetGroup="Group_uf_canal_atend" calculation="Sum">
 		<variableExpression><![CDATA[$F{estoque_resumo_devolucao}]]></variableExpression>
 	</variable>
-	<variable name="total_devolucao_s_troca" class="java.lang.Integer" resetType="Group" resetGroup="grupo-uf" calculation="Sum">
+	<variable name="total_devolucao_s_troca" class="java.lang.Integer" resetType="Group" resetGroup="Group_uf_canal_atend" calculation="Sum">
 		<variableExpression><![CDATA[$F{estoque_resumo_devolucao_sem_troc}]]></variableExpression>
 	</variable>
-	<variable name="total_transferencia" class="java.lang.Integer" resetType="Group" resetGroup="grupo-uf" calculation="Sum">
+	<variable name="total_transferencia" class="java.lang.Integer" resetType="Group" resetGroup="Group_uf_canal_atend" calculation="Sum">
 		<variableExpression><![CDATA[$F{estoque_resumo_transferencia}]]></variableExpression>
 	</variable>
-	<variable name="total_saldo" class="java.lang.Integer" resetType="Group" resetGroup="grupo-uf" calculation="Sum">
+	<variable name="total_saldo" class="java.lang.Integer" resetType="Group" resetGroup="Group_uf_canal_atend" calculation="Sum">
 		<variableExpression><![CDATA[$F{estoque_resumo_saldo_atual}]]></variableExpression>
-	</variable>
-	<variable name="total_g_entrada" class="java.lang.Integer" calculation="Sum">
-		<variableExpression><![CDATA[$F{estoque_resumo_entrada}]]></variableExpression>
-	</variable>
-	<variable name="total_g_saida" class="java.lang.Integer" calculation="Sum">
-		<variableExpression><![CDATA[$F{estoque_resumo_saida_estoque}]]></variableExpression>
-	</variable>
-	<variable name="total_g_reforco" class="java.lang.Integer" calculation="Sum">
-		<variableExpression><![CDATA[$F{estoque_resumo_reforco}]]></variableExpression>
 	</variable>
 	<variable name="total_g_fatura" class="java.lang.Integer" calculation="Sum">
 		<variableExpression><![CDATA[$F{estoque_resumo_fatura}]]></variableExpression>
+	</variable>
+	<variable name="total_g_devolucao" class="java.lang.Integer" calculation="Sum">
+		<variableExpression><![CDATA[$F{estoque_resumo_devolucao}]]></variableExpression>
 	</variable>
 	<variable name="total_g_a_vista" class="java.lang.Integer" calculation="Sum">
 		<variableExpression><![CDATA[$F{estoque_resumo_a_vista}]]></variableExpression>
@@ -134,9 +138,6 @@ WHERE
 	<variable name="total_g_balcao" class="java.lang.Integer" calculation="Sum">
 		<variableExpression><![CDATA[$F{estoque_resumo_balcao}]]></variableExpression>
 	</variable>
-	<variable name="total_g_devolucao" class="java.lang.Integer" calculation="Sum">
-		<variableExpression><![CDATA[$F{estoque_resumo_devolucao}]]></variableExpression>
-	</variable>
 	<variable name="total_g_devolucao_s_troca" class="java.lang.Integer" calculation="Sum">
 		<variableExpression><![CDATA[$F{estoque_resumo_devolucao_sem_troc}]]></variableExpression>
 	</variable>
@@ -146,96 +147,12 @@ WHERE
 	<variable name="total_g_saldo" class="java.lang.Integer" calculation="Sum">
 		<variableExpression><![CDATA[$F{estoque_resumo_saldo_atual}]]></variableExpression>
 	</variable>
-	<group name="grupo-uf">
-		<groupExpression><![CDATA[$F{estoque_resumo_uf}]]></groupExpression>
+	<group name="Group_uf_canal_atend" keepTogether="true">
+		<groupExpression><![CDATA[$F{estoque_resumo_canal_atendimento}]]></groupExpression>
 		<groupHeader>
 			<band height="56">
-				<textField>
-					<reportElement x="0" y="5" width="100" height="20" uuid="a0e5f3a4-f5f1-42bc-a480-89a0d8ee2c90"/>
-					<textElement verticalAlignment="Middle">
-						<font isBold="true"/>
-					</textElement>
-					<textFieldExpression><![CDATA["UF: " + $F{estoque_resumo_uf}]]></textFieldExpression>
-				</textField>
 				<staticText>
-					<reportElement mode="Opaque" x="-1" y="26" width="60" height="30" forecolor="#FFFFFF" backcolor="#424242" uuid="9d65a4f8-120c-4fdd-96fb-0b46ee4e49ab"/>
-					<box>
-						<topPen lineWidth="1.0"/>
-						<leftPen lineWidth="1.0"/>
-						<bottomPen lineWidth="1.0"/>
-						<rightPen lineWidth="1.0"/>
-					</box>
-					<textElement textAlignment="Center" verticalAlignment="Middle"/>
-					<text><![CDATA[DATA]]></text>
-				</staticText>
-				<staticText>
-					<reportElement mode="Opaque" x="59" y="26" width="50" height="30" forecolor="#FFFFFF" backcolor="#424242" uuid="87d9b686-9436-4638-925f-6b5f7e53aff6"/>
-					<box>
-						<topPen lineWidth="1.0"/>
-						<leftPen lineWidth="1.0"/>
-						<bottomPen lineWidth="1.0"/>
-						<rightPen lineWidth="1.0"/>
-					</box>
-					<textElement textAlignment="Center" verticalAlignment="Middle"/>
-					<text><![CDATA[ENTRADA]]></text>
-				</staticText>
-				<staticText>
-					<reportElement mode="Opaque" x="109" y="26" width="60" height="30" forecolor="#FFFFFF" backcolor="#424242" uuid="e20de629-3d02-491e-b114-804334479da4"/>
-					<box>
-						<topPen lineWidth="1.0"/>
-						<leftPen lineWidth="1.0"/>
-						<bottomPen lineWidth="1.0"/>
-						<rightPen lineWidth="1.0"/>
-					</box>
-					<textElement textAlignment="Center" verticalAlignment="Middle"/>
-					<text><![CDATA[SAÍDA ESTOQUE]]></text>
-				</staticText>
-				<staticText>
-					<reportElement mode="Opaque" x="169" y="26" width="60" height="30" forecolor="#FFFFFF" backcolor="#424242" uuid="2b8c38de-e1c9-4a66-b2dd-23b90cabd3b1"/>
-					<box>
-						<topPen lineWidth="1.0"/>
-						<leftPen lineWidth="1.0"/>
-						<bottomPen lineWidth="1.0"/>
-						<rightPen lineWidth="1.0"/>
-					</box>
-					<textElement textAlignment="Center" verticalAlignment="Middle"/>
-					<text><![CDATA[REFORÇO]]></text>
-				</staticText>
-				<staticText>
-					<reportElement mode="Opaque" x="289" y="26" width="60" height="30" forecolor="#FFFFFF" backcolor="#424242" uuid="080bb2af-02c1-4249-b03a-2ae3abd3052a"/>
-					<box>
-						<topPen lineWidth="1.0"/>
-						<leftPen lineWidth="1.0"/>
-						<bottomPen lineWidth="1.0"/>
-						<rightPen lineWidth="1.0"/>
-					</box>
-					<textElement textAlignment="Center" verticalAlignment="Middle"/>
-					<text><![CDATA[À VISTA]]></text>
-				</staticText>
-				<staticText>
-					<reportElement mode="Opaque" x="349" y="26" width="60" height="30" forecolor="#FFFFFF" backcolor="#424242" uuid="1bb876cd-424d-4d28-bde1-b3473d5c02f4"/>
-					<box>
-						<topPen lineWidth="1.0"/>
-						<leftPen lineWidth="1.0"/>
-						<bottomPen lineWidth="1.0"/>
-						<rightPen lineWidth="1.0"/>
-					</box>
-					<textElement textAlignment="Center" verticalAlignment="Middle"/>
-					<text><![CDATA[GRÁTIS]]></text>
-				</staticText>
-				<staticText>
-					<reportElement mode="Opaque" x="409" y="26" width="60" height="30" forecolor="#FFFFFF" backcolor="#424242" uuid="5651cf40-6704-418c-aa3b-a864082077d0"/>
-					<box>
-						<topPen lineWidth="1.0"/>
-						<leftPen lineWidth="1.0"/>
-						<bottomPen lineWidth="1.0"/>
-						<rightPen lineWidth="1.0"/>
-					</box>
-					<textElement textAlignment="Center" verticalAlignment="Middle"/>
-					<text><![CDATA[NOTA]]></text>
-				</staticText>
-				<staticText>
-					<reportElement mode="Opaque" x="469" y="26" width="60" height="30" forecolor="#FFFFFF" backcolor="#424242" uuid="28825245-b204-48d7-8518-78a05d8fa905"/>
+					<reportElement mode="Opaque" x="469" y="26" width="60" height="30" forecolor="#FFFFFF" backcolor="#424242" uuid="e1c30040-f2f8-4ad7-b1b0-2218639a782f"/>
 					<box>
 						<topPen lineWidth="1.0"/>
 						<leftPen lineWidth="1.0"/>
@@ -246,7 +163,7 @@ WHERE
 					<text><![CDATA[BALCÃO]]></text>
 				</staticText>
 				<staticText>
-					<reportElement mode="Opaque" x="529" y="26" width="70" height="30" forecolor="#FFFFFF" backcolor="#424242" uuid="4d254b2f-19ad-46b0-bdb2-4bfa8c0805c0"/>
+					<reportElement mode="Opaque" x="529" y="26" width="70" height="30" forecolor="#FFFFFF" backcolor="#424242" uuid="be5b7d1e-bc5f-4973-b732-a7d1f95f4db4"/>
 					<box>
 						<topPen lineWidth="1.0"/>
 						<leftPen lineWidth="1.0"/>
@@ -257,7 +174,7 @@ WHERE
 					<text><![CDATA[DEVOLUÇÃO]]></text>
 				</staticText>
 				<staticText>
-					<reportElement mode="Opaque" x="599" y="26" width="70" height="30" forecolor="#FFFFFF" backcolor="#424242" uuid="4ba9aada-0d83-46df-b24a-add5a056ec87"/>
+					<reportElement mode="Opaque" x="60" y="26" width="169" height="30" forecolor="#FFFFFF" backcolor="#424242" uuid="5d92d9e8-444e-40eb-9888-32a01cf8fd8f"/>
 					<box>
 						<topPen lineWidth="1.0"/>
 						<leftPen lineWidth="1.0"/>
@@ -265,10 +182,65 @@ WHERE
 						<rightPen lineWidth="1.0"/>
 					</box>
 					<textElement textAlignment="Center" verticalAlignment="Middle"/>
-					<text><![CDATA[DEVOLÇÃO SEM TROCA]]></text>
+					<text><![CDATA[]]></text>
 				</staticText>
 				<staticText>
-					<reportElement mode="Opaque" x="669" y="26" width="90" height="30" forecolor="#FFFFFF" backcolor="#424242" uuid="74dbde77-12fb-49a1-9890-c505ec6ceb78"/>
+					<reportElement mode="Opaque" x="409" y="26" width="60" height="30" forecolor="#FFFFFF" backcolor="#424242" uuid="d961e713-3e66-48fd-9857-857d21df23f3"/>
+					<box>
+						<topPen lineWidth="1.0"/>
+						<leftPen lineWidth="1.0"/>
+						<bottomPen lineWidth="1.0"/>
+						<rightPen lineWidth="1.0"/>
+					</box>
+					<textElement textAlignment="Center" verticalAlignment="Middle"/>
+					<text><![CDATA[NOTA]]></text>
+				</staticText>
+				<staticText>
+					<reportElement mode="Opaque" x="289" y="26" width="60" height="30" forecolor="#FFFFFF" backcolor="#424242" uuid="db541b27-b674-4499-9a20-a154b058e017"/>
+					<box>
+						<topPen lineWidth="1.0"/>
+						<leftPen lineWidth="1.0"/>
+						<bottomPen lineWidth="1.0"/>
+						<rightPen lineWidth="1.0"/>
+					</box>
+					<textElement textAlignment="Center" verticalAlignment="Middle"/>
+					<text><![CDATA[À VISTA]]></text>
+				</staticText>
+				<staticText>
+					<reportElement mode="Opaque" x="-1" y="26" width="60" height="30" forecolor="#FFFFFF" backcolor="#424242" uuid="398f25e3-0d8a-4494-9121-b20e9a30969a"/>
+					<box>
+						<topPen lineWidth="1.0"/>
+						<leftPen lineWidth="1.0"/>
+						<bottomPen lineWidth="1.0"/>
+						<rightPen lineWidth="1.0"/>
+					</box>
+					<textElement textAlignment="Center" verticalAlignment="Middle"/>
+					<text><![CDATA[DATA]]></text>
+				</staticText>
+				<staticText>
+					<reportElement mode="Opaque" x="349" y="26" width="60" height="30" forecolor="#FFFFFF" backcolor="#424242" uuid="3dfc7157-2ef0-4575-b952-db9dfbf47e90"/>
+					<box>
+						<topPen lineWidth="1.0"/>
+						<leftPen lineWidth="1.0"/>
+						<bottomPen lineWidth="1.0"/>
+						<rightPen lineWidth="1.0"/>
+					</box>
+					<textElement textAlignment="Center" verticalAlignment="Middle"/>
+					<text><![CDATA[GRÁTIS]]></text>
+				</staticText>
+				<staticText>
+					<reportElement mode="Opaque" x="229" y="26" width="60" height="30" forecolor="#FFFFFF" backcolor="#424242" uuid="e3102a1b-97d8-465e-a406-27ba5412bea5"/>
+					<box>
+						<topPen lineWidth="1.0"/>
+						<leftPen lineWidth="1.0"/>
+						<bottomPen lineWidth="1.0"/>
+						<rightPen lineWidth="1.0"/>
+					</box>
+					<textElement textAlignment="Center" verticalAlignment="Middle"/>
+					<text><![CDATA[FATURA]]></text>
+				</staticText>
+				<staticText>
+					<reportElement mode="Opaque" x="669" y="26" width="90" height="30" forecolor="#FFFFFF" backcolor="#424242" uuid="f88ca53d-a469-4da9-b86c-565ad870232d"/>
 					<box>
 						<topPen lineWidth="1.0"/>
 						<leftPen lineWidth="1.0"/>
@@ -279,7 +251,7 @@ WHERE
 					<text><![CDATA[TRANSFERÊNCIA]]></text>
 				</staticText>
 				<staticText>
-					<reportElement mode="Opaque" x="759" y="26" width="72" height="30" forecolor="#FFFFFF" backcolor="#424242" uuid="3b7cc07b-844d-4a88-9796-3eadad671904"/>
+					<reportElement mode="Opaque" x="759" y="26" width="72" height="30" forecolor="#FFFFFF" backcolor="#424242" uuid="78d5de47-00d2-477b-8698-ac79509142e2"/>
 					<box>
 						<topPen lineWidth="1.0"/>
 						<leftPen lineWidth="1.0"/>
@@ -290,7 +262,7 @@ WHERE
 					<text><![CDATA[SALDO]]></text>
 				</staticText>
 				<staticText>
-					<reportElement mode="Opaque" x="229" y="26" width="60" height="30" forecolor="#FFFFFF" backcolor="#424242" uuid="0e446111-40b5-40b6-b961-6acf357a452e"/>
+					<reportElement mode="Opaque" x="599" y="26" width="70" height="30" forecolor="#FFFFFF" backcolor="#424242" uuid="4c553cd6-1096-4591-8616-3e74cbd92a0a"/>
 					<box>
 						<topPen lineWidth="1.0"/>
 						<leftPen lineWidth="1.0"/>
@@ -298,10 +270,15 @@ WHERE
 						<rightPen lineWidth="1.0"/>
 					</box>
 					<textElement textAlignment="Center" verticalAlignment="Middle"/>
-					<text><![CDATA[FATURA]]></text>
+					<text><![CDATA[DEVOLÇÃO SEM TROCA]]></text>
 				</staticText>
+				<textField>
+					<reportElement x="1" y="5" width="199" height="20" uuid="780f828a-3029-438b-8a10-29f48a7bcabb"/>
+					<textElement verticalAlignment="Middle"/>
+					<textFieldExpression><![CDATA[$F{estoque_resumo_uf} + ($F{estoque_resumo_canal_atendimento} != null ? (" - " + $F{estoque_resumo_canal_atendimento}) : "")]]></textFieldExpression>
+				</textField>
 				<line>
-					<reportElement x="0" y="2" width="831" height="1" forecolor="#999999" uuid="b5d66268-6585-46ed-9d63-c246b11973cd">
+					<reportElement x="0" y="2" width="831" height="1" forecolor="#999999" uuid="733302da-f211-4fb2-874f-353ff9958f3d">
 						<property name="local_mesure_unitheight" value="pixel"/>
 						<property name="com.jaspersoft.studio.unit.height" value="px"/>
 					</reportElement>
@@ -309,9 +286,9 @@ WHERE
 			</band>
 		</groupHeader>
 		<groupFooter>
-			<band height="25">
+			<band height="23">
 				<textField>
-					<reportElement stretchType="RelativeToBandHeight" mode="Opaque" x="410" y="0" width="60" height="20" backcolor="#EDEDED" uuid="efce46da-397a-42eb-bde3-fe7c10b9bc18"/>
+					<reportElement stretchType="RelativeToBandHeight" mode="Opaque" x="410" y="0" width="60" height="20" backcolor="#EDEDED" uuid="649c037b-e6bd-48fc-9568-f5584545e3e7"/>
 					<box rightPadding="2">
 						<topPen lineWidth="1.0"/>
 						<leftPen lineWidth="1.0"/>
@@ -322,106 +299,7 @@ WHERE
 					<textFieldExpression><![CDATA[$V{total_nota}]]></textFieldExpression>
 				</textField>
 				<textField>
-					<reportElement stretchType="RelativeToBandHeight" mode="Opaque" x="600" y="0" width="70" height="20" backcolor="#EDEDED" uuid="e0e941cb-c77a-4709-b2ca-6e16faeb882b"/>
-					<box rightPadding="2">
-						<topPen lineWidth="1.0"/>
-						<leftPen lineWidth="1.0"/>
-						<bottomPen lineWidth="1.0"/>
-						<rightPen lineWidth="1.0"/>
-					</box>
-					<textElement textAlignment="Right" verticalAlignment="Middle"/>
-					<textFieldExpression><![CDATA[$V{total_devolucao_s_troca}]]></textFieldExpression>
-				</textField>
-				<textField>
-					<reportElement stretchType="RelativeToBandHeight" mode="Opaque" x="530" y="0" width="70" height="20" backcolor="#EDEDED" uuid="df96f5b7-b38f-45ab-9cd5-3e3175dae2eb"/>
-					<box rightPadding="2">
-						<topPen lineWidth="1.0"/>
-						<leftPen lineWidth="1.0"/>
-						<bottomPen lineWidth="1.0"/>
-						<rightPen lineWidth="1.0"/>
-					</box>
-					<textElement textAlignment="Right" verticalAlignment="Middle"/>
-					<textFieldExpression><![CDATA[$V{total_devolucao}]]></textFieldExpression>
-				</textField>
-				<textField>
-					<reportElement stretchType="RelativeToBandHeight" mode="Opaque" x="60" y="0" width="50" height="20" backcolor="#EDEDED" uuid="7d768346-02da-4e44-b0f0-0a23da41c878"/>
-					<box rightPadding="2">
-						<topPen lineWidth="1.0"/>
-						<leftPen lineWidth="1.0"/>
-						<bottomPen lineWidth="1.0"/>
-						<rightPen lineWidth="1.0"/>
-					</box>
-					<textElement textAlignment="Right" verticalAlignment="Middle"/>
-					<textFieldExpression><![CDATA[$V{total_entrada}]]></textFieldExpression>
-				</textField>
-				<textField>
-					<reportElement stretchType="RelativeToBandHeight" mode="Opaque" x="670" y="0" width="90" height="20" backcolor="#EDEDED" uuid="793e474e-2665-4917-b293-de66c26d7e02"/>
-					<box rightPadding="2">
-						<topPen lineWidth="1.0"/>
-						<leftPen lineWidth="1.0"/>
-						<bottomPen lineWidth="1.0"/>
-						<rightPen lineWidth="1.0"/>
-					</box>
-					<textElement textAlignment="Right" verticalAlignment="Middle"/>
-					<textFieldExpression><![CDATA[$V{total_transferencia}]]></textFieldExpression>
-				</textField>
-				<textField>
-					<reportElement stretchType="RelativeToBandHeight" mode="Opaque" x="230" y="0" width="60" height="20" backcolor="#EDEDED" uuid="31b302ae-e584-4f90-931b-dd70393fc301"/>
-					<box rightPadding="2">
-						<topPen lineWidth="1.0"/>
-						<leftPen lineWidth="1.0"/>
-						<bottomPen lineWidth="1.0"/>
-						<rightPen lineWidth="1.0"/>
-					</box>
-					<textElement textAlignment="Right" verticalAlignment="Middle"/>
-					<textFieldExpression><![CDATA[$V{total_fatura}]]></textFieldExpression>
-				</textField>
-				<textField>
-					<reportElement stretchType="RelativeToBandHeight" mode="Opaque" x="110" y="0" width="60" height="20" backcolor="#EDEDED" uuid="188db20d-7145-4de5-9205-9cd1097fd698"/>
-					<box rightPadding="2">
-						<topPen lineWidth="1.0"/>
-						<leftPen lineWidth="1.0"/>
-						<bottomPen lineWidth="1.0"/>
-						<rightPen lineWidth="1.0"/>
-					</box>
-					<textElement textAlignment="Right" verticalAlignment="Middle"/>
-					<textFieldExpression><![CDATA[$V{total_saida}]]></textFieldExpression>
-				</textField>
-				<textField>
-					<reportElement stretchType="RelativeToBandHeight" mode="Opaque" x="170" y="0" width="60" height="20" backcolor="#EDEDED" uuid="806d8eb2-4c9b-4f9a-9687-48ee0cfeb872"/>
-					<box rightPadding="2">
-						<topPen lineWidth="1.0"/>
-						<leftPen lineWidth="1.0"/>
-						<bottomPen lineWidth="1.0"/>
-						<rightPen lineWidth="1.0"/>
-					</box>
-					<textElement textAlignment="Right" verticalAlignment="Middle"/>
-					<textFieldExpression><![CDATA[$V{total_reforco}]]></textFieldExpression>
-				</textField>
-				<textField>
-					<reportElement stretchType="RelativeToBandHeight" mode="Opaque" x="290" y="0" width="60" height="20" backcolor="#EDEDED" uuid="c27d8dea-7b73-4e90-bae6-91e28c920bf5"/>
-					<box rightPadding="2">
-						<topPen lineWidth="1.0"/>
-						<leftPen lineWidth="1.0"/>
-						<bottomPen lineWidth="1.0"/>
-						<rightPen lineWidth="1.0"/>
-					</box>
-					<textElement textAlignment="Right" verticalAlignment="Middle"/>
-					<textFieldExpression><![CDATA[$V{total_a_vista}]]></textFieldExpression>
-				</textField>
-				<staticText>
-					<reportElement stretchType="RelativeToBandHeight" mode="Opaque" x="0" y="0" width="60" height="20" backcolor="#EDEDED" uuid="47d80fb4-0775-4a6c-a193-58a33197cd9c"/>
-					<box leftPadding="2">
-						<topPen lineWidth="1.0"/>
-						<leftPen lineWidth="1.0"/>
-						<bottomPen lineWidth="1.0"/>
-						<rightPen lineWidth="1.0"/>
-					</box>
-					<textElement verticalAlignment="Middle"/>
-					<text><![CDATA[TOTAL UF:]]></text>
-				</staticText>
-				<textField>
-					<reportElement stretchType="RelativeToBandHeight" mode="Opaque" x="760" y="0" width="72" height="20" backcolor="#EDEDED" uuid="ec4d6171-0f24-4468-98a1-9905f8e2745c"/>
+					<reportElement stretchType="RelativeToBandHeight" mode="Opaque" x="760" y="0" width="72" height="20" backcolor="#EDEDED" uuid="98eb9f5f-61d6-4d3c-ac57-6de5edbd8be5"/>
 					<box rightPadding="2">
 						<topPen lineWidth="1.0"/>
 						<leftPen lineWidth="1.0"/>
@@ -432,7 +310,62 @@ WHERE
 					<textFieldExpression><![CDATA[$V{total_saldo}]]></textFieldExpression>
 				</textField>
 				<textField>
-					<reportElement stretchType="RelativeToBandHeight" mode="Opaque" x="350" y="0" width="60" height="20" backcolor="#EDEDED" uuid="c7cc2bf0-75e4-4148-962b-77ab81719835"/>
+					<reportElement stretchType="RelativeToBandHeight" mode="Opaque" x="670" y="0" width="90" height="20" backcolor="#EDEDED" uuid="4c1f67f9-3a47-4f0e-a566-2c1eb1b0832b"/>
+					<box rightPadding="2">
+						<topPen lineWidth="1.0"/>
+						<leftPen lineWidth="1.0"/>
+						<bottomPen lineWidth="1.0"/>
+						<rightPen lineWidth="1.0"/>
+					</box>
+					<textElement textAlignment="Right" verticalAlignment="Middle"/>
+					<textFieldExpression><![CDATA[$V{total_transferencia}]]></textFieldExpression>
+				</textField>
+				<textField>
+					<reportElement stretchType="RelativeToBandHeight" mode="Opaque" x="290" y="0" width="60" height="20" backcolor="#EDEDED" uuid="707bcace-f852-48d9-b85d-08ad9eaa7c98"/>
+					<box rightPadding="2">
+						<topPen lineWidth="1.0"/>
+						<leftPen lineWidth="1.0"/>
+						<bottomPen lineWidth="1.0"/>
+						<rightPen lineWidth="1.0"/>
+					</box>
+					<textElement textAlignment="Right" verticalAlignment="Middle"/>
+					<textFieldExpression><![CDATA[$V{total_a_vista}]]></textFieldExpression>
+				</textField>
+				<textField>
+					<reportElement stretchType="RelativeToBandHeight" mode="Opaque" x="470" y="0" width="60" height="20" backcolor="#EDEDED" uuid="1e92a717-385b-424d-925f-7e900af4d6a7"/>
+					<box rightPadding="2">
+						<topPen lineWidth="1.0"/>
+						<leftPen lineWidth="1.0"/>
+						<bottomPen lineWidth="1.0"/>
+						<rightPen lineWidth="1.0"/>
+					</box>
+					<textElement textAlignment="Right" verticalAlignment="Middle"/>
+					<textFieldExpression><![CDATA[$V{total_balcao}]]></textFieldExpression>
+				</textField>
+				<staticText>
+					<reportElement stretchType="RelativeToBandHeight" mode="Opaque" x="0" y="0" width="140" height="20" backcolor="#EDEDED" uuid="d5bbe2d0-201b-4de2-b136-5f76d4218591"/>
+					<box leftPadding="2">
+						<topPen lineWidth="1.0"/>
+						<leftPen lineWidth="1.0"/>
+						<bottomPen lineWidth="1.0"/>
+						<rightPen lineWidth="1.0"/>
+					</box>
+					<textElement verticalAlignment="Middle"/>
+					<text><![CDATA[TOTAL:]]></text>
+				</staticText>
+				<textField>
+					<reportElement stretchType="RelativeToBandHeight" mode="Opaque" x="230" y="0" width="60" height="20" backcolor="#EDEDED" uuid="0d9d3ccd-5319-4a12-87c8-5887de5e1832"/>
+					<box rightPadding="2">
+						<topPen lineWidth="1.0"/>
+						<leftPen lineWidth="1.0"/>
+						<bottomPen lineWidth="1.0"/>
+						<rightPen lineWidth="1.0"/>
+					</box>
+					<textElement textAlignment="Right" verticalAlignment="Middle"/>
+					<textFieldExpression><![CDATA[$V{total_fatura}]]></textFieldExpression>
+				</textField>
+				<textField>
+					<reportElement stretchType="RelativeToBandHeight" mode="Opaque" x="350" y="0" width="60" height="20" backcolor="#EDEDED" uuid="8a40d526-f7f7-4aaa-9a96-45825b6979eb"/>
 					<box rightPadding="2">
 						<topPen lineWidth="1.0"/>
 						<leftPen lineWidth="1.0"/>
@@ -443,7 +376,7 @@ WHERE
 					<textFieldExpression><![CDATA[$V{total_v_gratis}]]></textFieldExpression>
 				</textField>
 				<textField>
-					<reportElement stretchType="RelativeToBandHeight" mode="Opaque" x="470" y="0" width="60" height="20" backcolor="#EDEDED" uuid="aa22313a-5f2f-455e-a5d4-290454c850ab"/>
+					<reportElement stretchType="RelativeToBandHeight" mode="Opaque" x="530" y="0" width="70" height="20" backcolor="#EDEDED" uuid="7ec9beea-3044-4e54-b067-d30473d130c7"/>
 					<box rightPadding="2">
 						<topPen lineWidth="1.0"/>
 						<leftPen lineWidth="1.0"/>
@@ -451,7 +384,18 @@ WHERE
 						<rightPen lineWidth="1.0"/>
 					</box>
 					<textElement textAlignment="Right" verticalAlignment="Middle"/>
-					<textFieldExpression><![CDATA[$V{total_balcao}]]></textFieldExpression>
+					<textFieldExpression><![CDATA[$V{total_devolucao}]]></textFieldExpression>
+				</textField>
+				<textField>
+					<reportElement stretchType="RelativeToBandHeight" mode="Opaque" x="600" y="0" width="70" height="20" backcolor="#EDEDED" uuid="97327ccb-d912-4c30-9e0b-f10648b4e882"/>
+					<box rightPadding="2">
+						<topPen lineWidth="1.0"/>
+						<leftPen lineWidth="1.0"/>
+						<bottomPen lineWidth="1.0"/>
+						<rightPen lineWidth="1.0"/>
+					</box>
+					<textElement textAlignment="Right" verticalAlignment="Middle"/>
+					<textFieldExpression><![CDATA[$V{total_devolucao_s_troca}]]></textFieldExpression>
 				</textField>
 			</band>
 		</groupFooter>
@@ -460,81 +404,37 @@ WHERE
 		<band splitType="Stretch"/>
 	</background>
 	<pageHeader>
-		<band height="61" splitType="Stretch">
-			<line>
-				<reportElement x="0" y="39" width="831" height="1" forecolor="#999999" uuid="2148574e-15a8-4b74-8c5c-0efbc5b34372">
-					<property name="local_mesure_unitheight" value="pixel"/>
-					<property name="com.jaspersoft.studio.unit.height" value="px"/>
-				</reportElement>
-			</line>
+		<band height="61">
 			<staticText>
-				<reportElement x="0" y="0" width="415" height="32" uuid="3bfef06e-993d-4fe7-9b67-c6a15e9859bc"/>
+				<reportElement x="0" y="0" width="415" height="32" uuid="6cce6ff6-ad83-4e7c-bccf-345b910f8cb0"/>
 				<textElement>
 					<font size="20" isBold="true"/>
 				</textElement>
 				<text><![CDATA[Movimentação de Estoque - DIPROL]]></text>
 			</staticText>
-			<image>
-				<reportElement x="730" y="0" width="94" height="38" uuid="f86bfca9-102c-46a4-9670-a3cfc45728a1"/>
-				<imageExpression><![CDATA["../../img/logo_diprol.jpg"]]></imageExpression>
-			</image>
 			<textField>
-				<reportElement x="1" y="41" width="307" height="20" uuid="ed78f048-d514-4949-b8b7-2af509f8ee90"/>
+				<reportElement x="1" y="41" width="307" height="20" uuid="d10d6ae8-f9c2-4f97-9001-c131433a007f"/>
 				<textElement verticalAlignment="Middle">
 					<font isBold="true"/>
 				</textElement>
 				<textFieldExpression><![CDATA["Campanha: " + $P{par_campanha}]]></textFieldExpression>
 			</textField>
+			<line>
+				<reportElement x="0" y="39" width="831" height="1" forecolor="#999999" uuid="775ff87c-e40d-4d33-b284-883a1a992aea">
+					<property name="local_mesure_unitheight" value="pixel"/>
+					<property name="com.jaspersoft.studio.unit.height" value="px"/>
+				</reportElement>
+			</line>
+			<image>
+				<reportElement x="730" y="0" width="94" height="38" uuid="4b0c87ee-300b-487e-93c2-873d2e283574"/>
+				<imageExpression><![CDATA["../../img/logo_diprol.jpg"]]></imageExpression>
+			</image>
 		</band>
 	</pageHeader>
 	<detail>
-		<band height="20" splitType="Stretch">
-			<textField pattern="dd/MM/yyyy">
-				<reportElement x="0" y="0" width="60" height="20" uuid="4539f3fd-a39c-4de6-a193-91a8fab4bc2e"/>
-				<box leftPadding="2" rightPadding="2">
-					<topPen lineWidth="1.0"/>
-					<leftPen lineWidth="1.0"/>
-					<bottomPen lineWidth="1.0"/>
-					<rightPen lineWidth="1.0"/>
-				</box>
-				<textElement textAlignment="Center" verticalAlignment="Middle"/>
-				<textFieldExpression><![CDATA[$F{estoque_resumo_data_movimento}]]></textFieldExpression>
-			</textField>
+		<band height="19" splitType="Stretch">
 			<textField pattern="###0;-###0">
-				<reportElement x="60" y="0" width="50" height="20" uuid="09810f4e-42a5-4547-908d-2046768ce11c"/>
-				<box leftPadding="2" rightPadding="2">
-					<topPen lineWidth="1.0"/>
-					<leftPen lineWidth="1.0"/>
-					<bottomPen lineWidth="1.0"/>
-					<rightPen lineWidth="1.0"/>
-				</box>
-				<textElement textAlignment="Right" verticalAlignment="Middle"/>
-				<textFieldExpression><![CDATA[$F{estoque_resumo_entrada}]]></textFieldExpression>
-			</textField>
-			<textField pattern="###0;-###0">
-				<reportElement x="110" y="0" width="60" height="20" uuid="48bd2a62-9d73-48bd-b1fe-7ad63ea0519f"/>
-				<box leftPadding="2" rightPadding="2">
-					<topPen lineWidth="1.0"/>
-					<leftPen lineWidth="1.0"/>
-					<bottomPen lineWidth="1.0"/>
-					<rightPen lineWidth="1.0"/>
-				</box>
-				<textElement textAlignment="Right" verticalAlignment="Middle"/>
-				<textFieldExpression><![CDATA[$F{estoque_resumo_saida_estoque}]]></textFieldExpression>
-			</textField>
-			<textField pattern="###0;-###0">
-				<reportElement x="170" y="0" width="60" height="20" uuid="4e97c591-1b3a-4014-be80-5004e0f5467e"/>
-				<box leftPadding="2" rightPadding="2">
-					<topPen lineWidth="1.0"/>
-					<leftPen lineWidth="1.0"/>
-					<bottomPen lineWidth="1.0"/>
-					<rightPen lineWidth="1.0"/>
-				</box>
-				<textElement textAlignment="Right" verticalAlignment="Middle"/>
-				<textFieldExpression><![CDATA[$F{estoque_resumo_reforco}]]></textFieldExpression>
-			</textField>
-			<textField pattern="###0;-###0">
-				<reportElement x="230" y="0" width="60" height="20" uuid="88e84639-5177-4a8f-b5de-1f2a3a68d816"/>
+				<reportElement x="230" y="-1" width="60" height="20" uuid="b578572a-e6f2-4e94-b134-2b3068068176"/>
 				<box leftPadding="2" rightPadding="2">
 					<topPen lineWidth="1.0"/>
 					<leftPen lineWidth="1.0"/>
@@ -545,51 +445,7 @@ WHERE
 				<textFieldExpression><![CDATA[$F{estoque_resumo_fatura}]]></textFieldExpression>
 			</textField>
 			<textField pattern="###0;-###0">
-				<reportElement x="290" y="0" width="60" height="20" uuid="ec220f7e-87f1-4cce-8cdc-067917b5f430"/>
-				<box leftPadding="2" rightPadding="2">
-					<topPen lineWidth="1.0"/>
-					<leftPen lineWidth="1.0"/>
-					<bottomPen lineWidth="1.0"/>
-					<rightPen lineWidth="1.0"/>
-				</box>
-				<textElement textAlignment="Right" verticalAlignment="Middle"/>
-				<textFieldExpression><![CDATA[$F{estoque_resumo_a_vista}]]></textFieldExpression>
-			</textField>
-			<textField pattern="###0;-###0">
-				<reportElement x="350" y="0" width="60" height="20" uuid="3fa8f623-88b8-4d0f-8e73-5b4afed819f5"/>
-				<box leftPadding="2" rightPadding="2">
-					<topPen lineWidth="1.0"/>
-					<leftPen lineWidth="1.0"/>
-					<bottomPen lineWidth="1.0"/>
-					<rightPen lineWidth="1.0"/>
-				</box>
-				<textElement textAlignment="Right" verticalAlignment="Middle"/>
-				<textFieldExpression><![CDATA[$F{estoque_resumo_v_gratis}]]></textFieldExpression>
-			</textField>
-			<textField pattern="###0;-###0">
-				<reportElement x="410" y="0" width="60" height="20" uuid="ab099475-6c63-445e-9fbd-9463a2e741f4"/>
-				<box leftPadding="2" rightPadding="2">
-					<topPen lineWidth="1.0"/>
-					<leftPen lineWidth="1.0"/>
-					<bottomPen lineWidth="1.0"/>
-					<rightPen lineWidth="1.0"/>
-				</box>
-				<textElement textAlignment="Right" verticalAlignment="Middle"/>
-				<textFieldExpression><![CDATA[$F{estoque_resumo_nota}]]></textFieldExpression>
-			</textField>
-			<textField pattern="###0;-###0">
-				<reportElement x="470" y="0" width="60" height="20" uuid="ca0992eb-839f-404a-8f59-d02d50a6e7a7"/>
-				<box leftPadding="2" rightPadding="2">
-					<topPen lineWidth="1.0"/>
-					<leftPen lineWidth="1.0"/>
-					<bottomPen lineWidth="1.0"/>
-					<rightPen lineWidth="1.0"/>
-				</box>
-				<textElement textAlignment="Right" verticalAlignment="Middle"/>
-				<textFieldExpression><![CDATA[$F{estoque_resumo_balcao}]]></textFieldExpression>
-			</textField>
-			<textField pattern="###0;-###0">
-				<reportElement x="530" y="0" width="70" height="20" uuid="c5cd4ce8-f599-4a0a-9181-eaf35c5327f5"/>
+				<reportElement x="530" y="-1" width="70" height="20" uuid="9fdc49a5-8683-4d60-9bf5-cbd7c721f0e1"/>
 				<box leftPadding="2" rightPadding="2">
 					<topPen lineWidth="1.0"/>
 					<leftPen lineWidth="1.0"/>
@@ -600,18 +456,7 @@ WHERE
 				<textFieldExpression><![CDATA[$F{estoque_resumo_devolucao}]]></textFieldExpression>
 			</textField>
 			<textField pattern="###0;-###0">
-				<reportElement x="600" y="0" width="70" height="20" uuid="64383dfa-c9d4-4ba2-a1e0-bd5b12f8fc77"/>
-				<box leftPadding="2" rightPadding="2">
-					<topPen lineWidth="1.0"/>
-					<leftPen lineWidth="1.0"/>
-					<bottomPen lineWidth="1.0"/>
-					<rightPen lineWidth="1.0"/>
-				</box>
-				<textElement textAlignment="Right" verticalAlignment="Middle"/>
-				<textFieldExpression><![CDATA[$F{estoque_resumo_devolucao_sem_troc}]]></textFieldExpression>
-			</textField>
-			<textField pattern="###0;-###0">
-				<reportElement x="670" y="0" width="90" height="20" uuid="4493fceb-4d71-4b64-83b7-9688501a547f"/>
+				<reportElement x="670" y="-1" width="90" height="20" uuid="32a59a5f-315f-478b-9561-2d255ee5ce6b"/>
 				<box leftPadding="2" rightPadding="2">
 					<topPen lineWidth="1.0"/>
 					<leftPen lineWidth="1.0"/>
@@ -622,7 +467,40 @@ WHERE
 				<textFieldExpression><![CDATA[$F{estoque_resumo_transferencia}]]></textFieldExpression>
 			</textField>
 			<textField pattern="###0;-###0">
-				<reportElement x="760" y="0" width="72" height="20" uuid="3a2012c2-1ee8-4a84-9ded-b4951d9e9d62"/>
+				<reportElement x="410" y="-1" width="60" height="20" uuid="a9c88811-b71e-43d6-973f-4cfb011b489b"/>
+				<box leftPadding="2" rightPadding="2">
+					<topPen lineWidth="1.0"/>
+					<leftPen lineWidth="1.0"/>
+					<bottomPen lineWidth="1.0"/>
+					<rightPen lineWidth="1.0"/>
+				</box>
+				<textElement textAlignment="Right" verticalAlignment="Middle"/>
+				<textFieldExpression><![CDATA[$F{estoque_resumo_nota}]]></textFieldExpression>
+			</textField>
+			<textField pattern="###0;-###0">
+				<reportElement x="470" y="-1" width="60" height="20" uuid="7ac8858a-0fa3-4426-aeec-f6c73a3adbda"/>
+				<box leftPadding="2" rightPadding="2">
+					<topPen lineWidth="1.0"/>
+					<leftPen lineWidth="1.0"/>
+					<bottomPen lineWidth="1.0"/>
+					<rightPen lineWidth="1.0"/>
+				</box>
+				<textElement textAlignment="Right" verticalAlignment="Middle"/>
+				<textFieldExpression><![CDATA[$F{estoque_resumo_balcao}]]></textFieldExpression>
+			</textField>
+			<textField pattern="###0;-###0">
+				<reportElement x="290" y="-1" width="60" height="20" uuid="50485442-4267-41b2-aed2-d0e23e79e22b"/>
+				<box leftPadding="2" rightPadding="2">
+					<topPen lineWidth="1.0"/>
+					<leftPen lineWidth="1.0"/>
+					<bottomPen lineWidth="1.0"/>
+					<rightPen lineWidth="1.0"/>
+				</box>
+				<textElement textAlignment="Right" verticalAlignment="Middle"/>
+				<textFieldExpression><![CDATA[$F{estoque_resumo_a_vista}]]></textFieldExpression>
+			</textField>
+			<textField pattern="###0;-###0">
+				<reportElement x="760" y="-1" width="72" height="20" uuid="51bda8dc-5148-4136-a491-599d4707d616"/>
 				<box leftPadding="2" rightPadding="2">
 					<topPen lineWidth="1.0"/>
 					<leftPen lineWidth="1.0"/>
@@ -632,37 +510,70 @@ WHERE
 				<textElement textAlignment="Right" verticalAlignment="Middle"/>
 				<textFieldExpression><![CDATA[$F{estoque_resumo_saldo_atual}]]></textFieldExpression>
 			</textField>
-		</band>
-	</detail>
-	<pageFooter>
-		<band height="13" splitType="Stretch">
-			<textField>
-				<reportElement x="300" y="1" width="100" height="12" uuid="bfa41a15-46e4-419e-8d91-546126b78fbb"/>
-				<textElement textAlignment="Right"/>
-				<textFieldExpression><![CDATA["Página " + $V{PAGE_NUMBER}]]></textFieldExpression>
-			</textField>
-			<textField evaluationTime="Report">
-				<reportElement x="400" y="1" width="100" height="12" uuid="d7dc5b39-65c5-4e4a-bc17-f277e55a62be"/>
-				<textElement textAlignment="Left"/>
-				<textFieldExpression><![CDATA[" de " + $V{PAGE_NUMBER}]]></textFieldExpression>
-			</textField>
-		</band>
-	</pageFooter>
-	<summary>
-		<band height="27" splitType="Stretch">
-			<textField>
-				<reportElement mode="Opaque" x="470" y="7" width="60" height="20" backcolor="#EDEDED" uuid="929d364b-7581-45eb-aaa9-767e5974074f"/>
-				<box rightPadding="2">
+			<textField pattern="###0;-###0">
+				<reportElement x="350" y="-1" width="60" height="20" uuid="83c033e1-8228-47d6-871d-046caa66ca82"/>
+				<box leftPadding="2" rightPadding="2">
 					<topPen lineWidth="1.0"/>
 					<leftPen lineWidth="1.0"/>
 					<bottomPen lineWidth="1.0"/>
 					<rightPen lineWidth="1.0"/>
 				</box>
 				<textElement textAlignment="Right" verticalAlignment="Middle"/>
-				<textFieldExpression><![CDATA[$V{total_g_balcao}]]></textFieldExpression>
+				<textFieldExpression><![CDATA[$F{estoque_resumo_v_gratis}]]></textFieldExpression>
 			</textField>
+			<textField pattern="###0;-###0">
+				<reportElement x="600" y="-1" width="70" height="20" uuid="24f9ce1d-8bfa-4fde-a011-37519cb67b28"/>
+				<box leftPadding="2" rightPadding="2">
+					<topPen lineWidth="1.0"/>
+					<leftPen lineWidth="1.0"/>
+					<bottomPen lineWidth="1.0"/>
+					<rightPen lineWidth="1.0"/>
+				</box>
+				<textElement textAlignment="Right" verticalAlignment="Middle"/>
+				<textFieldExpression><![CDATA[$F{estoque_resumo_devolucao_sem_troc}]]></textFieldExpression>
+			</textField>
+			<textField pattern="###0;-###0">
+				<reportElement x="60" y="-1" width="170" height="20" uuid="debecc24-3846-42b0-855b-d7f49a79b24f"/>
+				<box leftPadding="2" rightPadding="2">
+					<topPen lineWidth="1.0"/>
+					<leftPen lineWidth="1.0"/>
+					<bottomPen lineWidth="1.0"/>
+					<rightPen lineWidth="1.0"/>
+				</box>
+				<textElement verticalAlignment="Middle"/>
+				<textFieldExpression><![CDATA[$F{estoque_resumo_cod_cef} + ($F{estoque_resumo_razao_social} != null ? (" - " + $F{estoque_resumo_razao_social}) : "")]]></textFieldExpression>
+			</textField>
+			<textField pattern="dd/MM/yyyy">
+				<reportElement x="0" y="-1" width="60" height="20" uuid="b7bea80b-54da-476f-b8cb-24f8edac15e0"/>
+				<box leftPadding="2" rightPadding="2">
+					<topPen lineWidth="1.0"/>
+					<leftPen lineWidth="1.0"/>
+					<bottomPen lineWidth="1.0"/>
+					<rightPen lineWidth="1.0"/>
+				</box>
+				<textElement textAlignment="Center" verticalAlignment="Middle"/>
+				<textFieldExpression><![CDATA[$F{estoque_resumo_data_movimento}]]></textFieldExpression>
+			</textField>
+		</band>
+	</detail>
+	<pageFooter>
+		<band height="13" splitType="Stretch">
 			<textField>
-				<reportElement mode="Opaque" x="290" y="7" width="60" height="20" backcolor="#EDEDED" uuid="9932bcdf-db2e-43ee-b62d-be2db248fd37"/>
+				<reportElement x="300" y="1" width="100" height="12" uuid="5bcfa55f-b7c1-4637-a636-54da6008f3e1"/>
+				<textElement textAlignment="Right"/>
+				<textFieldExpression><![CDATA["Página " + $V{PAGE_NUMBER}]]></textFieldExpression>
+			</textField>
+			<textField evaluationTime="Report">
+				<reportElement x="400" y="1" width="100" height="12" uuid="c4507c78-7dfc-448a-9414-b90a59dc1ef3"/>
+				<textElement textAlignment="Left"/>
+				<textFieldExpression><![CDATA[" de " + $V{PAGE_NUMBER}]]></textFieldExpression>
+			</textField>
+		</band>
+	</pageFooter>
+	<summary>
+		<band height="29" splitType="Stretch">
+			<textField>
+				<reportElement stretchType="RelativeToBandHeight" mode="Opaque" x="290" y="9" width="60" height="20" backcolor="#EDEDED" uuid="f38aa5fe-0213-4fe3-8672-5d6635d27bf6"/>
 				<box rightPadding="2">
 					<topPen lineWidth="1.0"/>
 					<leftPen lineWidth="1.0"/>
@@ -673,7 +584,7 @@ WHERE
 				<textFieldExpression><![CDATA[$V{total_g_a_vista}]]></textFieldExpression>
 			</textField>
 			<textField>
-				<reportElement mode="Opaque" x="670" y="7" width="90" height="20" backcolor="#EDEDED" uuid="0c429816-110b-460d-8c56-7525d5e726b7"/>
+				<reportElement stretchType="RelativeToBandHeight" mode="Opaque" x="600" y="9" width="70" height="20" backcolor="#EDEDED" uuid="799cb8f9-1469-4d4d-8ad2-48dd4f767fb2"/>
 				<box rightPadding="2">
 					<topPen lineWidth="1.0"/>
 					<leftPen lineWidth="1.0"/>
@@ -681,10 +592,10 @@ WHERE
 					<rightPen lineWidth="1.0"/>
 				</box>
 				<textElement textAlignment="Right" verticalAlignment="Middle"/>
-				<textFieldExpression><![CDATA[$V{total_g_transferencia}]]></textFieldExpression>
+				<textFieldExpression><![CDATA[$V{total_g_devolucao_s_troca}]]></textFieldExpression>
 			</textField>
 			<textField>
-				<reportElement mode="Opaque" x="350" y="7" width="60" height="20" backcolor="#EDEDED" uuid="de89c946-8a68-4285-be19-7ef942a95363"/>
+				<reportElement stretchType="RelativeToBandHeight" mode="Opaque" x="350" y="9" width="60" height="20" backcolor="#EDEDED" uuid="c0ab776b-8ec9-4a09-9fa5-dcb1b78dcec1"/>
 				<box rightPadding="2">
 					<topPen lineWidth="1.0"/>
 					<leftPen lineWidth="1.0"/>
@@ -695,18 +606,7 @@ WHERE
 				<textFieldExpression><![CDATA[$V{total_g_v_gratis}]]></textFieldExpression>
 			</textField>
 			<textField>
-				<reportElement mode="Opaque" x="530" y="7" width="70" height="20" backcolor="#EDEDED" uuid="fcdab86f-7faa-489e-b5e3-edeae672cd98"/>
-				<box rightPadding="2">
-					<topPen lineWidth="1.0"/>
-					<leftPen lineWidth="1.0"/>
-					<bottomPen lineWidth="1.0"/>
-					<rightPen lineWidth="1.0"/>
-				</box>
-				<textElement textAlignment="Right" verticalAlignment="Middle"/>
-				<textFieldExpression><![CDATA[$V{total_g_devolucao}]]></textFieldExpression>
-			</textField>
-			<textField>
-				<reportElement mode="Opaque" x="760" y="7" width="72" height="20" backcolor="#EDEDED" uuid="7adc3d1b-6a9b-43bf-ba38-488a8ee0f8ca"/>
+				<reportElement stretchType="RelativeToBandHeight" mode="Opaque" x="760" y="9" width="72" height="20" backcolor="#EDEDED" uuid="e36d6deb-07d2-4ac3-83fc-1992d3d4d47f"/>
 				<box rightPadding="2">
 					<topPen lineWidth="1.0"/>
 					<leftPen lineWidth="1.0"/>
@@ -717,7 +617,18 @@ WHERE
 				<textFieldExpression><![CDATA[$V{total_g_saldo}]]></textFieldExpression>
 			</textField>
 			<textField>
-				<reportElement mode="Opaque" x="410" y="7" width="60" height="20" backcolor="#EDEDED" uuid="71c3e0b6-d49e-4941-a204-d393fe34cd68"/>
+				<reportElement stretchType="RelativeToBandHeight" mode="Opaque" x="470" y="9" width="60" height="20" backcolor="#EDEDED" uuid="3e44c29d-8aa8-41e0-9b85-4c78af4c0158"/>
+				<box rightPadding="2">
+					<topPen lineWidth="1.0"/>
+					<leftPen lineWidth="1.0"/>
+					<bottomPen lineWidth="1.0"/>
+					<rightPen lineWidth="1.0"/>
+				</box>
+				<textElement textAlignment="Right" verticalAlignment="Middle"/>
+				<textFieldExpression><![CDATA[$V{total_g_balcao}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement stretchType="RelativeToBandHeight" mode="Opaque" x="410" y="9" width="60" height="20" backcolor="#EDEDED" uuid="77cc0af6-c369-4ccc-990b-a82e9bf96775"/>
 				<box rightPadding="2">
 					<topPen lineWidth="1.0"/>
 					<leftPen lineWidth="1.0"/>
@@ -728,7 +639,29 @@ WHERE
 				<textFieldExpression><![CDATA[$V{total_g_nota}]]></textFieldExpression>
 			</textField>
 			<textField>
-				<reportElement mode="Opaque" x="230" y="7" width="60" height="20" backcolor="#EDEDED" uuid="51096d29-a1f1-4339-998e-05601ed6d7d2"/>
+				<reportElement stretchType="RelativeToBandHeight" mode="Opaque" x="530" y="9" width="70" height="20" backcolor="#EDEDED" uuid="b820a0de-723d-452f-8892-eb262894712b"/>
+				<box rightPadding="2">
+					<topPen lineWidth="1.0"/>
+					<leftPen lineWidth="1.0"/>
+					<bottomPen lineWidth="1.0"/>
+					<rightPen lineWidth="1.0"/>
+				</box>
+				<textElement textAlignment="Right" verticalAlignment="Middle"/>
+				<textFieldExpression><![CDATA[$V{total_g_devolucao}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement stretchType="RelativeToBandHeight" mode="Opaque" x="670" y="9" width="90" height="20" backcolor="#EDEDED" uuid="d7ca729b-5ad2-4814-a73e-28b62eb8e948"/>
+				<box rightPadding="2">
+					<topPen lineWidth="1.0"/>
+					<leftPen lineWidth="1.0"/>
+					<bottomPen lineWidth="1.0"/>
+					<rightPen lineWidth="1.0"/>
+				</box>
+				<textElement textAlignment="Right" verticalAlignment="Middle"/>
+				<textFieldExpression><![CDATA[$V{total_g_transferencia}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement stretchType="RelativeToBandHeight" mode="Opaque" x="230" y="9" width="60" height="20" backcolor="#EDEDED" uuid="cb0fdfa2-3299-4109-9b89-4554f70911dd"/>
 				<box rightPadding="2">
 					<topPen lineWidth="1.0"/>
 					<leftPen lineWidth="1.0"/>
@@ -738,30 +671,8 @@ WHERE
 				<textElement textAlignment="Right" verticalAlignment="Middle"/>
 				<textFieldExpression><![CDATA[$V{total_g_fatura}]]></textFieldExpression>
 			</textField>
-			<textField>
-				<reportElement mode="Opaque" x="170" y="7" width="60" height="20" backcolor="#EDEDED" uuid="8e47f348-95f8-4b33-bb36-bb876691cfa9"/>
-				<box rightPadding="2">
-					<topPen lineWidth="1.0"/>
-					<leftPen lineWidth="1.0"/>
-					<bottomPen lineWidth="1.0"/>
-					<rightPen lineWidth="1.0"/>
-				</box>
-				<textElement textAlignment="Right" verticalAlignment="Middle"/>
-				<textFieldExpression><![CDATA[$V{total_g_reforco}]]></textFieldExpression>
-			</textField>
-			<textField>
-				<reportElement mode="Opaque" x="600" y="7" width="70" height="20" backcolor="#EDEDED" uuid="3ca9db08-60f3-4b3c-9b49-8671523aa105"/>
-				<box rightPadding="2">
-					<topPen lineWidth="1.0"/>
-					<leftPen lineWidth="1.0"/>
-					<bottomPen lineWidth="1.0"/>
-					<rightPen lineWidth="1.0"/>
-				</box>
-				<textElement textAlignment="Right" verticalAlignment="Middle"/>
-				<textFieldExpression><![CDATA[$V{total_g_devolucao_s_troca}]]></textFieldExpression>
-			</textField>
 			<staticText>
-				<reportElement mode="Opaque" x="1" y="7" width="59" height="20" backcolor="#EDEDED" uuid="81159081-d467-46b7-aa36-55059fd1a8f8"/>
+				<reportElement stretchType="RelativeToBandHeight" mode="Opaque" x="0" y="9" width="140" height="20" backcolor="#EDEDED" uuid="684b2983-32ec-49a1-9715-f58affb16e5f"/>
 				<box leftPadding="2">
 					<topPen lineWidth="1.0"/>
 					<leftPen lineWidth="1.0"/>
@@ -769,32 +680,10 @@ WHERE
 					<rightPen lineWidth="1.0"/>
 				</box>
 				<textElement verticalAlignment="Middle"/>
-				<text><![CDATA[TOTAL:]]></text>
+				<text><![CDATA[TOTAL GERAL:]]></text>
 			</staticText>
-			<textField>
-				<reportElement mode="Opaque" x="60" y="7" width="50" height="20" backcolor="#EDEDED" uuid="00fdfdd2-4f7d-4442-9691-5f0f2a7f7700"/>
-				<box rightPadding="2">
-					<topPen lineWidth="1.0"/>
-					<leftPen lineWidth="1.0"/>
-					<bottomPen lineWidth="1.0"/>
-					<rightPen lineWidth="1.0"/>
-				</box>
-				<textElement textAlignment="Right" verticalAlignment="Middle"/>
-				<textFieldExpression><![CDATA[$V{total_g_entrada}]]></textFieldExpression>
-			</textField>
-			<textField>
-				<reportElement mode="Opaque" x="110" y="7" width="60" height="20" backcolor="#EDEDED" uuid="20b37c03-0724-4f11-a0e2-898380b1e608"/>
-				<box rightPadding="2">
-					<topPen lineWidth="1.0"/>
-					<leftPen lineWidth="1.0"/>
-					<bottomPen lineWidth="1.0"/>
-					<rightPen lineWidth="1.0"/>
-				</box>
-				<textElement textAlignment="Right" verticalAlignment="Middle"/>
-				<textFieldExpression><![CDATA[$V{total_g_saida}]]></textFieldExpression>
-			</textField>
 			<line>
-				<reportElement x="0" y="2" width="831" height="1" forecolor="#999999" uuid="d9892b17-47ba-484c-9690-500f81a2d89e">
+				<reportElement x="0" y="2" width="831" height="1" forecolor="#999999" uuid="58cf6a4b-79c8-4dd7-ac89-c1c74d4633b8">
 					<property name="local_mesure_unitheight" value="pixel"/>
 					<property name="com.jaspersoft.studio.unit.height" value="px"/>
 				</reportElement>

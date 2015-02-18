@@ -117,7 +117,12 @@ public class RelatoriosBean implements Serializable {
 		parametros.put("par_cod_campanha", campanha.getCodCampanha());
 		parametros.put("par_campanha", campanha.getCampanha());
 		
-		sc = DiprolFacade.getInstance().geraReport("estoque", parametros);
+		String nomeReport = "estoque";
+		
+		if ("LOTERICAS".equals(tipoMovimento))
+			nomeReport = "estoque_lotericas";
+			
+		sc = DiprolFacade.getInstance().geraReport(nomeReport, parametros);
 		
 		return sc;
 	}
