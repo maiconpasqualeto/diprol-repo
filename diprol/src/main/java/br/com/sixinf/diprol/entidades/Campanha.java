@@ -240,6 +240,12 @@ public class Campanha implements Serializable, Entidade {
 			return DiprolHelper.getMoneyFormatterInstance().format(saldoCampanha.floatValue());
 		return "";
 	}
+	
+	public String getComissaoCampanhaFormatada() {
+		if(comissaoCampanha != null)
+			return DiprolHelper.getMoneyFormatterInstance().format(comissaoCampanha.floatValue());
+		return "";
+	}
 
 	@Override
 	public Long getIdentificacao() {

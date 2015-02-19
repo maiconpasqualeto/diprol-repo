@@ -74,6 +74,7 @@ public class CampanhaDAO extends BridgeBaseDAO {
 			
 			hql.append("from ResumoEstoque re ");
 			hql.append("where re.codCampanha = :codCampanha ");
+			hql.append("and (re.codCef = '07.000000-0' or re.codCef = '10.000000-0') ");
 			
 			Query q = em.createQuery(hql.toString());
 			q.setParameter("codCampanha", campanha.getCodCampanha());

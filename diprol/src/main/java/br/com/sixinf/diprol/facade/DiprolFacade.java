@@ -280,22 +280,22 @@ public class DiprolFacade {
 		
 		BigDecimal devolucao = new BigDecimal((Long) somatorios[3]);
 		BigDecimal saldoAtual = new BigDecimal((Long) somatorios[4]);
-		BigDecimal qtdeDevolvida = devolucao.add(saldoAtual);		
+		BigDecimal qtdeDevolvida = devolucao.abs().add(saldoAtual);		
 		BigDecimal sicap = new BigDecimal((Long)somatorios[5]);
 		
-		BigDecimal vendaAlternativa = qtdeRecebida.add(reforco).subtract(devolucao).subtract(sicap);		
-		BigDecimal comissaoFaturada = sicap.multiply(campanha.getComissaoPercentual().divide(new BigDecimal(100)));
+		BigDecimal vendaAlternativa = qtdeRecebida.add(reforco.abs()).subtract(devolucao.abs()).subtract(sicap.abs());		
+		BigDecimal comissaoFaturada = sicap.abs().multiply(campanha.getComissaoPercentual().divide(new BigDecimal(100)));
 		BigDecimal aPagarEmReais = vendaAlternativa.multiply(campanha.getValorUnitario());
 		BigDecimal saldo = aPagarEmReais.subtract(comissaoFaturada);
 		
-		campanha.setQtdeRecebida(qtdeRecebida);
-		campanha.setQtdeReforco(reforco);
-		campanha.setQtdeDevolvida(qtdeDevolvida);
-		campanha.setSicap(sicap);
-		campanha.setVendaAlternativa(vendaAlternativa);
-		campanha.setComissaoCampanha(comissaoFaturada);
-		campanha.setValorCampanha(aPagarEmReais);
-		campanha.setSaldoCampanha(saldo);
+		campanha.setQtdeRecebida(qtdeRecebida.abs());
+		campanha.setQtdeReforco(reforco.abs());
+		campanha.setQtdeDevolvida(qtdeDevolvida.abs());
+		campanha.setSicap(sicap.abs());
+		campanha.setVendaAlternativa(vendaAlternativa.abs());
+		campanha.setComissaoCampanha(comissaoFaturada.abs());
+		campanha.setValorCampanha(aPagarEmReais.abs());
+		campanha.setSaldoCampanha(saldo.abs());
 		
 	}
 	
