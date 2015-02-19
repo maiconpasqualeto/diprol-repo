@@ -286,7 +286,7 @@ public class DiprolFacade {
 		BigDecimal vendaAlternativa = qtdeRecebida.add(reforco.abs()).subtract(devolucao.abs()).subtract(sicap.abs());		
 		BigDecimal comissaoFaturada = sicap.abs().multiply(campanha.getComissaoPercentual().divide(new BigDecimal(100)));
 		BigDecimal aPagarEmReais = vendaAlternativa.multiply(campanha.getValorUnitario());
-		BigDecimal saldo = aPagarEmReais.subtract(comissaoFaturada);
+		BigDecimal saldo = comissaoFaturada.subtract(aPagarEmReais);
 		
 		campanha.setQtdeRecebida(qtdeRecebida.abs());
 		campanha.setQtdeReforco(reforco.abs());

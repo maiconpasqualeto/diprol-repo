@@ -69,13 +69,13 @@
 					<h:panelGroup id="divFechaCampanha" layout="block" rendered="#{fechaCampanhaBean.mostraCampos}">
 						
 						<div class="row formrow">
-							<label class="col-sm-1" >Campanha</label>
+							<label class="col-sm-2" >Campanha</label>
 							<div class="col-sm-3">
 								<p:inputText id="txtCampanhaNome" disabled="true"
 									value="#{fechaCampanhaBean.campanha.campanha}"
 									class="form-control fullwidth" />
 							</div>
-							<label class="col-sm-1">Período</label>
+							<label class="col-sm-2">Período</label>
 							<div class="col-sm-3">
 								<p:inputText id="txtPeriodo" disabled="true"
 									value="#{fechaCampanhaBean.periodo}"
@@ -84,19 +84,19 @@
 						</div>
 						
 						<div class="row formrow">
-							<label class="col-sm-1">Qtde Recebida</label>
+							<label class="col-sm-2">Qtde Recebida</label>
 							<div class="col-sm-2">
 								<p:inputText id="txtQtdRecebida" disabled="true"
 									value="#{fechaCampanhaBean.campanha.qtdeRecebida}"
 									class="form-control fullwidth" />
 							</div>
-							<label class="col-sm-1">Reforço</label>
+							<label class="col-sm-2">Reforço</label>
 							<div class="col-sm-2">
 								<p:inputText id="txtReforco" disabled="true"
 									value="#{fechaCampanhaBean.campanha.qtdeReforco}"
 									class="form-control fullwidth" />
 							</div>
-							<label class="col-sm-1">Qtde Devolvida</label>
+							<label class="col-sm-2">Qtde Devolvida</label>
 							<div class="col-sm-2">
 								<p:inputText id="txtQtdeDevolvida" disabled="true"
 									value="#{fechaCampanhaBean.campanha.qtdeDevolvida}"
@@ -105,13 +105,13 @@
 						</div>
 						
 						<div class="row formrow">
-							<label class="col-sm-1">SICAP</label>
+							<label class="col-sm-2">SICAP</label>
 							<div class="col-sm-2">
 								<p:inputText id="txtSicap" disabled="true"
 									value="#{fechaCampanhaBean.campanha.sicap}"
 									class="form-control fullwidth" />
 							</div>
-							<p:outputLabel for="txtPercentual" value="Percentual" styleClass="col-sm-1" />
+							<p:outputLabel for="txtPercentual" value="Percentual" styleClass="col-sm-2" />
 							<div class="col-sm-2">
 								<pe:inputNumber id="txtPercentual" value="#{fechaCampanhaBean.campanha.comissaoPercentual}" 
 										required="true" decimalSeparator="," thousandSeparator="" decimalPlaces="2" 
@@ -120,7 +120,7 @@
 									<f:validateDoubleRange minimum="0.01" />
 								</pe:inputNumber>
 							</div>
-							<label class="col-sm-1" >Comissão Faturado</label>
+							<label class="col-sm-2" >Comissão Faturado</label>
 							<div class="col-sm-2">
 								<p:inputText id="txtComFaturado" disabled="true"
 									value="#{fechaCampanhaBean.campanha.comissaoCampanhaFormatada}"
@@ -129,19 +129,19 @@
 						</div>
 						
 						<div class="row formrow">
-							<label class="col-sm-1">Venda Alternativa</label>
+							<label class="col-sm-2">Venda Alternativa</label>
 							<div class="col-sm-2">
 								<p:inputText id="txtVendaAlterantiva" disabled="true"
 									value="#{fechaCampanhaBean.campanha.vendaAlternativa}"
 									class="form-control fullwidth" />
 							</div>
-							<p:outputLabel for="txtValorUnitario" value="Valor Unitário" styleClass="col-sm-1" />
+							<p:outputLabel for="txtValorUnitario" value="Valor Unitário" styleClass="col-sm-2" />
 							<div class="col-sm-2">
 								<pe:inputNumber id="txtValorUnitario" value="#{fechaCampanhaBean.campanha.valorUnitario}" 
 										symbol="R$ " symbolPosition="p" decimalSeparator="," thousandSeparator="" 
 										styleClass="form-control-numeric" required="true"/>											
 							</div>
-							<label class="col-sm-1" >A pagar em reais</label>
+							<label class="col-sm-2" >A pagar em reais</label>
 							<div class="col-sm-2">
 								<p:inputText id="txtPagarReais" disabled="true"
 									value="#{fechaCampanhaBean.campanha.valorCampanhaFormatado}"
@@ -151,13 +151,13 @@
 						
 						
 						<div class="row formrow">
-							<label class="col-sm-1">SALDO</label>
+							<label class="col-sm-2">SALDO</label>
 							<div class="col-sm-3">
 								<p:inputText id="txtSaldo" disabled="true"
 									value="#{fechaCampanhaBean.campanha.saldoCampanhaFormatado}"
 									class="form-control fullwidth" />
 							</div>
-							<p:outputLabel for="txtDevolucao" value="Devolução Autorizada" styleClass="col-sm-1" />
+							<p:outputLabel for="txtDevolucao" value="Devolução Autorizada" styleClass="col-sm-2" />
 							<div class="col-sm-3">
 								<pe:inputNumber id="txtDevolucao" decimalPlaces="0" thousandSeparator="" 
 										value="#{fechaCampanhaBean.campanha.devolucaoAutorizada}"

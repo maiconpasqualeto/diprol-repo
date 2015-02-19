@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!-- Created with Jaspersoft Studio version 5.6.2.final using JasperReports Library version 5.6.1  -->
-<!-- 2015-02-19T15:05:05 -->
+<!-- 2015-02-19T19:02:06 -->
 <jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="estoque_lotericas" pageWidth="842" pageHeight="595" orientation="Landscape" columnWidth="832" leftMargin="5" rightMargin="5" topMargin="20" bottomMargin="20" uuid="84fa0b6b-9220-4c8d-9eb7-51a909a4a5f7">
 	<property name="com.jaspersoft.studio.data.defaultdataadapter" value="Diprol Adapter"/>
 	<property name="com.jaspersoft.studio.unit." value="pixel"/>
@@ -307,7 +307,6 @@ WHERE
 						<rightPen lineWidth="1.0"/>
 					</box>
 					<textElement textAlignment="Right" verticalAlignment="Middle"/>
-					<textFieldExpression><![CDATA[$V{total_saldo}]]></textFieldExpression>
 				</textField>
 				<textField pattern="#,##0.###;#,-##0.###">
 					<reportElement stretchType="RelativeToBandHeight" mode="Opaque" x="670" y="0" width="90" height="20" backcolor="#EDEDED" uuid="4c1f67f9-3a47-4f0e-a566-2c1eb1b0832b"/>
@@ -614,7 +613,6 @@ WHERE
 					<rightPen lineWidth="1.0"/>
 				</box>
 				<textElement textAlignment="Right" verticalAlignment="Middle"/>
-				<textFieldExpression><![CDATA[$V{total_g_saldo}]]></textFieldExpression>
 			</textField>
 			<textField pattern="#,##0.###;#,-##0.###">
 				<reportElement stretchType="RelativeToBandHeight" mode="Opaque" x="470" y="9" width="60" height="20" backcolor="#EDEDED" uuid="3e44c29d-8aa8-41e0-9b85-4c78af4c0158"/>
