@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!-- Created with Jaspersoft Studio version 5.6.2.final using JasperReports Library version 5.6.1  -->
-<!-- 2015-02-19T19:01:35 -->
+<!-- 2015-02-20T13:13:43 -->
 <jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="estoque" pageWidth="842" pageHeight="595" orientation="Landscape" columnWidth="832" leftMargin="5" rightMargin="5" topMargin="20" bottomMargin="20" uuid="f5e92e74-07b9-4ef2-b40a-00c8f674f23d">
 	<property name="ireport.zoom" value="1.2100000000000009"/>
 	<property name="ireport.x" value="39"/>
@@ -162,7 +162,7 @@ WHERE
 					<textFieldExpression><![CDATA["UF: " + $F{estoque_resumo_uf}]]></textFieldExpression>
 				</textField>
 				<staticText>
-					<reportElement mode="Opaque" x="-1" y="26" width="60" height="30" forecolor="#FFFFFF" backcolor="#424242" uuid="9d65a4f8-120c-4fdd-96fb-0b46ee4e49ab"/>
+					<reportElement mode="Opaque" x="-1" y="26" width="71" height="30" forecolor="#FFFFFF" backcolor="#424242" uuid="9d65a4f8-120c-4fdd-96fb-0b46ee4e49ab"/>
 					<box>
 						<topPen lineWidth="1.0"/>
 						<leftPen lineWidth="1.0"/>
@@ -173,7 +173,7 @@ WHERE
 					<text><![CDATA[DATA]]></text>
 				</staticText>
 				<staticText>
-					<reportElement mode="Opaque" x="59" y="26" width="50" height="30" forecolor="#FFFFFF" backcolor="#424242" uuid="87d9b686-9436-4638-925f-6b5f7e53aff6"/>
+					<reportElement mode="Opaque" x="70" y="26" width="50" height="30" forecolor="#FFFFFF" backcolor="#424242" uuid="87d9b686-9436-4638-925f-6b5f7e53aff6"/>
 					<box>
 						<topPen lineWidth="1.0"/>
 						<leftPen lineWidth="1.0"/>
@@ -184,7 +184,7 @@ WHERE
 					<text><![CDATA[ENTRADA]]></text>
 				</staticText>
 				<staticText>
-					<reportElement mode="Opaque" x="109" y="26" width="60" height="30" forecolor="#FFFFFF" backcolor="#424242" uuid="e20de629-3d02-491e-b114-804334479da4"/>
+					<reportElement mode="Opaque" x="120" y="26" width="60" height="30" forecolor="#FFFFFF" backcolor="#424242" uuid="e20de629-3d02-491e-b114-804334479da4"/>
 					<box>
 						<topPen lineWidth="1.0"/>
 						<leftPen lineWidth="1.0"/>
@@ -195,7 +195,7 @@ WHERE
 					<text><![CDATA[SAÍDA ESTOQUE]]></text>
 				</staticText>
 				<staticText>
-					<reportElement mode="Opaque" x="169" y="26" width="60" height="30" forecolor="#FFFFFF" backcolor="#424242" uuid="2b8c38de-e1c9-4a66-b2dd-23b90cabd3b1"/>
+					<reportElement mode="Opaque" x="180" y="26" width="60" height="30" forecolor="#FFFFFF" backcolor="#424242" uuid="2b8c38de-e1c9-4a66-b2dd-23b90cabd3b1"/>
 					<box>
 						<topPen lineWidth="1.0"/>
 						<leftPen lineWidth="1.0"/>
@@ -206,7 +206,7 @@ WHERE
 					<text><![CDATA[REFORÇO]]></text>
 				</staticText>
 				<staticText>
-					<reportElement mode="Opaque" x="289" y="26" width="60" height="30" forecolor="#FFFFFF" backcolor="#424242" uuid="080bb2af-02c1-4249-b03a-2ae3abd3052a"/>
+					<reportElement mode="Opaque" x="300" y="26" width="60" height="30" forecolor="#FFFFFF" backcolor="#424242" uuid="080bb2af-02c1-4249-b03a-2ae3abd3052a"/>
 					<box>
 						<topPen lineWidth="1.0"/>
 						<leftPen lineWidth="1.0"/>
@@ -217,7 +217,7 @@ WHERE
 					<text><![CDATA[À VISTA]]></text>
 				</staticText>
 				<staticText>
-					<reportElement mode="Opaque" x="349" y="26" width="60" height="30" forecolor="#FFFFFF" backcolor="#424242" uuid="1bb876cd-424d-4d28-bde1-b3473d5c02f4"/>
+					<reportElement mode="Opaque" x="360" y="26" width="60" height="30" forecolor="#FFFFFF" backcolor="#424242" uuid="1bb876cd-424d-4d28-bde1-b3473d5c02f4"/>
 					<box>
 						<topPen lineWidth="1.0"/>
 						<leftPen lineWidth="1.0"/>
@@ -228,7 +228,7 @@ WHERE
 					<text><![CDATA[GRÁTIS]]></text>
 				</staticText>
 				<staticText>
-					<reportElement mode="Opaque" x="409" y="26" width="60" height="30" forecolor="#FFFFFF" backcolor="#424242" uuid="5651cf40-6704-418c-aa3b-a864082077d0"/>
+					<reportElement mode="Opaque" x="420" y="26" width="60" height="30" forecolor="#FFFFFF" backcolor="#424242" uuid="5651cf40-6704-418c-aa3b-a864082077d0"/>
 					<box>
 						<topPen lineWidth="1.0"/>
 						<leftPen lineWidth="1.0"/>
@@ -239,7 +239,7 @@ WHERE
 					<text><![CDATA[NOTA]]></text>
 				</staticText>
 				<staticText>
-					<reportElement mode="Opaque" x="469" y="26" width="60" height="30" forecolor="#FFFFFF" backcolor="#424242" uuid="28825245-b204-48d7-8518-78a05d8fa905"/>
+					<reportElement mode="Opaque" x="480" y="26" width="60" height="30" forecolor="#FFFFFF" backcolor="#424242" uuid="28825245-b204-48d7-8518-78a05d8fa905"/>
 					<box>
 						<topPen lineWidth="1.0"/>
 						<leftPen lineWidth="1.0"/>
@@ -250,7 +250,7 @@ WHERE
 					<text><![CDATA[BALCÃO]]></text>
 				</staticText>
 				<staticText>
-					<reportElement mode="Opaque" x="529" y="26" width="70" height="30" forecolor="#FFFFFF" backcolor="#424242" uuid="4d254b2f-19ad-46b0-bdb2-4bfa8c0805c0"/>
+					<reportElement mode="Opaque" x="540" y="26" width="70" height="30" forecolor="#FFFFFF" backcolor="#424242" uuid="4d254b2f-19ad-46b0-bdb2-4bfa8c0805c0"/>
 					<box>
 						<topPen lineWidth="1.0"/>
 						<leftPen lineWidth="1.0"/>
@@ -261,7 +261,7 @@ WHERE
 					<text><![CDATA[DEVOLUÇÃO]]></text>
 				</staticText>
 				<staticText>
-					<reportElement mode="Opaque" x="599" y="26" width="70" height="30" forecolor="#FFFFFF" backcolor="#424242" uuid="4ba9aada-0d83-46df-b24a-add5a056ec87"/>
+					<reportElement mode="Opaque" x="610" y="26" width="70" height="30" forecolor="#FFFFFF" backcolor="#424242" uuid="4ba9aada-0d83-46df-b24a-add5a056ec87"/>
 					<box>
 						<topPen lineWidth="1.0"/>
 						<leftPen lineWidth="1.0"/>
@@ -272,7 +272,7 @@ WHERE
 					<text><![CDATA[DEVOLÇÃO SEM TROCA]]></text>
 				</staticText>
 				<staticText>
-					<reportElement mode="Opaque" x="669" y="26" width="90" height="30" forecolor="#FFFFFF" backcolor="#424242" uuid="74dbde77-12fb-49a1-9890-c505ec6ceb78"/>
+					<reportElement mode="Opaque" x="680" y="26" width="79" height="30" forecolor="#FFFFFF" backcolor="#424242" uuid="74dbde77-12fb-49a1-9890-c505ec6ceb78"/>
 					<box>
 						<topPen lineWidth="1.0"/>
 						<leftPen lineWidth="1.0"/>
@@ -280,7 +280,7 @@ WHERE
 						<rightPen lineWidth="1.0"/>
 					</box>
 					<textElement textAlignment="Center" verticalAlignment="Middle"/>
-					<text><![CDATA[TRANSFERÊNCIA]]></text>
+					<text><![CDATA[TRANSF.]]></text>
 				</staticText>
 				<staticText>
 					<reportElement mode="Opaque" x="759" y="26" width="72" height="30" forecolor="#FFFFFF" backcolor="#424242" uuid="3b7cc07b-844d-4a88-9796-3eadad671904"/>
@@ -294,7 +294,7 @@ WHERE
 					<text><![CDATA[SALDO]]></text>
 				</staticText>
 				<staticText>
-					<reportElement mode="Opaque" x="229" y="26" width="60" height="30" forecolor="#FFFFFF" backcolor="#424242" uuid="0e446111-40b5-40b6-b961-6acf357a452e"/>
+					<reportElement mode="Opaque" x="240" y="26" width="60" height="30" forecolor="#FFFFFF" backcolor="#424242" uuid="0e446111-40b5-40b6-b961-6acf357a452e"/>
 					<box>
 						<topPen lineWidth="1.0"/>
 						<leftPen lineWidth="1.0"/>
@@ -315,7 +315,7 @@ WHERE
 		<groupFooter>
 			<band height="25">
 				<textField pattern="#,##0.###;#,-##0.###">
-					<reportElement stretchType="RelativeToBandHeight" mode="Opaque" x="410" y="0" width="60" height="20" backcolor="#EDEDED" uuid="efce46da-397a-42eb-bde3-fe7c10b9bc18"/>
+					<reportElement stretchType="RelativeToBandHeight" mode="Opaque" x="420" y="0" width="60" height="20" backcolor="#EDEDED" uuid="efce46da-397a-42eb-bde3-fe7c10b9bc18"/>
 					<box rightPadding="2">
 						<topPen lineWidth="1.0"/>
 						<leftPen lineWidth="1.0"/>
@@ -326,7 +326,7 @@ WHERE
 					<textFieldExpression><![CDATA[$V{total_nota}]]></textFieldExpression>
 				</textField>
 				<textField pattern="#,##0.###;#,-##0.###">
-					<reportElement stretchType="RelativeToBandHeight" mode="Opaque" x="600" y="0" width="70" height="20" backcolor="#EDEDED" uuid="e0e941cb-c77a-4709-b2ca-6e16faeb882b"/>
+					<reportElement stretchType="RelativeToBandHeight" mode="Opaque" x="610" y="0" width="70" height="20" backcolor="#EDEDED" uuid="e0e941cb-c77a-4709-b2ca-6e16faeb882b"/>
 					<box rightPadding="2">
 						<topPen lineWidth="1.0"/>
 						<leftPen lineWidth="1.0"/>
@@ -337,7 +337,7 @@ WHERE
 					<textFieldExpression><![CDATA[$V{total_devolucao_s_troca}]]></textFieldExpression>
 				</textField>
 				<textField pattern="#,##0.###;#,-##0.###">
-					<reportElement stretchType="RelativeToBandHeight" mode="Opaque" x="530" y="0" width="70" height="20" backcolor="#EDEDED" uuid="df96f5b7-b38f-45ab-9cd5-3e3175dae2eb"/>
+					<reportElement stretchType="RelativeToBandHeight" mode="Opaque" x="540" y="0" width="70" height="20" backcolor="#EDEDED" uuid="df96f5b7-b38f-45ab-9cd5-3e3175dae2eb"/>
 					<box rightPadding="2">
 						<topPen lineWidth="1.0"/>
 						<leftPen lineWidth="1.0"/>
@@ -348,7 +348,7 @@ WHERE
 					<textFieldExpression><![CDATA[$V{total_devolucao}]]></textFieldExpression>
 				</textField>
 				<textField pattern="#,##0.###;#,-##0.###">
-					<reportElement stretchType="RelativeToBandHeight" mode="Opaque" x="60" y="0" width="50" height="20" backcolor="#EDEDED" uuid="7d768346-02da-4e44-b0f0-0a23da41c878"/>
+					<reportElement stretchType="RelativeToBandHeight" mode="Opaque" x="70" y="0" width="50" height="20" backcolor="#EDEDED" uuid="7d768346-02da-4e44-b0f0-0a23da41c878"/>
 					<box rightPadding="2">
 						<topPen lineWidth="1.0"/>
 						<leftPen lineWidth="1.0"/>
@@ -359,7 +359,7 @@ WHERE
 					<textFieldExpression><![CDATA[$V{total_entrada}]]></textFieldExpression>
 				</textField>
 				<textField pattern="#,##0.###;#,-##0.###">
-					<reportElement stretchType="RelativeToBandHeight" mode="Opaque" x="670" y="0" width="90" height="20" backcolor="#EDEDED" uuid="793e474e-2665-4917-b293-de66c26d7e02"/>
+					<reportElement stretchType="RelativeToBandHeight" mode="Opaque" x="680" y="0" width="80" height="20" backcolor="#EDEDED" uuid="793e474e-2665-4917-b293-de66c26d7e02"/>
 					<box rightPadding="2">
 						<topPen lineWidth="1.0"/>
 						<leftPen lineWidth="1.0"/>
@@ -370,7 +370,7 @@ WHERE
 					<textFieldExpression><![CDATA[$V{total_transferencia}]]></textFieldExpression>
 				</textField>
 				<textField pattern="#,##0.###;#,-##0.###">
-					<reportElement stretchType="RelativeToBandHeight" mode="Opaque" x="230" y="0" width="60" height="20" backcolor="#EDEDED" uuid="31b302ae-e584-4f90-931b-dd70393fc301"/>
+					<reportElement stretchType="RelativeToBandHeight" mode="Opaque" x="240" y="0" width="60" height="20" backcolor="#EDEDED" uuid="31b302ae-e584-4f90-931b-dd70393fc301"/>
 					<box rightPadding="2">
 						<topPen lineWidth="1.0"/>
 						<leftPen lineWidth="1.0"/>
@@ -381,7 +381,7 @@ WHERE
 					<textFieldExpression><![CDATA[$V{total_fatura}]]></textFieldExpression>
 				</textField>
 				<textField pattern="#,##0.###;#,-##0.###">
-					<reportElement stretchType="RelativeToBandHeight" mode="Opaque" x="110" y="0" width="60" height="20" backcolor="#EDEDED" uuid="188db20d-7145-4de5-9205-9cd1097fd698"/>
+					<reportElement stretchType="RelativeToBandHeight" mode="Opaque" x="120" y="0" width="60" height="20" backcolor="#EDEDED" uuid="188db20d-7145-4de5-9205-9cd1097fd698"/>
 					<box rightPadding="2">
 						<topPen lineWidth="1.0"/>
 						<leftPen lineWidth="1.0"/>
@@ -392,7 +392,7 @@ WHERE
 					<textFieldExpression><![CDATA[$V{total_saida}]]></textFieldExpression>
 				</textField>
 				<textField pattern="#,##0.###;#,-##0.###">
-					<reportElement stretchType="RelativeToBandHeight" mode="Opaque" x="170" y="0" width="60" height="20" backcolor="#EDEDED" uuid="806d8eb2-4c9b-4f9a-9687-48ee0cfeb872"/>
+					<reportElement stretchType="RelativeToBandHeight" mode="Opaque" x="180" y="0" width="60" height="20" backcolor="#EDEDED" uuid="806d8eb2-4c9b-4f9a-9687-48ee0cfeb872"/>
 					<box rightPadding="2">
 						<topPen lineWidth="1.0"/>
 						<leftPen lineWidth="1.0"/>
@@ -403,7 +403,7 @@ WHERE
 					<textFieldExpression><![CDATA[$V{total_reforco}]]></textFieldExpression>
 				</textField>
 				<textField pattern="#,##0.###;#,-##0.###">
-					<reportElement stretchType="RelativeToBandHeight" mode="Opaque" x="290" y="0" width="60" height="20" backcolor="#EDEDED" uuid="c27d8dea-7b73-4e90-bae6-91e28c920bf5"/>
+					<reportElement stretchType="RelativeToBandHeight" mode="Opaque" x="300" y="0" width="60" height="20" backcolor="#EDEDED" uuid="c27d8dea-7b73-4e90-bae6-91e28c920bf5"/>
 					<box rightPadding="2">
 						<topPen lineWidth="1.0"/>
 						<leftPen lineWidth="1.0"/>
@@ -414,7 +414,7 @@ WHERE
 					<textFieldExpression><![CDATA[$V{total_a_vista}]]></textFieldExpression>
 				</textField>
 				<staticText>
-					<reportElement stretchType="RelativeToBandHeight" mode="Opaque" x="0" y="0" width="60" height="20" backcolor="#EDEDED" uuid="47d80fb4-0775-4a6c-a193-58a33197cd9c"/>
+					<reportElement stretchType="RelativeToBandHeight" mode="Opaque" x="0" y="0" width="70" height="20" backcolor="#EDEDED" uuid="47d80fb4-0775-4a6c-a193-58a33197cd9c"/>
 					<box leftPadding="2">
 						<topPen lineWidth="1.0"/>
 						<leftPen lineWidth="1.0"/>
@@ -435,7 +435,7 @@ WHERE
 					<textElement textAlignment="Right" verticalAlignment="Middle"/>
 				</textField>
 				<textField pattern="#,##0.###;#,-##0.###">
-					<reportElement stretchType="RelativeToBandHeight" mode="Opaque" x="350" y="0" width="60" height="20" backcolor="#EDEDED" uuid="c7cc2bf0-75e4-4148-962b-77ab81719835"/>
+					<reportElement stretchType="RelativeToBandHeight" mode="Opaque" x="360" y="0" width="60" height="20" backcolor="#EDEDED" uuid="c7cc2bf0-75e4-4148-962b-77ab81719835"/>
 					<box rightPadding="2">
 						<topPen lineWidth="1.0"/>
 						<leftPen lineWidth="1.0"/>
@@ -446,7 +446,7 @@ WHERE
 					<textFieldExpression><![CDATA[$V{total_v_gratis}]]></textFieldExpression>
 				</textField>
 				<textField pattern="#,##0.###;#,-##0.###">
-					<reportElement stretchType="RelativeToBandHeight" mode="Opaque" x="470" y="0" width="60" height="20" backcolor="#EDEDED" uuid="aa22313a-5f2f-455e-a5d4-290454c850ab"/>
+					<reportElement stretchType="RelativeToBandHeight" mode="Opaque" x="480" y="0" width="60" height="20" backcolor="#EDEDED" uuid="aa22313a-5f2f-455e-a5d4-290454c850ab"/>
 					<box rightPadding="2">
 						<topPen lineWidth="1.0"/>
 						<leftPen lineWidth="1.0"/>
@@ -493,7 +493,7 @@ WHERE
 	<detail>
 		<band height="20" splitType="Stretch">
 			<textField pattern="dd/MM/yyyy">
-				<reportElement x="0" y="0" width="60" height="20" uuid="4539f3fd-a39c-4de6-a193-91a8fab4bc2e"/>
+				<reportElement x="0" y="0" width="70" height="20" uuid="4539f3fd-a39c-4de6-a193-91a8fab4bc2e"/>
 				<box leftPadding="2" rightPadding="2">
 					<topPen lineWidth="1.0"/>
 					<leftPen lineWidth="1.0"/>
@@ -504,7 +504,7 @@ WHERE
 				<textFieldExpression><![CDATA[$F{estoque_resumo_data_movimento}]]></textFieldExpression>
 			</textField>
 			<textField pattern="#,##0.###;#,-##0.###">
-				<reportElement x="60" y="0" width="50" height="20" uuid="09810f4e-42a5-4547-908d-2046768ce11c"/>
+				<reportElement x="70" y="0" width="50" height="20" uuid="09810f4e-42a5-4547-908d-2046768ce11c"/>
 				<box leftPadding="2" rightPadding="2">
 					<topPen lineWidth="1.0"/>
 					<leftPen lineWidth="1.0"/>
@@ -515,7 +515,7 @@ WHERE
 				<textFieldExpression><![CDATA[$F{estoque_resumo_entrada}]]></textFieldExpression>
 			</textField>
 			<textField pattern="#,##0.###;#,-##0.###">
-				<reportElement x="110" y="0" width="60" height="20" uuid="48bd2a62-9d73-48bd-b1fe-7ad63ea0519f"/>
+				<reportElement x="120" y="0" width="60" height="20" uuid="48bd2a62-9d73-48bd-b1fe-7ad63ea0519f"/>
 				<box leftPadding="2" rightPadding="2">
 					<topPen lineWidth="1.0"/>
 					<leftPen lineWidth="1.0"/>
@@ -526,7 +526,7 @@ WHERE
 				<textFieldExpression><![CDATA[$F{estoque_resumo_saida_estoque}]]></textFieldExpression>
 			</textField>
 			<textField pattern="#,##0.###;#,-##0.###">
-				<reportElement x="170" y="0" width="60" height="20" uuid="4e97c591-1b3a-4014-be80-5004e0f5467e"/>
+				<reportElement x="180" y="0" width="60" height="20" uuid="4e97c591-1b3a-4014-be80-5004e0f5467e"/>
 				<box leftPadding="2" rightPadding="2">
 					<topPen lineWidth="1.0"/>
 					<leftPen lineWidth="1.0"/>
@@ -537,7 +537,7 @@ WHERE
 				<textFieldExpression><![CDATA[$F{estoque_resumo_reforco}]]></textFieldExpression>
 			</textField>
 			<textField pattern="#,##0.###;#,-##0.###">
-				<reportElement x="230" y="0" width="60" height="20" uuid="88e84639-5177-4a8f-b5de-1f2a3a68d816"/>
+				<reportElement x="240" y="0" width="60" height="20" uuid="88e84639-5177-4a8f-b5de-1f2a3a68d816"/>
 				<box leftPadding="2" rightPadding="2">
 					<topPen lineWidth="1.0"/>
 					<leftPen lineWidth="1.0"/>
@@ -548,7 +548,7 @@ WHERE
 				<textFieldExpression><![CDATA[$F{estoque_resumo_fatura}]]></textFieldExpression>
 			</textField>
 			<textField pattern="#,##0.###;#,-##0.###">
-				<reportElement x="290" y="0" width="60" height="20" uuid="ec220f7e-87f1-4cce-8cdc-067917b5f430"/>
+				<reportElement x="300" y="0" width="60" height="20" uuid="ec220f7e-87f1-4cce-8cdc-067917b5f430"/>
 				<box leftPadding="2" rightPadding="2">
 					<topPen lineWidth="1.0"/>
 					<leftPen lineWidth="1.0"/>
@@ -559,7 +559,7 @@ WHERE
 				<textFieldExpression><![CDATA[$F{estoque_resumo_a_vista}]]></textFieldExpression>
 			</textField>
 			<textField pattern="#,##0.###;#,-##0.###">
-				<reportElement x="350" y="0" width="60" height="20" uuid="3fa8f623-88b8-4d0f-8e73-5b4afed819f5"/>
+				<reportElement x="360" y="0" width="60" height="20" uuid="3fa8f623-88b8-4d0f-8e73-5b4afed819f5"/>
 				<box leftPadding="2" rightPadding="2">
 					<topPen lineWidth="1.0"/>
 					<leftPen lineWidth="1.0"/>
@@ -570,7 +570,7 @@ WHERE
 				<textFieldExpression><![CDATA[$F{estoque_resumo_v_gratis}]]></textFieldExpression>
 			</textField>
 			<textField pattern="#,##0.###;#,-##0.###">
-				<reportElement x="410" y="0" width="60" height="20" uuid="ab099475-6c63-445e-9fbd-9463a2e741f4"/>
+				<reportElement x="420" y="0" width="60" height="20" uuid="ab099475-6c63-445e-9fbd-9463a2e741f4"/>
 				<box leftPadding="2" rightPadding="2">
 					<topPen lineWidth="1.0"/>
 					<leftPen lineWidth="1.0"/>
@@ -581,7 +581,7 @@ WHERE
 				<textFieldExpression><![CDATA[$F{estoque_resumo_nota}]]></textFieldExpression>
 			</textField>
 			<textField pattern="#,##0.###;#,-##0.###">
-				<reportElement x="470" y="0" width="60" height="20" uuid="ca0992eb-839f-404a-8f59-d02d50a6e7a7"/>
+				<reportElement x="480" y="0" width="60" height="20" uuid="ca0992eb-839f-404a-8f59-d02d50a6e7a7"/>
 				<box leftPadding="2" rightPadding="2">
 					<topPen lineWidth="1.0"/>
 					<leftPen lineWidth="1.0"/>
@@ -592,7 +592,7 @@ WHERE
 				<textFieldExpression><![CDATA[$F{estoque_resumo_balcao}]]></textFieldExpression>
 			</textField>
 			<textField pattern="#,##0.###;#,-##0.###">
-				<reportElement x="530" y="0" width="70" height="20" uuid="c5cd4ce8-f599-4a0a-9181-eaf35c5327f5"/>
+				<reportElement x="540" y="0" width="70" height="20" uuid="c5cd4ce8-f599-4a0a-9181-eaf35c5327f5"/>
 				<box leftPadding="2" rightPadding="2">
 					<topPen lineWidth="1.0"/>
 					<leftPen lineWidth="1.0"/>
@@ -603,7 +603,7 @@ WHERE
 				<textFieldExpression><![CDATA[$F{estoque_resumo_devolucao}]]></textFieldExpression>
 			</textField>
 			<textField pattern="#,##0.###;#,-##0.###">
-				<reportElement x="600" y="0" width="70" height="20" uuid="64383dfa-c9d4-4ba2-a1e0-bd5b12f8fc77"/>
+				<reportElement x="610" y="0" width="70" height="20" uuid="64383dfa-c9d4-4ba2-a1e0-bd5b12f8fc77"/>
 				<box leftPadding="2" rightPadding="2">
 					<topPen lineWidth="1.0"/>
 					<leftPen lineWidth="1.0"/>
@@ -614,7 +614,7 @@ WHERE
 				<textFieldExpression><![CDATA[$F{estoque_resumo_devolucao_sem_troc}]]></textFieldExpression>
 			</textField>
 			<textField pattern="#,##0.###;#,-##0.###">
-				<reportElement x="670" y="0" width="90" height="20" uuid="4493fceb-4d71-4b64-83b7-9688501a547f"/>
+				<reportElement x="680" y="0" width="80" height="20" uuid="4493fceb-4d71-4b64-83b7-9688501a547f"/>
 				<box leftPadding="2" rightPadding="2">
 					<topPen lineWidth="1.0"/>
 					<leftPen lineWidth="1.0"/>
@@ -654,7 +654,7 @@ WHERE
 	<summary>
 		<band height="27" splitType="Stretch">
 			<textField>
-				<reportElement mode="Opaque" x="470" y="7" width="60" height="20" backcolor="#EDEDED" uuid="929d364b-7581-45eb-aaa9-767e5974074f"/>
+				<reportElement mode="Opaque" x="480" y="7" width="60" height="20" backcolor="#EDEDED" uuid="929d364b-7581-45eb-aaa9-767e5974074f"/>
 				<box rightPadding="2">
 					<topPen lineWidth="1.0"/>
 					<leftPen lineWidth="1.0"/>
@@ -665,7 +665,7 @@ WHERE
 				<textFieldExpression><![CDATA[$V{total_g_balcao}]]></textFieldExpression>
 			</textField>
 			<textField>
-				<reportElement mode="Opaque" x="290" y="7" width="60" height="20" backcolor="#EDEDED" uuid="9932bcdf-db2e-43ee-b62d-be2db248fd37"/>
+				<reportElement mode="Opaque" x="300" y="7" width="60" height="20" backcolor="#EDEDED" uuid="9932bcdf-db2e-43ee-b62d-be2db248fd37"/>
 				<box rightPadding="2">
 					<topPen lineWidth="1.0"/>
 					<leftPen lineWidth="1.0"/>
@@ -676,7 +676,7 @@ WHERE
 				<textFieldExpression><![CDATA[$V{total_g_a_vista}]]></textFieldExpression>
 			</textField>
 			<textField>
-				<reportElement mode="Opaque" x="670" y="7" width="90" height="20" backcolor="#EDEDED" uuid="0c429816-110b-460d-8c56-7525d5e726b7"/>
+				<reportElement mode="Opaque" x="680" y="7" width="80" height="20" backcolor="#EDEDED" uuid="0c429816-110b-460d-8c56-7525d5e726b7"/>
 				<box rightPadding="2">
 					<topPen lineWidth="1.0"/>
 					<leftPen lineWidth="1.0"/>
@@ -687,7 +687,7 @@ WHERE
 				<textFieldExpression><![CDATA[$V{total_g_transferencia}]]></textFieldExpression>
 			</textField>
 			<textField>
-				<reportElement mode="Opaque" x="350" y="7" width="60" height="20" backcolor="#EDEDED" uuid="de89c946-8a68-4285-be19-7ef942a95363"/>
+				<reportElement mode="Opaque" x="360" y="7" width="60" height="20" backcolor="#EDEDED" uuid="de89c946-8a68-4285-be19-7ef942a95363"/>
 				<box rightPadding="2">
 					<topPen lineWidth="1.0"/>
 					<leftPen lineWidth="1.0"/>
@@ -698,7 +698,7 @@ WHERE
 				<textFieldExpression><![CDATA[$V{total_g_v_gratis}]]></textFieldExpression>
 			</textField>
 			<textField>
-				<reportElement mode="Opaque" x="530" y="7" width="70" height="20" backcolor="#EDEDED" uuid="fcdab86f-7faa-489e-b5e3-edeae672cd98"/>
+				<reportElement mode="Opaque" x="540" y="7" width="70" height="20" backcolor="#EDEDED" uuid="fcdab86f-7faa-489e-b5e3-edeae672cd98"/>
 				<box rightPadding="2">
 					<topPen lineWidth="1.0"/>
 					<leftPen lineWidth="1.0"/>
@@ -719,7 +719,7 @@ WHERE
 				<textElement textAlignment="Right" verticalAlignment="Middle"/>
 			</textField>
 			<textField>
-				<reportElement mode="Opaque" x="410" y="7" width="60" height="20" backcolor="#EDEDED" uuid="71c3e0b6-d49e-4941-a204-d393fe34cd68"/>
+				<reportElement mode="Opaque" x="420" y="7" width="60" height="20" backcolor="#EDEDED" uuid="71c3e0b6-d49e-4941-a204-d393fe34cd68"/>
 				<box rightPadding="2">
 					<topPen lineWidth="1.0"/>
 					<leftPen lineWidth="1.0"/>
@@ -730,7 +730,7 @@ WHERE
 				<textFieldExpression><![CDATA[$V{total_g_nota}]]></textFieldExpression>
 			</textField>
 			<textField>
-				<reportElement mode="Opaque" x="230" y="7" width="60" height="20" backcolor="#EDEDED" uuid="51096d29-a1f1-4339-998e-05601ed6d7d2"/>
+				<reportElement mode="Opaque" x="240" y="7" width="60" height="20" backcolor="#EDEDED" uuid="51096d29-a1f1-4339-998e-05601ed6d7d2"/>
 				<box rightPadding="2">
 					<topPen lineWidth="1.0"/>
 					<leftPen lineWidth="1.0"/>
@@ -741,7 +741,7 @@ WHERE
 				<textFieldExpression><![CDATA[$V{total_g_fatura}]]></textFieldExpression>
 			</textField>
 			<textField>
-				<reportElement mode="Opaque" x="170" y="7" width="60" height="20" backcolor="#EDEDED" uuid="8e47f348-95f8-4b33-bb36-bb876691cfa9"/>
+				<reportElement mode="Opaque" x="180" y="7" width="60" height="20" backcolor="#EDEDED" uuid="8e47f348-95f8-4b33-bb36-bb876691cfa9"/>
 				<box rightPadding="2">
 					<topPen lineWidth="1.0"/>
 					<leftPen lineWidth="1.0"/>
@@ -752,7 +752,7 @@ WHERE
 				<textFieldExpression><![CDATA[$V{total_g_reforco}]]></textFieldExpression>
 			</textField>
 			<textField>
-				<reportElement mode="Opaque" x="600" y="7" width="70" height="20" backcolor="#EDEDED" uuid="3ca9db08-60f3-4b3c-9b49-8671523aa105"/>
+				<reportElement mode="Opaque" x="610" y="7" width="70" height="20" backcolor="#EDEDED" uuid="3ca9db08-60f3-4b3c-9b49-8671523aa105"/>
 				<box rightPadding="2">
 					<topPen lineWidth="1.0"/>
 					<leftPen lineWidth="1.0"/>
@@ -763,7 +763,7 @@ WHERE
 				<textFieldExpression><![CDATA[$V{total_g_devolucao_s_troca}]]></textFieldExpression>
 			</textField>
 			<staticText>
-				<reportElement mode="Opaque" x="1" y="7" width="59" height="20" backcolor="#EDEDED" uuid="81159081-d467-46b7-aa36-55059fd1a8f8"/>
+				<reportElement mode="Opaque" x="1" y="7" width="69" height="20" backcolor="#EDEDED" uuid="81159081-d467-46b7-aa36-55059fd1a8f8"/>
 				<box leftPadding="2">
 					<topPen lineWidth="1.0"/>
 					<leftPen lineWidth="1.0"/>
@@ -774,7 +774,7 @@ WHERE
 				<text><![CDATA[TOTAL:]]></text>
 			</staticText>
 			<textField>
-				<reportElement mode="Opaque" x="60" y="7" width="50" height="20" backcolor="#EDEDED" uuid="00fdfdd2-4f7d-4442-9691-5f0f2a7f7700"/>
+				<reportElement mode="Opaque" x="70" y="7" width="50" height="20" backcolor="#EDEDED" uuid="00fdfdd2-4f7d-4442-9691-5f0f2a7f7700"/>
 				<box rightPadding="2">
 					<topPen lineWidth="1.0"/>
 					<leftPen lineWidth="1.0"/>
@@ -785,7 +785,7 @@ WHERE
 				<textFieldExpression><![CDATA[$V{total_g_entrada}]]></textFieldExpression>
 			</textField>
 			<textField>
-				<reportElement mode="Opaque" x="110" y="7" width="60" height="20" backcolor="#EDEDED" uuid="20b37c03-0724-4f11-a0e2-898380b1e608"/>
+				<reportElement mode="Opaque" x="120" y="7" width="60" height="20" backcolor="#EDEDED" uuid="20b37c03-0724-4f11-a0e2-898380b1e608"/>
 				<box rightPadding="2">
 					<topPen lineWidth="1.0"/>
 					<leftPen lineWidth="1.0"/>

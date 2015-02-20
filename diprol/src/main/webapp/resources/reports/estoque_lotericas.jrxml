@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!-- Created with Jaspersoft Studio version 5.6.2.final using JasperReports Library version 5.6.1  -->
-<!-- 2015-02-19T19:02:06 -->
+<!-- 2015-02-20T13:11:19 -->
 <jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="estoque_lotericas" pageWidth="842" pageHeight="595" orientation="Landscape" columnWidth="832" leftMargin="5" rightMargin="5" topMargin="20" bottomMargin="20" uuid="84fa0b6b-9220-4c8d-9eb7-51a909a4a5f7">
 	<property name="com.jaspersoft.studio.data.defaultdataadapter" value="Diprol Adapter"/>
 	<property name="com.jaspersoft.studio.unit." value="pixel"/>
@@ -174,7 +174,7 @@ WHERE
 					<text><![CDATA[DEVOLUÇÃO]]></text>
 				</staticText>
 				<staticText>
-					<reportElement mode="Opaque" x="60" y="26" width="169" height="30" forecolor="#FFFFFF" backcolor="#424242" uuid="5d92d9e8-444e-40eb-9888-32a01cf8fd8f"/>
+					<reportElement mode="Opaque" x="70" y="26" width="159" height="30" forecolor="#FFFFFF" backcolor="#424242" uuid="5d92d9e8-444e-40eb-9888-32a01cf8fd8f"/>
 					<box>
 						<topPen lineWidth="1.0"/>
 						<leftPen lineWidth="1.0"/>
@@ -207,7 +207,7 @@ WHERE
 					<text><![CDATA[À VISTA]]></text>
 				</staticText>
 				<staticText>
-					<reportElement mode="Opaque" x="-1" y="26" width="60" height="30" forecolor="#FFFFFF" backcolor="#424242" uuid="398f25e3-0d8a-4494-9121-b20e9a30969a"/>
+					<reportElement mode="Opaque" x="-1" y="26" width="71" height="30" forecolor="#FFFFFF" backcolor="#424242" uuid="398f25e3-0d8a-4494-9121-b20e9a30969a"/>
 					<box>
 						<topPen lineWidth="1.0"/>
 						<leftPen lineWidth="1.0"/>
@@ -298,8 +298,8 @@ WHERE
 					<textElement textAlignment="Right" verticalAlignment="Middle"/>
 					<textFieldExpression><![CDATA[$V{total_nota}]]></textFieldExpression>
 				</textField>
-				<textField pattern="#,##0.###;#,-##0.###">
-					<reportElement stretchType="RelativeToBandHeight" mode="Opaque" x="760" y="0" width="72" height="20" backcolor="#EDEDED" uuid="98eb9f5f-61d6-4d3c-ac57-6de5edbd8be5"/>
+				<textField pattern="#,##0.###;#,-##0.###" isBlankWhenNull="true">
+					<reportElement stretchType="RelativeToTallestObject" mode="Opaque" x="760" y="0" width="72" height="20" backcolor="#EDEDED" uuid="98eb9f5f-61d6-4d3c-ac57-6de5edbd8be5"/>
 					<box rightPadding="2">
 						<topPen lineWidth="1.0"/>
 						<leftPen lineWidth="1.0"/>
@@ -532,7 +532,7 @@ WHERE
 				<textFieldExpression><![CDATA[$F{estoque_resumo_devolucao_sem_troc}]]></textFieldExpression>
 			</textField>
 			<textField pattern="#,##0.###;#,-##0.###">
-				<reportElement x="60" y="-1" width="170" height="20" uuid="debecc24-3846-42b0-855b-d7f49a79b24f"/>
+				<reportElement x="70" y="-1" width="160" height="20" uuid="debecc24-3846-42b0-855b-d7f49a79b24f"/>
 				<box leftPadding="2" rightPadding="2">
 					<topPen lineWidth="1.0"/>
 					<leftPen lineWidth="1.0"/>
@@ -542,8 +542,8 @@ WHERE
 				<textElement verticalAlignment="Middle"/>
 				<textFieldExpression><![CDATA[$F{estoque_resumo_cod_cef} + ($F{estoque_resumo_razao_social} != null ? (" - " + $F{estoque_resumo_razao_social}) : "")]]></textFieldExpression>
 			</textField>
-			<textField pattern="#,##0.###;#,-##0.###">
-				<reportElement x="0" y="-1" width="60" height="20" uuid="b7bea80b-54da-476f-b8cb-24f8edac15e0"/>
+			<textField pattern="dd/MM/yyyy">
+				<reportElement x="0" y="-1" width="70" height="20" uuid="b7bea80b-54da-476f-b8cb-24f8edac15e0"/>
 				<box leftPadding="2" rightPadding="2">
 					<topPen lineWidth="1.0"/>
 					<leftPen lineWidth="1.0"/>
@@ -604,7 +604,7 @@ WHERE
 				<textElement textAlignment="Right" verticalAlignment="Middle"/>
 				<textFieldExpression><![CDATA[$V{total_g_v_gratis}]]></textFieldExpression>
 			</textField>
-			<textField pattern="#,##0.###;#,-##0.###">
+			<textField pattern="#,##0.###;#,-##0.###" isBlankWhenNull="true">
 				<reportElement stretchType="RelativeToBandHeight" mode="Opaque" x="760" y="9" width="72" height="20" backcolor="#EDEDED" uuid="e36d6deb-07d2-4ac3-83fc-1992d3d4d47f"/>
 				<box rightPadding="2">
 					<topPen lineWidth="1.0"/>

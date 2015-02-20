@@ -13,6 +13,7 @@ import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
+import java.util.Locale;
 import java.util.Map;
 
 import javax.faces.context.ExternalContext;
@@ -22,6 +23,7 @@ import javax.servlet.ServletContext;
 
 import net.sf.jasperreports.engine.JRException;
 import net.sf.jasperreports.engine.JRExporterParameter;
+import net.sf.jasperreports.engine.JRParameter;
 import net.sf.jasperreports.engine.JasperFillManager;
 import net.sf.jasperreports.engine.JasperPrint;
 import net.sf.jasperreports.engine.export.JRPdfExporter;
@@ -241,6 +243,8 @@ public class DiprolFacade {
 		String arquivo = contextS
 				.getRealPath("/resources/reports/" + nomeReport + ".jasper");
 		
+		Locale locale = new Locale("pt", "BR");
+		parametros.put(JRParameter.REPORT_LOCALE, locale);
 		
 		try {
 			
