@@ -246,6 +246,12 @@ public class Campanha implements Serializable, Entidade {
 			return DiprolHelper.getMoneyFormatterInstance().format(comissaoCampanha.floatValue());
 		return "";
 	}
+	
+	public String getValorUnitarioFormatado() {
+		if(valorUnitario != null)
+			return DiprolHelper.getMoneyFormatterInstance().format(valorUnitario.floatValue());
+		return "";
+	}
 
 	@Override
 	public Long getIdentificacao() {

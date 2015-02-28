@@ -274,22 +274,28 @@ public class DiprolFacade {
 	 * 
 	 * @param campanha
 	 */
-	public void calcularFechamentoCampanha(Campanha campanha) {
-		Object[] somatorios = CampanhaDAO.getInstance().calcularFechamentoCampanha(campanha);
-				
+	public void calcularFechamentoCampanha(Campanha campanha, BigDecimal valorUnitario) {
+		Object[] somatorios = CampanhaDAO.getInstance().buscaSomatoriosParaFechamento(campanha);
+		Long saldoMS = CampanhaDAO.getInstance().buscarSaldoAtual("MS", campanha);
+		Long saldoMT = CampanhaDAO.getInstance().buscarSaldoAtual("MT", campanha);
+						
 		Long entrada = (Long) somatorios[0];
 		Long saida = (Long) somatorios[1];
-		BigDecimal qtdeRecebida = new BigDecimal(entrada - saida);				
+		Long transferencia = (Long) somatorios[6];
+		
+		BigDecimal qtdeRecebida = new BigDecimal(entrada - saida - Math.abs(transferencia));				
 		BigDecimal reforco = new BigDecimal((Long) somatorios[2]);
 		
 		BigDecimal devolucao = new BigDecimal((Long) somatorios[3]);
-		BigDecimal saldoAtual = new BigDecimal((Long) somatorios[4]);
-		BigDecimal qtdeDevolvida = devolucao.abs().add(saldoAtual);		
-		BigDecimal sicap = new BigDecimal((Long)somatorios[5]);
+		BigDecimal devolucaoSemTroca = new BigDecimal((Long) somatorios[7]);
 		
-		BigDecimal vendaAlternativa = qtdeRecebida.add(reforco.abs()).subtract(devolucao.abs()).subtract(sicap.abs());		
-		BigDecimal comissaoFaturada = sicap.abs().multiply(campanha.getComissaoPercentual().divide(new BigDecimal(100)));
-		BigDecimal aPagarEmReais = vendaAlternativa.multiply(campanha.getValorUnitario());
+		//BigDecimal qtdeDevolvida = devolucao.abs().add(devolucaoSemTroca.abs()).add(new BigDecimal(saldoMS).add(new BigDecimal(saldoMT)));
+		BigDecimal qtdeDevolvida = devolucao.abs().add(new BigDecimal(saldoMS).add(new BigDecimal(saldoMT)));
+		BigDecimal sicap = new BigDecimal(Math.abs((Long)somatorios[5]));
+		
+		BigDecimal vendaAlternativa = qtdeRecebida.add(reforco.abs()).subtract(qtdeDevolvida.abs()).subtract(sicap.abs());		
+		BigDecimal comissaoFaturada = sicap.abs().multiply(campanha.getValorUnitario().divide(new BigDecimal(100))).multiply(campanha.getComissaoPercentual());
+		BigDecimal aPagarEmReais = vendaAlternativa.multiply(valorUnitario);
 		BigDecimal saldo = comissaoFaturada.subtract(aPagarEmReais);
 		
 		campanha.setQtdeRecebida(qtdeRecebida.abs());

@@ -52,7 +52,7 @@
 						<p:outputLabel value="Campanha" for="cmbCampanha" styleClass="col-sm-2 control-label" />
 						<div class="col-sm-3">
 							<h:selectOneMenu id="cmbCampanha" class="form-control" converter="entidadeConverter" 
-									required="true" value="#{estoqueBean.estoque.campanha}">
+									required="true" value="#{estoqueBean.campanhaPrincipal}">
 								<f:selectItem itemValue="#{null}" itemLabel="" />
 								<f:selectItems var="camp" value="#{estoqueBean.campanhas}" 
 									itemValue="#{camp}" itemLabel="#{camp.campanha}"/>

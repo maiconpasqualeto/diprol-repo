@@ -105,13 +105,19 @@
 						</div>
 						
 						<div class="row formrow">
-							<label class="col-sm-2">SICAP</label>
+							<label class="col-sm-1">SICAP</label>
 							<div class="col-sm-2">
 								<p:inputText id="txtSicap" disabled="true"
 									value="#{fechaCampanhaBean.campanha.sicap}"
 									class="form-control fullwidth" />
 							</div>
-							<p:outputLabel for="txtPercentual" value="Percentual" styleClass="col-sm-2" />
+							<p:outputLabel for="txtValorUnitario" value="Valor Un." styleClass="col-sm-1" />
+							<div class="col-sm-2">
+								<p:inputText id="txtValorUnitario" disabled="true"
+									value="#{fechaCampanhaBean.campanha.valorUnitarioFormatado}"
+									class="form-control fullwidth" />											
+							</div>
+							<p:outputLabel for="txtPercentual" value="Percentual" styleClass="col-sm-1" />
 							<div class="col-sm-2">
 								<pe:inputNumber id="txtPercentual" value="#{fechaCampanhaBean.campanha.comissaoPercentual}" 
 										required="true" decimalSeparator="," thousandSeparator="" decimalPlaces="2" 
@@ -120,7 +126,7 @@
 									<f:validateDoubleRange minimum="0.01" />
 								</pe:inputNumber>
 							</div>
-							<label class="col-sm-2" >Comissão Faturado</label>
+							<label class="col-sm-1" >Comissão Faturado</label>
 							<div class="col-sm-2">
 								<p:inputText id="txtComFaturado" disabled="true"
 									value="#{fechaCampanhaBean.campanha.comissaoCampanhaFormatada}"
@@ -135,9 +141,9 @@
 									value="#{fechaCampanhaBean.campanha.vendaAlternativa}"
 									class="form-control fullwidth" />
 							</div>
-							<p:outputLabel for="txtValorUnitario" value="Valor Unitário" styleClass="col-sm-2" />
+							<p:outputLabel for="txtValorUnitarioTela" value="Valor Unitário" styleClass="col-sm-2" />
 							<div class="col-sm-2">
-								<pe:inputNumber id="txtValorUnitario" value="#{fechaCampanhaBean.campanha.valorUnitario}" 
+								<pe:inputNumber id="txtValorUnitarioTela" value="#{fechaCampanhaBean.valorUnitarioTela}" 
 										symbol="R$ " symbolPosition="p" decimalSeparator="," thousandSeparator="" 
 										styleClass="form-control-numeric" required="true"/>											
 							</div>

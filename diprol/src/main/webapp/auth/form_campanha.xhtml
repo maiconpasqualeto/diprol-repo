@@ -5,7 +5,8 @@
 	xmlns:h="http://java.sun.com/jsf/html"
 	xmlns:ui="http://java.sun.com/jsf/facelets"
 	xmlns:p="http://primefaces.org/ui"
-	xmlns:f="http://java.sun.com/jsf/core">
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:pe="http://primefaces.org/ui/extensions">
 
 <h:head>
 
@@ -101,6 +102,19 @@
 										required="true" mindate="now">
 									<f:convertDateTime pattern="dd/MM/yyyy" />									
 								</p:calendar>
+							</div>
+						</div>
+						<div class="form-group">
+							<p:outputLabel value="Valor unitário" for="txtValorUnitario" 
+								styleClass="col-sm-2 control-label" />
+							<div class="col-sm-2">
+								<pe:inputNumber id="txtValorUnitario" value="#{cadastroCampanhaBean.campanha.valorUnitario}" 
+											symbol="R$ " symbolPosition="p" decimalSeparator="," thousandSeparator="" 
+											styleClass="form-control-numeric" required="true" 
+											requiredMessage="Valor unitário não informado" 
+											validatorMessage="Valor unitário não pode ser zero">
+									<f:validateDoubleRange minimum="0.01" />
+								</pe:inputNumber>
 							</div>
 						</div>
 						

@@ -59,7 +59,7 @@ public class CampanhaDAO extends BridgeBaseDAO {
 	 * 
 	 */
 	@SuppressWarnings("unchecked")
-	public Object[] calcularFechamentoCampanha(Campanha campanha) {
+	public Object[] buscaSomatoriosParaFechamento(Campanha campanha) {
 		EntityManager em = AdministradorPersistencia.getEntityManager();
 		
 		List<Object[]> list = null;
@@ -70,7 +70,9 @@ public class CampanhaDAO extends BridgeBaseDAO {
 			hql.append("sum(re.reforco), ");		//2
 			hql.append("sum(re.devolucao), ");		//3
 			hql.append("sum(re.saldoAtual), ");		//4
-			hql.append("sum(re.fatura) ");			//5
+			hql.append("sum(re.fatura), ");			//5
+			hql.append("sum(re.transferencia), ");	//6
+			hql.append("sum(re.devolucaoSemTroca) ");//7
 			
 			hql.append("from ResumoEstoque re ");
 			hql.append("where re.codCampanha = :codCampanha ");
@@ -87,6 +89,39 @@ public class CampanhaDAO extends BridgeBaseDAO {
             em.close();
         }
 		return list != null && !list.isEmpty() ? list.get(0) : null;
+	}
+	
+	/**
+	 * 
+	 * @param uf
+	 * @return
+	 */
+	public Long buscarSaldoAtual(String uf, Campanha campanha) {
+		EntityManager em = AdministradorPersistencia.getEntityManager();
+		
+		Long saldo = null;
+		try {
+			StringBuilder hql = new StringBuilder();
+			hql.append("select re.saldoAtual ");
+			hql.append("from ResumoEstoque re ");
+			hql.append("where re.codCampanha = :codCampanha ");
+			hql.append("and (re.codCef = '07.000000-0' or re.codCef = '10.000000-0') ");
+			hql.append("and re.uf = :uf ");
+			hql.append("order by re.codEstoqueResumo desc ");
+			
+			Query q = em.createQuery(hql.toString());
+			q.setParameter("codCampanha", campanha.getCodCampanha());
+			q.setParameter("uf", uf);
+			q.setMaxResults(1);
+			
+			saldo = ((Integer) q.getSingleResult()).longValue();
+			
+		} catch (Exception e) {
+			Logger.getLogger(this.getClass()).error("Erro ao buscar saldo atual", e);
+		} finally {
+            em.close();
+        }
+		return saldo;
 	}
 	
 	/**

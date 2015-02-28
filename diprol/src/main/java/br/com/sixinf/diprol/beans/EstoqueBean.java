@@ -54,21 +54,16 @@ public class EstoqueBean implements Serializable {
 	private List<Cliente> clientesPesquisa;
 	private String parPesquisaCliente;
 	private Cliente clienteSelecionadoPesquisa;
+	private Campanha campanhaDevolucao;
+	private List<Campanha> campanhasDevolucao;
+	private boolean mostraCampoDevolucao;
+	private Campanha campanhaPrincipal;
 	
 	@ManagedProperty(value="#{segurancaBean}")
 	private SegurancaBean segurancaBean;
 	
 	@PostConstruct
 	public void init() {
-		/*campanhas = EstoqueDAO.getInstance().buscarCampanhasAtivas();
-		if (campanhas == null ||
-				campanhas.isEmpty()) {
-			FacesMessage m = new FacesMessage(
-					FacesMessage.SEVERITY_ERROR, "Não existem campanhas ativas para movimentação", 
-						"Não existem campanhas ativas para movimentação");
-			FacesContext.getCurrentInstance().addMessage(null, m);
-			return;
-		}*/
 		
 		campanhas = EstoqueDAO.getInstance().buscarCampanhasAtivasNoPeriodo(new Date());
 		if (campanhas == null ||
@@ -236,6 +231,38 @@ public class EstoqueBean implements Serializable {
 		this.clienteSelecionadoPesquisa = clienteSelecionadoPesquisa;
 	}
 
+	public Campanha getCampanhaDevolucao() {
+		return campanhaDevolucao;
+	}
+
+	public void setCampanhaDevolucao(Campanha campanhaDevolucao) {
+		this.campanhaDevolucao = campanhaDevolucao;
+	}
+
+	public List<Campanha> getCampanhasDevolucao() {
+		return campanhasDevolucao;
+	}
+
+	public void setCampanhasDevolucao(List<Campanha> campanhasDevolucao) {
+		this.campanhasDevolucao = campanhasDevolucao;
+	}
+
+	public boolean isMostraCampoDevolucao() {
+		return mostraCampoDevolucao;
+	}
+
+	public void setMostraCampoDevolucao(boolean mostraCampoDevolucao) {
+		this.mostraCampoDevolucao = mostraCampoDevolucao;
+	}
+
+	public Campanha getCampanhaPrincipal() {
+		return campanhaPrincipal;
+	}
+
+	public void setCampanhaPrincipal(Campanha campanhaPrincipal) {
+		this.campanhaPrincipal = campanhaPrincipal;
+	}
+
 	/**
 	 * 
 	 * @param event
@@ -272,6 +299,8 @@ public class EstoqueBean implements Serializable {
 				codigoCEFContra = "07.000000-0";
 			}
 			
+			estoque.setCampanha(campanhaPrincipal);
+			
 			DiprolFacade.getInstance().salvarEstoque(
 					estoque, ufDestino, codigoCEF, codigoCEFContra,
 						segurancaBean.getUsuario().getCpf(), null);
@@ -281,6 +310,7 @@ public class EstoqueBean implements Serializable {
 			
 			estoque = new Estoque();
 			estoque.setDataEnvio(new Date());
+			//campanhaPrincipal = null;
 			
 		} catch (Exception e) {
 			Logger.getLogger(getClass()).error("Erro ao gravar venda", e);
@@ -308,6 +338,7 @@ public class EstoqueBean implements Serializable {
 	 */
 	public void confirmaInicioVendas(){
 		mostraCampos = false;
+		mostraCampoDevolucao = false;
 		
 		Cliente c = ClienteDAO.getInstance().buscarClientePorCodigo(codCEF);
 		if (c == null) {
@@ -332,7 +363,24 @@ public class EstoqueBean implements Serializable {
 			}
 		} else {
 			
-			campanhasPermuta = EstoqueDAO.getInstance().buscarCampanhasAtivasPosteriores(estoque.getCampanha());
+			if (estoque.getMovimento().getCodMovimento().intValue() == 17) {
+				
+				campanhasDevolucao = EstoqueDAO.getInstance().buscarCampanhasAtivasEncerradas();
+				
+				if (campanhasDevolucao == null || 
+						campanhasDevolucao.isEmpty()) {
+					FacesMessage m = new FacesMessage(
+							FacesMessage.SEVERITY_ERROR, "Não existem campanhas ANTERIORES cadastradas", 
+								"Não existem campanhas ANTERIORES cadastradas");
+					FacesContext.getCurrentInstance().addMessage(null, m);
+					return;
+				}
+				
+				mostraCampoDevolucao = true;
+				
+			} 
+			
+			campanhasPermuta = EstoqueDAO.getInstance().buscarCampanhasAtivasPosteriores(campanhaPrincipal);
 			
 			if (campanhasPermuta == null || 
 					campanhasPermuta.isEmpty()) {
@@ -384,6 +432,14 @@ public class EstoqueBean implements Serializable {
 				codigoCEFContra = "07.000000-0";
 			else 
 				codigoCEFContra = "10.000000-0";
+			
+			// e for devolução sem troca, a campanha atual do estoque tem que ser a campanha passada
+			// cod movimento = 17
+			if (mostraCampoDevolucao) {
+				estoque.setCampanha(campanhaDevolucao);
+			} else {
+				estoque.setCampanha(campanhaPrincipal);
+			}
 									
 			DiprolFacade.getInstance().salvarEstoque(
 					estoque, ufDestino, codCEF, codigoCEFContra, 
@@ -392,18 +448,17 @@ public class EstoqueBean implements Serializable {
 			FacesMessage m = new FacesMessage("Registro salvo com sucesso!");
 			FacesContext.getCurrentInstance().addMessage(null, m);
 			
-			Campanha c = estoque.getCampanha();
 			Movimento mv = estoque.getMovimento();
 			
 			estoque = new Estoque();
 			estoque.setDataEnvio(new Date());
-			estoque.setCampanha(c);
 			estoque.setMovimento(mv);
 			
-			codCEF = null;
+			//codCEF = null;
 			campanhaPermuta = null;
 			mostraCampos = false;
-			mostraCampoPermuta = false;			
+			mostraCampoPermuta = false;
+			mostraCampoDevolucao = false;
 			
 		} catch (Exception e) {
 			Logger.getLogger(getClass()).error("Erro ao gravar venda", e);

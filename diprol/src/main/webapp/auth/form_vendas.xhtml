@@ -50,7 +50,7 @@
 						<p:outputLabel value="Campanha" for="cmbCampanha" styleClass="col-sm-2 control-label" />
 						<div class="col-sm-3">
 							<h:selectOneMenu id="cmbCampanha" class="form-control" converter="entidadeConverter" 
-									required="true" value="#{estoqueBean.estoque.campanha}">
+									required="true" value="#{estoqueBean.campanhaPrincipal}">
 								<f:selectItem itemValue="#{null}" itemLabel="" />
 								<f:selectItems var="camp" value="#{estoqueBean.campanhas}" 
 									itemValue="#{camp}" itemLabel="#{camp.campanha}"/>
@@ -152,6 +152,18 @@
 								</p:inputText>
 							</div>
 							
+							<h:panelGroup id="divDevolucao" layout="block" rendered="#{estoqueBean.mostraCampoDevolucao}">
+								<p:outputLabel value="Campanha Devolução" for="cmbCampanhaDevolucao" styleClass="col-sm-2 control-label" />
+								<div class="col-sm-2">
+									<h:selectOneMenu id="cmbCampanhaDevolucao" class="form-control" converter="entidadeConverter" 
+											required="true" value="#{estoqueBean.campanhaDevolucao}">
+										<f:selectItem itemValue="#{null}" itemLabel="" />
+										<f:selectItems var="camp" value="#{estoqueBean.campanhasDevolucao}" 
+											itemValue="#{camp}" itemLabel="#{camp.campanha}"/>
+									</h:selectOneMenu>
+								</div>
+							</h:panelGroup>
+							
 							<h:panelGroup id="divPermuta" layout="block" rendered="#{estoqueBean.mostraCampoPermuta}">
 								<p:outputLabel value="Campanha Permuta" for="cmbCampanhaPermuta" styleClass="col-sm-2 control-label" />
 								<div class="col-sm-2">
@@ -163,6 +175,7 @@
 									</h:selectOneMenu>
 								</div>
 							</h:panelGroup>
+							
 						</div>						
 						<div class="form-group">
 							<p:outputLabel value="PAC" for="txtPac" styleClass="col-sm-2 control-label" />

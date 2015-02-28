@@ -83,7 +83,7 @@ public class CadastroCampanhaBean implements Serializable {
 	public void confirmaCadastroCampanha(){
 		try {
 			
-			if (campanha.getDataInicio().compareTo(new Date()) < 0) {
+			if (campanha.getDataInicio().compareTo(new Date()) <= 0) {
 				FacesMessage m = new FacesMessage(
 						FacesMessage.SEVERITY_ERROR, "Data de início inválida", "Data de início inválida");
 				FacesContext.getCurrentInstance().addMessage(null, m);
@@ -98,13 +98,15 @@ public class CadastroCampanhaBean implements Serializable {
 			}
 			
 			if (campanha.getCodCampanha() == null) {
+				campanha.setDataCadastro(new Date());
+				campanha.setSituacaoCampanha("A");
+				campanha.setStatus('A');
 				campanha.setQtdeRecebida(BigDecimal.ZERO);
 				campanha.setQtdeReforco(BigDecimal.ZERO);
 				campanha.setQtdeDevolvida(BigDecimal.ZERO);
 				campanha.setSicap(BigDecimal.ZERO);
 				campanha.setVendaAlternativa(BigDecimal.ZERO);
 				campanha.setDevolucaoAutorizada(BigDecimal.ZERO);
-				campanha.setValorUnitario(BigDecimal.ZERO);
 				campanha.setValorCampanha(BigDecimal.ZERO);
 				campanha.setComissaoPercentual(BigDecimal.ZERO);
 				campanha.setComissaoCampanha(BigDecimal.ZERO);

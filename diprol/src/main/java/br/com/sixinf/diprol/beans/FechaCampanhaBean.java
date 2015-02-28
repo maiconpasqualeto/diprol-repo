@@ -4,6 +4,7 @@
 package br.com.sixinf.diprol.beans;
 
 import java.io.Serializable;
+import java.math.BigDecimal;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.List;
@@ -32,6 +33,7 @@ public class FechaCampanhaBean implements Serializable {
 	private List<Campanha> campanhas = new ArrayList<Campanha>();
 	private Campanha campanha;
 	private boolean mostraCampos;
+	private BigDecimal valorUnitarioTela;
 	
 	@PostConstruct
 	public void init() {
@@ -62,7 +64,15 @@ public class FechaCampanhaBean implements Serializable {
 	public void setMostraCampos(boolean mostraCampos) {
 		this.mostraCampos = mostraCampos;
 	}
-	
+
+	public BigDecimal getValorUnitarioTela() {
+		return valorUnitarioTela;
+	}
+
+	public void setValorUnitarioTela(BigDecimal valorUnitarioTela) {
+		this.valorUnitarioTela = valorUnitarioTela;
+	}
+
 	public String getPeriodo() {
 		if (campanha != null &&
 				campanha.getDataInicio() != null &&
@@ -99,7 +109,8 @@ public class FechaCampanhaBean implements Serializable {
 	 * 
 	 */
 	public void calcula() {
-		DiprolFacade.getInstance().calcularFechamentoCampanha(campanha);
+		DiprolFacade.getInstance().calcularFechamentoCampanha(
+				campanha, valorUnitarioTela);
 	}
 	
 	/**
