@@ -128,7 +128,7 @@
 							</div>
 							<label class="col-sm-1" >Comissão Faturado</label>
 							<div class="col-sm-2">
-								<p:inputText id="txtComFaturado" disabled="true"
+								<p:inputText id="txtComFaturado" disabled="true" style="background-color: #DEE7FF;"
 									value="#{fechaCampanhaBean.campanha.comissaoCampanhaFormatada}"
 									class="form-control fullwidth" />
 							</div>
@@ -149,7 +149,7 @@
 							</div>
 							<label class="col-sm-2" >A pagar em reais</label>
 							<div class="col-sm-2">
-								<p:inputText id="txtPagarReais" disabled="true"
+								<p:inputText id="txtPagarReais" disabled="true" style="background-color: #DEE7FF;"
 									value="#{fechaCampanhaBean.campanha.valorCampanhaFormatado}"
 									class="form-control fullwidth" />
 							</div>
@@ -159,7 +159,7 @@
 						<div class="row formrow">
 							<label class="col-sm-2">SALDO</label>
 							<div class="col-sm-3">
-								<p:inputText id="txtSaldo" disabled="true"
+								<p:inputText id="txtSaldo" disabled="true" style="background-color: #DEE7FF;"
 									value="#{fechaCampanhaBean.campanha.saldoCampanhaFormatado}"
 									class="form-control fullwidth" />
 							</div>
@@ -168,7 +168,6 @@
 								<pe:inputNumber id="txtDevolucao" decimalPlaces="0" thousandSeparator="" 
 										value="#{fechaCampanhaBean.campanha.devolucaoAutorizada}"
 										class="form-control-numeric" >
-									<f:validateLongRange minimum="1"/>
 								</pe:inputNumber>
 							</div>
 						</div>

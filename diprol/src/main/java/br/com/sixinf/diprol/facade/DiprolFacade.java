@@ -421,7 +421,7 @@ public class DiprolFacade {
 					e.getMovimento().getCodMovimento().equals(19) ||
 					e.getMovimento().getCodMovimento().equals(20)) {
 				
-				re.setDevolucaoSemTroca(re.getDevolucaoSemTroca() + e.getQuantidade());
+				re.setDevolucaoSemTroca(Math.abs(re.getDevolucaoSemTroca()) + e.getQuantidade());
 				
 			} else if (e.getMovimento().getCodMovimento().equals(3)) {
 				
@@ -433,7 +433,10 @@ public class DiprolFacade {
 				
 			}
 			
-			re.setSaldoAtual(re.getSaldoAtual() + e.getQuantidade());
+			//Saldo-anterior + entrada+fatura + a_vista + v_gratis + nota + balcão + devolução + devolucao_s_troca + transferencia
+			re.setSaldoAtual(re.getSaldoAnterior() + re.getEntrada() + re.getFatura() + 
+					re.getAvista() + re.getGratis() + re.getNota() + re.getBalcao() + 
+					re.getDevolucao() + re.getTransferencia());
 			
 		}
 		

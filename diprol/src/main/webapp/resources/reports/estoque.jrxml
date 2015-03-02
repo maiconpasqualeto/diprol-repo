@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!-- Created with Jaspersoft Studio version 5.6.2.final using JasperReports Library version 5.6.1  -->
-<!-- 2015-02-20T13:13:43 -->
+<!-- 2015-03-02T15:50:15 -->
 <jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="estoque" pageWidth="842" pageHeight="595" orientation="Landscape" columnWidth="832" leftMargin="5" rightMargin="5" topMargin="20" bottomMargin="20" uuid="f5e92e74-07b9-4ef2-b40a-00c8f674f23d">
 	<property name="ireport.zoom" value="1.2100000000000009"/>
 	<property name="ireport.x" value="39"/>
@@ -482,9 +482,9 @@ WHERE
 				<imageExpression><![CDATA["../../img/logo_diprol.jpg"]]></imageExpression>
 			</image>
 			<textField>
-				<reportElement x="1" y="41" width="307" height="20" uuid="ed78f048-d514-4949-b8b7-2af509f8ee90"/>
+				<reportElement x="1" y="41" width="823" height="20" uuid="ed78f048-d514-4949-b8b7-2af509f8ee90"/>
 				<textElement verticalAlignment="Middle">
-					<font isBold="true"/>
+					<font size="16" isBold="true"/>
 				</textElement>
 				<textFieldExpression><![CDATA["Campanha: " + $P{par_campanha}]]></textFieldExpression>
 			</textField>

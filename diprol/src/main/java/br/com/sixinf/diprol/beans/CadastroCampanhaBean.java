@@ -83,12 +83,12 @@ public class CadastroCampanhaBean implements Serializable {
 	public void confirmaCadastroCampanha(){
 		try {
 			
-			if (campanha.getDataInicio().compareTo(new Date()) <= 0) {
+			/*if (campanha.getDataInicio().compareTo(new Date()) <= 0) {
 				FacesMessage m = new FacesMessage(
 						FacesMessage.SEVERITY_ERROR, "Data de início inválida", "Data de início inválida");
 				FacesContext.getCurrentInstance().addMessage(null, m);
 				return;
-			}
+			}*/
 			
 			if (campanha.getDataTermino().compareTo(campanha.getDataInicio()) <= 0) {
 				FacesMessage m = new FacesMessage(

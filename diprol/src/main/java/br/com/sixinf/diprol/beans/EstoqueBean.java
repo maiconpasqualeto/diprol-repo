@@ -308,9 +308,11 @@ public class EstoqueBean implements Serializable {
 			FacesMessage m = new FacesMessage("Registro salvo com sucesso!");
 			FacesContext.getCurrentInstance().addMessage(null, m);
 			
+			String uf = estoque.getUf();
+			
 			estoque = new Estoque();
+			estoque.setUf(uf);
 			estoque.setDataEnvio(new Date());
-			//campanhaPrincipal = null;
 			
 		} catch (Exception e) {
 			Logger.getLogger(getClass()).error("Erro ao gravar venda", e);
@@ -448,13 +450,9 @@ public class EstoqueBean implements Serializable {
 			FacesMessage m = new FacesMessage("Registro salvo com sucesso!");
 			FacesContext.getCurrentInstance().addMessage(null, m);
 			
-			Movimento mv = estoque.getMovimento();
-			
 			estoque = new Estoque();
 			estoque.setDataEnvio(new Date());
-			estoque.setMovimento(mv);
 			
-			//codCEF = null;
 			campanhaPermuta = null;
 			mostraCampos = false;
 			mostraCampoPermuta = false;
