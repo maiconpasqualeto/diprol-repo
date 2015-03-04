@@ -252,7 +252,37 @@ public class Campanha implements Serializable, Entidade {
 			return DiprolHelper.getMoneyFormatterInstance().format(valorUnitario.floatValue());
 		return "";
 	}
+	
+	public String getQuantidadeRecebidaFormatado() {
+		if(qtdeRecebida != null)
+			return DiprolHelper.getIntegerFormatterInstance().format(qtdeRecebida.intValue());
+		return "";
+	}
+	
+	public String getQuantidadeDevolvidaFormatado() {
+		if(qtdeDevolvida != null)
+			return DiprolHelper.getIntegerFormatterInstance().format(qtdeDevolvida.intValue());
+		return "";
+	}
 
+	public String getQuantidadeReforcoFormatado() {
+		if(qtdeReforco != null)
+			return DiprolHelper.getIntegerFormatterInstance().format(qtdeReforco.intValue());
+		return "";
+	}
+	
+	public String getSicapFormatado() {
+		if(sicap != null)
+			return DiprolHelper.getIntegerFormatterInstance().format(sicap.intValue());
+		return "";
+	}
+	
+	public String getVendaAlternativaFormatado() {
+		if(vendaAlternativa != null)
+			return DiprolHelper.getIntegerFormatterInstance().format(vendaAlternativa.intValue());
+		return "";
+	}
+	
 	@Override
 	public Long getIdentificacao() {
 		return codCampanha.longValue();

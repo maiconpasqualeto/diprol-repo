@@ -87,6 +87,7 @@ public class FechaCampanhaBean implements Serializable {
 	 * 
 	 */
 	public void confirma() {
+		valorUnitarioTela = null;
 		mostraCampos = true;
 	}
 	

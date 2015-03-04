@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!-- Created with Jaspersoft Studio version 5.6.2.final using JasperReports Library version 5.6.1  -->
-<!-- 2015-03-02T15:50:15 -->
+<!-- 2015-03-03T20:35:38 -->
 <jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="estoque" pageWidth="842" pageHeight="595" orientation="Landscape" columnWidth="832" leftMargin="5" rightMargin="5" topMargin="20" bottomMargin="20" uuid="f5e92e74-07b9-4ef2-b40a-00c8f674f23d">
 	<property name="ireport.zoom" value="1.2100000000000009"/>
 	<property name="ireport.x" value="39"/>
@@ -425,7 +425,7 @@ WHERE
 					<text><![CDATA[TOTAL UF:]]></text>
 				</staticText>
 				<textField pattern="#,##0.###;#,-##0.###" isBlankWhenNull="true">
-					<reportElement stretchType="RelativeToBandHeight" mode="Opaque" x="760" y="0" width="72" height="20" backcolor="#EDEDED" uuid="ec4d6171-0f24-4468-98a1-9905f8e2745c"/>
+					<reportElement stretchType="RelativeToBandHeight" mode="Opaque" x="760" y="0" width="71" height="20" backcolor="#EDEDED" uuid="ec4d6171-0f24-4468-98a1-9905f8e2745c"/>
 					<box rightPadding="2">
 						<topPen lineWidth="1.0"/>
 						<leftPen lineWidth="1.0"/>
@@ -625,7 +625,7 @@ WHERE
 				<textFieldExpression><![CDATA[$F{estoque_resumo_transferencia}]]></textFieldExpression>
 			</textField>
 			<textField pattern="#,##0.###;#,-##0.###" isBlankWhenNull="true">
-				<reportElement x="760" y="0" width="72" height="20" uuid="3a2012c2-1ee8-4a84-9ded-b4951d9e9d62"/>
+				<reportElement x="760" y="0" width="71" height="20" uuid="3a2012c2-1ee8-4a84-9ded-b4951d9e9d62"/>
 				<box leftPadding="2" rightPadding="2">
 					<topPen lineWidth="1.0"/>
 					<leftPen lineWidth="1.0"/>
@@ -653,7 +653,7 @@ WHERE
 	</pageFooter>
 	<summary>
 		<band height="27" splitType="Stretch">
-			<textField>
+			<textField pattern="#,##0.###;#,-##0.###">
 				<reportElement mode="Opaque" x="480" y="7" width="60" height="20" backcolor="#EDEDED" uuid="929d364b-7581-45eb-aaa9-767e5974074f"/>
 				<box rightPadding="2">
 					<topPen lineWidth="1.0"/>
@@ -664,7 +664,7 @@ WHERE
 				<textElement textAlignment="Right" verticalAlignment="Middle"/>
 				<textFieldExpression><![CDATA[$V{total_g_balcao}]]></textFieldExpression>
 			</textField>
-			<textField>
+			<textField pattern="#,##0.###;#,-##0.###">
 				<reportElement mode="Opaque" x="300" y="7" width="60" height="20" backcolor="#EDEDED" uuid="9932bcdf-db2e-43ee-b62d-be2db248fd37"/>
 				<box rightPadding="2">
 					<topPen lineWidth="1.0"/>
@@ -675,7 +675,7 @@ WHERE
 				<textElement textAlignment="Right" verticalAlignment="Middle"/>
 				<textFieldExpression><![CDATA[$V{total_g_a_vista}]]></textFieldExpression>
 			</textField>
-			<textField>
+			<textField pattern="#,##0.###;#,-##0.###">
 				<reportElement mode="Opaque" x="680" y="7" width="80" height="20" backcolor="#EDEDED" uuid="0c429816-110b-460d-8c56-7525d5e726b7"/>
 				<box rightPadding="2">
 					<topPen lineWidth="1.0"/>
@@ -686,7 +686,7 @@ WHERE
 				<textElement textAlignment="Right" verticalAlignment="Middle"/>
 				<textFieldExpression><![CDATA[$V{total_g_transferencia}]]></textFieldExpression>
 			</textField>
-			<textField>
+			<textField pattern="#,##0.###;#,-##0.###">
 				<reportElement mode="Opaque" x="360" y="7" width="60" height="20" backcolor="#EDEDED" uuid="de89c946-8a68-4285-be19-7ef942a95363"/>
 				<box rightPadding="2">
 					<topPen lineWidth="1.0"/>
@@ -697,7 +697,7 @@ WHERE
 				<textElement textAlignment="Right" verticalAlignment="Middle"/>
 				<textFieldExpression><![CDATA[$V{total_g_v_gratis}]]></textFieldExpression>
 			</textField>
-			<textField>
+			<textField pattern="#,##0.###;#,-##0.###">
 				<reportElement mode="Opaque" x="540" y="7" width="70" height="20" backcolor="#EDEDED" uuid="fcdab86f-7faa-489e-b5e3-edeae672cd98"/>
 				<box rightPadding="2">
 					<topPen lineWidth="1.0"/>
@@ -709,7 +709,7 @@ WHERE
 				<textFieldExpression><![CDATA[$V{total_g_devolucao}]]></textFieldExpression>
 			</textField>
 			<textField isBlankWhenNull="true">
-				<reportElement mode="Opaque" x="760" y="7" width="72" height="20" backcolor="#EDEDED" uuid="7adc3d1b-6a9b-43bf-ba38-488a8ee0f8ca"/>
+				<reportElement mode="Opaque" x="760" y="7" width="71" height="20" backcolor="#EDEDED" uuid="7adc3d1b-6a9b-43bf-ba38-488a8ee0f8ca"/>
 				<box rightPadding="2">
 					<topPen lineWidth="1.0"/>
 					<leftPen lineWidth="1.0"/>
@@ -718,7 +718,7 @@ WHERE
 				</box>
 				<textElement textAlignment="Right" verticalAlignment="Middle"/>
 			</textField>
-			<textField>
+			<textField pattern="#,##0.###;#,-##0.###">
 				<reportElement mode="Opaque" x="420" y="7" width="60" height="20" backcolor="#EDEDED" uuid="71c3e0b6-d49e-4941-a204-d393fe34cd68"/>
 				<box rightPadding="2">
 					<topPen lineWidth="1.0"/>
@@ -729,7 +729,7 @@ WHERE
 				<textElement textAlignment="Right" verticalAlignment="Middle"/>
 				<textFieldExpression><![CDATA[$V{total_g_nota}]]></textFieldExpression>
 			</textField>
-			<textField>
+			<textField pattern="#,##0.###;#,-##0.###">
 				<reportElement mode="Opaque" x="240" y="7" width="60" height="20" backcolor="#EDEDED" uuid="51096d29-a1f1-4339-998e-05601ed6d7d2"/>
 				<box rightPadding="2">
 					<topPen lineWidth="1.0"/>
@@ -740,7 +740,7 @@ WHERE
 				<textElement textAlignment="Right" verticalAlignment="Middle"/>
 				<textFieldExpression><![CDATA[$V{total_g_fatura}]]></textFieldExpression>
 			</textField>
-			<textField>
+			<textField pattern="#,##0.###;#,-##0.###">
 				<reportElement mode="Opaque" x="180" y="7" width="60" height="20" backcolor="#EDEDED" uuid="8e47f348-95f8-4b33-bb36-bb876691cfa9"/>
 				<box rightPadding="2">
 					<topPen lineWidth="1.0"/>
@@ -751,7 +751,7 @@ WHERE
 				<textElement textAlignment="Right" verticalAlignment="Middle"/>
 				<textFieldExpression><![CDATA[$V{total_g_reforco}]]></textFieldExpression>
 			</textField>
-			<textField>
+			<textField pattern="#,##0.###;#,-##0.###">
 				<reportElement mode="Opaque" x="610" y="7" width="70" height="20" backcolor="#EDEDED" uuid="3ca9db08-60f3-4b3c-9b49-8671523aa105"/>
 				<box rightPadding="2">
 					<topPen lineWidth="1.0"/>
@@ -773,7 +773,7 @@ WHERE
 				<textElement verticalAlignment="Middle"/>
 				<text><![CDATA[TOTAL:]]></text>
 			</staticText>
-			<textField>
+			<textField pattern="#,##0.###;#,-##0.###">
 				<reportElement mode="Opaque" x="70" y="7" width="50" height="20" backcolor="#EDEDED" uuid="00fdfdd2-4f7d-4442-9691-5f0f2a7f7700"/>
 				<box rightPadding="2">
 					<topPen lineWidth="1.0"/>
@@ -784,7 +784,7 @@ WHERE
 				<textElement textAlignment="Right" verticalAlignment="Middle"/>
 				<textFieldExpression><![CDATA[$V{total_g_entrada}]]></textFieldExpression>
 			</textField>
-			<textField>
+			<textField pattern="#,##0.###;#,-##0.###">
 				<reportElement mode="Opaque" x="120" y="7" width="60" height="20" backcolor="#EDEDED" uuid="20b37c03-0724-4f11-a0e2-898380b1e608"/>
 				<box rightPadding="2">
 					<topPen lineWidth="1.0"/>
