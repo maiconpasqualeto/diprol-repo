@@ -89,6 +89,11 @@ public class FechaCampanhaBean implements Serializable {
 	public void confirma() {
 		valorUnitarioTela = null;
 		mostraCampos = true;
+		if( !"F".equals(campanha.getSituacaoCampanha()) ) {			
+			campanha.setSaldoCampanha(BigDecimal.ZERO);
+			campanha.setComissaoCampanha(BigDecimal.ZERO);
+			campanha.setValorCampanha(BigDecimal.ZERO);
+		}
 	}
 	
 	/**

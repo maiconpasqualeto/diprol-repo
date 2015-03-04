@@ -287,7 +287,7 @@ public class DiprolFacade {
 		BigDecimal reforco = new BigDecimal((Long) somatorios[2]);
 		
 		BigDecimal devolucao = new BigDecimal((Long) somatorios[3]);
-		BigDecimal devolucaoSemTroca = new BigDecimal((Long) somatorios[7]);
+		//BigDecimal devolucaoSemTroca = new BigDecimal((Long) somatorios[7]);
 		
 		//BigDecimal qtdeDevolvida = devolucao.abs().add(devolucaoSemTroca.abs()).add(new BigDecimal(saldoMS).add(new BigDecimal(saldoMT)));
 		BigDecimal qtdeDevolvida = devolucao.abs().add(new BigDecimal(saldoMS).add(new BigDecimal(saldoMT)));
@@ -305,7 +305,7 @@ public class DiprolFacade {
 		campanha.setVendaAlternativa(vendaAlternativa.abs());
 		campanha.setComissaoCampanha(comissaoFaturada.abs());
 		campanha.setValorCampanha(aPagarEmReais.abs());
-		campanha.setSaldoCampanha(saldo.abs());
+		campanha.setSaldoCampanha(saldo);
 		
 	}
 	
