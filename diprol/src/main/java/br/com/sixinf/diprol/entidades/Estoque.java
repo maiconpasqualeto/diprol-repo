@@ -19,6 +19,7 @@ import javax.persistence.Table;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
 
+import br.com.sixinf.diprol.DiprolHelper;
 import br.com.sixinf.ferramentas.persistencia.Entidade;
 
 /**
@@ -46,6 +47,10 @@ public class Estoque implements Serializable, Entidade {
 	
 	@Column(name="cod_cef")
 	private String codCEF;
+	
+	@ManyToOne(fetch=FetchType.LAZY, targetEntity=Cliente.class)
+	@JoinColumn(name="cod_cef", insertable=false, updatable=false)
+	private Cliente cliente;
 	
 	@Column(name="data_movimento")
 	@Temporal(TemporalType.TIMESTAMP)
@@ -190,6 +195,20 @@ public class Estoque implements Serializable, Entidade {
 
 	public void setDataEnvio(Date dataEnvio) {
 		this.dataEnvio = dataEnvio;
+	}
+	
+	public Cliente getCliente() {
+		return cliente;
+	}
+
+	public void setCliente(Cliente cliente) {
+		this.cliente = cliente;
+	}
+
+	public String getDataMovimentoFormatado() {
+		if(dataMovimento != null)
+			return DiprolHelper.getDateFormatterInstance().format(dataMovimento);
+		return "";
 	}
 
 	@Override

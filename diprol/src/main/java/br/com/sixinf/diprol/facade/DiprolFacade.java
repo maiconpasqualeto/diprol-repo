@@ -99,8 +99,10 @@ public class DiprolFacade {
 		
 		Estoque estContraDevolucao = null;
 		Estoque estDevolucao = null;
+		Date dataMovimento = new Date();
 		
-		Estoque estContra = geraMovimentoEstoque(estoque, ufDestino, codigoCEF, codigoCEFContra, usuarioCPF);
+		Estoque estContra = geraMovimentoEstoque(
+				estoque, ufDestino, codigoCEF, codigoCEFContra, usuarioCPF, dataMovimento);
 		
 		if ( estoque.getMovimento().getPermuta() != null && 
 				estoque.getMovimento().getPermuta().equals('S') ) {
@@ -122,7 +124,8 @@ public class DiprolFacade {
 			estDevolucao.setUf(estoque.getUf());
 			estDevolucao.setUsuarioCPF(estoque.getUsuarioCPF());
 			
-			estContraDevolucao = geraMovimentoEstoque(estDevolucao, ufDestino, codigoCEF, codigoCEFContra, usuarioCPF);
+			estContraDevolucao = geraMovimentoEstoque(
+					estDevolucao, ufDestino, codigoCEF, codigoCEFContra, usuarioCPF, dataMovimento);
 		}
 		
 		estoqueDAO.salvarEstoque(estoque, estContra, estDevolucao, estContraDevolucao);
@@ -140,15 +143,16 @@ public class DiprolFacade {
 	 * @return retorna o estoque de contra partida se houver
 	 */
 	private Estoque geraMovimentoEstoque(Estoque estoque, String ufDestino, 
-			String codigoCEF, String codigoCEFContra, String usuarioCPF){
+			String codigoCEF, String codigoCEFContra, String usuarioCPF,
+			Date dataMovimento){
 		
 		Estoque estContra = null;
 		
 		Integer quantidadeInformada = estoque.getQuantidade();
 		
-		Estoque ultimoEstoque = 
+		/*Estoque ultimoEstoque = 
 				EstoqueDAO.getInstance().buscarUltimoEstoque(
-						estoque.getCampanha(), estoque.getUf(), codigoCEF);
+						estoque.getCampanha(), estoque.getUf(), codigoCEF);*/
 		
 		Estoque ultimoEstoqueContra = 
 				EstoqueDAO.getInstance().buscarUltimoEstoque(
@@ -159,19 +163,19 @@ public class DiprolFacade {
 		
 		if (ultimoEstoqueContra != null) {
 			campanhaContra = ultimoEstoqueContra.getCampanha();
-			saldoAtualContra = ultimoEstoqueContra.getSaldoAtual();
+			//saldoAtualContra = ultimoEstoqueContra.getSaldoAtual();
 		}
 	
 		
 		Integer saldoAtualUltimoEst = 0;
 		
-		if (ultimoEstoque != null) 
-			saldoAtualUltimoEst = ultimoEstoque.getSaldoAtual();
+		/*if (ultimoEstoque != null) 
+			saldoAtualUltimoEst = ultimoEstoque.getSaldoAtual();*/
 		
 		if (estoque.getMovimento().getAcaoSaldo().equals("subtrae"))
 			estoque.setQuantidade(estoque.getQuantidade() * -1);
 		
-		estoque.setDataMovimento(new Date());
+		estoque.setDataMovimento(dataMovimento);
 		estoque.setSaldoAnterior(saldoAtualUltimoEst);
 		estoque.setSaldoAtual(estoque.getSaldoAnterior() + estoque.getQuantidade());
 		estoque.setUsuarioCPF(usuarioCPF);

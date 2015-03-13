@@ -1,0 +1,136 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE html>
+
+<html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:p="http://primefaces.org/ui"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:pe="http://primefaces.org/ui/extensions">
+
+<h:head>
+
+</h:head>
+<h:body>
+	<!-- Na composição tudo que está fora da tag é ignorado -->
+	<ui:composition template="/layout/layout_interno.xhtml">
+
+		<ui:define name="principal">
+		
+			<!--  ==========  -->
+		    <!--  = Breadcrumbs =  -->
+		    <!--  ==========  -->
+	        <div class="container">
+	        	<div class="row">
+        			<div class="darker-stripe">
+						<ul class="breadcrumb">
+							<li>Estoque 
+								<span class="icon-chevron-right"></span>
+							</li>
+							<li>Venda
+								<span class="icon-chevron-right"></span>
+							</li>
+							<li class="active">Cancela Venda</li>
+						</ul>
+					</div>
+				</div>
+			</div>
+			
+			<h:form id="formCancela" class="form-horizontal" role="form" onkeypress="return event.keyCode != 13;">
+								
+				<p:growl id="msgs" />
+				
+								
+				<div class="container">
+					<div class="btn-toolbar pull-right push-down-20">
+						<h:button value="Voltar" styleClass="btn btn-primary" outcome="principal.xhtml" />
+					</div>
+				</div>
+
+				<h:panelGroup layout="block" id="divForm" class="container well">
+					
+					<div class="form-group">
+						<p:outputLabel value="Data Movimento" for="txtDataMovimento" styleClass="col-sm-2 control-label" />
+						<div class="col-sm-3">
+							<p:calendar id="txtDataMovimento" value="#{cancelaBean.dataMovimento}" 
+								mask="99/99/9999" maxdate="now" required="true" pattern="dd/MM/yyyy"/>
+						</div>
+						<div class="col-sm-1">
+							<p:commandButton id="btnConfirma" actionListener="#{cancelaBean.confirma}" 
+								value="Confirma" styleClass="btn btn-success" 
+							 	process="@this txtDataMovimento" update="divForm msgs"/>
+						</div>
+					</div>					
+					
+					<hr/>
+					
+					<h:panelGroup id="divCampanha" layout="block" >
+						<div>
+							<p:dataTable id="tblCancela" value="#{cancelaBean.estoques}"
+									var="e" emptyMessage="Sem Movimentos" >
+								<p:column style="width:120px; text-align: center;">
+									<f:facet name="header">Data Movimento</f:facet>
+									<h:outputText value="#{e.dataMovimentoFormatado}" />
+								</p:column>
+								
+								<p:column>
+									<f:facet name="header">Campanha</f:facet>
+									<h:outputText value="#{e.campanha.campanha}" />
+								</p:column>
+								
+								<p:column style="width:120px; text-align: center;">
+									<f:facet name="header">Cod. CEF</f:facet>
+									<h:outputText value="#{e.codCEF}" />
+								</p:column>
+								
+								<p:column>
+									<f:facet name="header">Razão social</f:facet>
+									<h:outputText value="#{e.cliente.razaoSocial}" />
+								</p:column>
+								
+								<p:column style="text-align: left;">
+									<f:facet name="header">Movimento</f:facet>
+									<h:outputText value="#{e.movimento.movimento}" />
+								</p:column>
+								
+								<p:column style="width:120px; text-align: right;">
+									<f:facet name="header">Quantidade</f:facet>
+									<h:outputText value="#{e.quantidade}" />
+								</p:column>
+								
+								<p:column style="width:100px; text-align: center;">
+									<f:facet name="header">Ação</f:facet>
+									<p:commandLink value="Excluir" process="@this" actionListener="#{cancelaBean.delete(e)}"
+					                	id="btnExcluir" title="Excluir" styleClass="btn btn-primary"
+					                	update="tblCancela :formCancela:msgs">
+					                	
+					                	<p:confirm header="Confirmação de exclusão" 
+					                		message="Confirma exclusão do movimento?" icon="ui-icon-alert" />
+			                            
+					                </p:commandLink>
+					             </p:column>
+					             
+							</p:dataTable>
+							
+							<p:confirmDialog global="true">
+							    <p:commandLink value="Sim" styleClass="btn btn-primary ui-confirmdialog-yes"  />
+							    <p:commandLink value="Não" styleClass="btn btn-primary ui-confirmdialog-no" />
+							</p:confirmDialog>	
+							
+						</div>
+						
+					</h:panelGroup>	
+				</h:panelGroup>
+				
+				
+				
+
+			</h:form>
+			
+		</ui:define>
+	</ui:composition>
+	<!-- Fim composição -->
+
+</h:body>
+
+</html>

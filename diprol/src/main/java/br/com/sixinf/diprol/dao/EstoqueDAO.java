@@ -13,6 +13,7 @@ import javax.persistence.NoResultException;
 import javax.persistence.Query;
 import javax.persistence.TypedQuery;
 
+import org.apache.commons.lang3.time.DateUtils;
 import org.apache.log4j.Logger;
 
 import br.com.sixinf.diprol.entidades.Campanha;
@@ -386,6 +387,78 @@ public class EstoqueDAO  extends BridgeBaseDAO {
 		} catch (Exception e) {
 			t.rollback();
 			throw new LoggerException("Erro ao gravar resumos estoque", e, Logger.getLogger(getClass()));
+		} finally {
+            em.close();
+        }
+	}
+	
+	/**
+	 * 
+	 * @return
+	 */
+	public List<Estoque> buscarEstoquesCancelamento(Date dataMovimento) {
+		
+		Date dataFinalMovimento = DateUtils.addSeconds(DateUtils.addMinutes(DateUtils.addHours(dataMovimento, 23), 59), 59);
+		
+		EntityManager em = AdministradorPersistencia.getEntityManager();
+		List<Estoque> lista = null;
+		try {
+			StringBuilder hql = new StringBuilder();
+			hql.append("select e from Estoque e ");
+			hql.append("join fetch e.campanha c ");
+			hql.append("join fetch e.movimento m ");
+			hql.append("join fetch e.cliente c ");
+			hql.append("where e.dataMovimento between :dataMovimento and :dataFinalMovimento ");
+			hql.append("and m.codMovimento = "
+					+ "(select min(em.codMovimento) "
+					+ "from Estoque es inner join es.movimento em "
+					+ "where es.dataMovimento = e.dataMovimento) ");
+			hql.append("order by e.dataMovimento ");
+			
+												
+			TypedQuery<Estoque> q = em.createQuery(hql.toString(), Estoque.class);
+			q.setParameter("dataMovimento", dataMovimento);
+			q.setParameter("dataFinalMovimento", dataFinalMovimento);
+			
+			lista = q.getResultList();
+			
+		} catch (NoResultException e) {
+			
+		} catch (Exception e) {
+			LOG.error("Erro ao buscar estoques para cancelamento", e);
+		} finally {
+            em.close();
+        }
+		return lista;
+	}
+	
+	/**
+	 * 
+	 * @param resumos
+	 * @throws LoggerException 
+	 */
+	public void excluiMovimentoEstoque(Estoque estoque) throws LoggerException {
+		
+		EntityManager em = AdministradorPersistencia.getEntityManager();
+		EntityTransaction t = em.getTransaction();
+		
+		try {
+			t.begin();
+			
+			StringBuilder hql = new StringBuilder();
+			hql.append("delete Estoque e ");
+			hql.append("where e.dataMovimento = :dataMovimento ");
+			
+	        Query q = em.createQuery(hql.toString());
+	        
+	        q.setParameter("dataMovimento", estoque.getDataMovimento());
+	        
+	        q.executeUpdate();
+			
+			t.commit();
+		} catch (Exception e) {
+			t.rollback();
+			throw new LoggerException("Erro ao excluir movimento de estoque", e, Logger.getLogger(getClass()));
 		} finally {
             em.close();
         }
