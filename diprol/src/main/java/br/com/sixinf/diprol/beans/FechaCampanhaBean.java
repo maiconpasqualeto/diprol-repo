@@ -33,7 +33,7 @@ public class FechaCampanhaBean implements Serializable {
 	private List<Campanha> campanhas = new ArrayList<Campanha>();
 	private Campanha campanha;
 	private boolean mostraCampos;
-	private BigDecimal valorUnitarioTela;
+	private BigDecimal custoRepasse;
 	
 	@PostConstruct
 	public void init() {
@@ -65,12 +65,12 @@ public class FechaCampanhaBean implements Serializable {
 		this.mostraCampos = mostraCampos;
 	}
 
-	public BigDecimal getValorUnitarioTela() {
-		return valorUnitarioTela;
+	public BigDecimal getCustoRepasse() {
+		return custoRepasse;
 	}
 
-	public void setValorUnitarioTela(BigDecimal valorUnitarioTela) {
-		this.valorUnitarioTela = valorUnitarioTela;
+	public void setCustoRepasse(BigDecimal custoRepasse) {
+		this.custoRepasse = custoRepasse;
 	}
 
 	public String getPeriodo() {
@@ -87,7 +87,7 @@ public class FechaCampanhaBean implements Serializable {
 	 * 
 	 */
 	public void confirma() {
-		valorUnitarioTela = null;
+		custoRepasse = null;
 		mostraCampos = true;
 		if( !"F".equals(campanha.getSituacaoCampanha()) ) {			
 			campanha.setSaldoCampanha(BigDecimal.ZERO);
@@ -116,7 +116,7 @@ public class FechaCampanhaBean implements Serializable {
 	 */
 	public void calcula() {
 		DiprolFacade.getInstance().calcularFechamentoCampanha(
-				campanha, valorUnitarioTela);
+				campanha, custoRepasse);
 	}
 	
 	/**

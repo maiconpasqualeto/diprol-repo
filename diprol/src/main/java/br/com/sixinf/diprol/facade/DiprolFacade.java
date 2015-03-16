@@ -278,7 +278,7 @@ public class DiprolFacade {
 	 * 
 	 * @param campanha
 	 */
-	public void calcularFechamentoCampanha(Campanha campanha, BigDecimal valorUnitario) {
+	public void calcularFechamentoCampanha(Campanha campanha, BigDecimal custoRepasse) {
 		Object[] somatorios = CampanhaDAO.getInstance().buscaSomatoriosParaFechamento(campanha);
 		Long saldoMS = CampanhaDAO.getInstance().buscarSaldoAtual("MS", campanha);
 		Long saldoMT = CampanhaDAO.getInstance().buscarSaldoAtual("MT", campanha);
@@ -299,7 +299,7 @@ public class DiprolFacade {
 		
 		BigDecimal vendaAlternativa = qtdeRecebida.add(reforco.abs()).subtract(qtdeDevolvida.abs()).subtract(sicap.abs());		
 		BigDecimal comissaoFaturada = sicap.abs().multiply(campanha.getValorUnitario().divide(new BigDecimal(100))).multiply(campanha.getComissaoPercentual());
-		BigDecimal aPagarEmReais = vendaAlternativa.multiply(valorUnitario);
+		BigDecimal aPagarEmReais = vendaAlternativa.add(campanha.getDevolucaoAutorizada()).multiply(custoRepasse);
 		BigDecimal saldo = comissaoFaturada.subtract(aPagarEmReais);
 		
 		campanha.setQtdeRecebida(qtdeRecebida.abs());
@@ -438,9 +438,9 @@ public class DiprolFacade {
 			}
 			
 			//Saldo-anterior + entrada+fatura + a_vista + v_gratis + nota + balcão + devolução + devolucao_s_troca + transferencia
-			re.setSaldoAtual(re.getSaldoAnterior() + re.getEntrada() + re.getFatura() + 
+			re.setSaldoAtual(re.getSaldoAnterior() + re.getEntrada() + re.getReforco() + re.getFatura() + 
 					re.getAvista() + re.getGratis() + re.getNota() + re.getBalcao() + 
-					re.getDevolucao() + re.getTransferencia());
+					re.getDevolucao() + re.getDevolucaoSemTroca() + re.getTransferencia());
 			
 		}
 		

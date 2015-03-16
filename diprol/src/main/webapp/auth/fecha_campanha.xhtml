@@ -111,7 +111,7 @@
 									value="#{fechaCampanhaBean.campanha.sicapFormatado}"
 									class="form-control fullwidth" />
 							</div>
-							<p:outputLabel for="txtValorUnitario" value="Valor Un." styleClass="col-sm-1" />
+							<p:outputLabel for="txtCustoRepasse" value="Valor Un." styleClass="col-sm-1" />
 							<div class="col-sm-2">
 								<p:inputText id="txtValorUnitario" disabled="true"
 									value="#{fechaCampanhaBean.campanha.valorUnitarioFormatado}"
@@ -128,28 +128,35 @@
 							</div>
 							<label class="col-sm-1" >Comissão Faturado</label>
 							<div class="col-sm-2">
-								<p:inputText id="txtComFaturado" disabled="true" style="background-color: #FED7E2;"
+								<p:inputText id="txtComFaturado" disabled="true" style="background-color: #FED7E2 !important;"
 									value="#{fechaCampanhaBean.campanha.comissaoCampanhaFormatada}"
 									class="form-control fullwidth" />
 							</div>
 						</div>
 						
 						<div class="row formrow">
-							<label class="col-sm-2">Venda Alternativa</label>
+							<label class="col-sm-1">Venda Alternativa</label>
 							<div class="col-sm-2">
 								<p:inputText id="txtVendaAlterantiva" disabled="true"
 									value="#{fechaCampanhaBean.campanha.vendaAlternativaFormatado}"
 									class="form-control fullwidth" />
 							</div>
-							<p:outputLabel for="txtValorUnitarioTela" value="Valor Unitário" styleClass="col-sm-2" />
+							<p:outputLabel styleClass="col-sm-1" for="txtDevolucao" value="Devolução Autorizada"  />
 							<div class="col-sm-2">
-								<pe:inputNumber id="txtValorUnitarioTela" value="#{fechaCampanhaBean.valorUnitarioTela}" 
-										symbol="R$ " symbolPosition="p" decimalSeparator="," thousandSeparator="" 
-										styleClass="form-control-numeric" required="true"/>											
+								<pe:inputNumber id="txtDevolucao" decimalPlaces="0" thousandSeparator="" 
+										value="#{fechaCampanhaBean.campanha.devolucaoAutorizada}"
+										class="form-control-numeric" >
+								</pe:inputNumber>
 							</div>
-							<label class="col-sm-2" >A pagar em reais</label>
+							<p:outputLabel for="txtCustoRepasse" value="Custo Repasse" styleClass="col-sm-1" />
 							<div class="col-sm-2">
-								<p:inputText id="txtPagarReais" disabled="true" style="background-color: #FED7E2;"
+								<pe:inputNumber id="txtCustoRepasse" value="#{fechaCampanhaBean.custoRepasse}" 
+										symbol="R$ " symbolPosition="p" decimalSeparator="," thousandSeparator="" 
+										styleClass="form-control-numeric" required="true" decimalPlaces="3"/>											
+							</div>
+							<label class="col-sm-1" >A pagar em reais</label>
+							<div class="col-sm-2">
+								<p:inputText id="txtPagarReais" disabled="true" style="background-color: #FED7E2 !important;"
 									value="#{fechaCampanhaBean.campanha.valorCampanhaFormatado}"
 									class="form-control fullwidth" />
 							</div>
@@ -159,17 +166,11 @@
 						<div class="row formrow">
 							<label class="col-sm-2">SALDO</label>
 							<div class="col-sm-3">
-								<p:inputText id="txtSaldo" disabled="true" style="background-color: #FED7E2;"
+								<p:inputText id="txtSaldo" disabled="true" style="background-color: #FED7E2 !important;"
 									value="#{fechaCampanhaBean.campanha.saldoCampanhaFormatado}"
 									class="form-control fullwidth" />
 							</div>
-							<p:outputLabel for="txtDevolucao" value="Devolução Autorizada" styleClass="col-sm-2" />
-							<div class="col-sm-3">
-								<pe:inputNumber id="txtDevolucao" decimalPlaces="0" thousandSeparator="" 
-										value="#{fechaCampanhaBean.campanha.devolucaoAutorizada}"
-										class="form-control-numeric" >
-								</pe:inputNumber>
-							</div>
+							
 						</div>
 												
 					

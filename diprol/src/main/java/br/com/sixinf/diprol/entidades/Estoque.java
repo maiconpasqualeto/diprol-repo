@@ -210,6 +210,12 @@ public class Estoque implements Serializable, Entidade {
 			return DiprolHelper.getDateFormatterInstance().format(dataMovimento);
 		return "";
 	}
+	
+	public String getQuantidadeFormatada() {
+		if(quantidade != null)
+			return DiprolHelper.getIntegerFormatterInstance().format(quantidade.intValue());
+		return "";
+	}
 
 	@Override
 	public Long getIdentificacao() {

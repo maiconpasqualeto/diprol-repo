@@ -65,6 +65,10 @@ hr { border-color: #CCC -moz-use-text-color -moz-use-text-color }
 	min-height: 450px;
 }
 
+.form-control{
+	background-color: white !important;
+}
+
 .btn{
 	.btn;
 	color: #fff !important;
