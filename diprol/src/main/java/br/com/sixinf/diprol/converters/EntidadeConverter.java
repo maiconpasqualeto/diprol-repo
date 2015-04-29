@@ -48,7 +48,7 @@ public class EntidadeConverter implements Converter {
 		if (value == null) {
 			return empty;
 		}
-		String id = ((Entidade) value).getIdentificacao().toString() + value.getClass().hashCode();
+		String id = ((Entidade) value).getIdentificacao().toString() + value.hashCode();
 		getViewMap(context).put(id, value);
 		return id;
 	}
