@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!-- Created with Jaspersoft Studio version 5.6.2.final using JasperReports Library version 5.6.1  -->
-<!-- 2015-03-03T20:35:38 -->
+<!-- 2015-05-08T09:38:29 -->
 <jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="estoque" pageWidth="842" pageHeight="595" orientation="Landscape" columnWidth="832" leftMargin="5" rightMargin="5" topMargin="20" bottomMargin="20" uuid="f5e92e74-07b9-4ef2-b40a-00c8f674f23d">
 	<property name="ireport.zoom" value="1.2100000000000009"/>
 	<property name="ireport.x" value="39"/>
@@ -315,17 +315,6 @@ WHERE
 		<groupFooter>
 			<band height="25">
 				<textField pattern="#,##0.###;#,-##0.###">
-					<reportElement stretchType="RelativeToBandHeight" mode="Opaque" x="420" y="0" width="60" height="20" backcolor="#EDEDED" uuid="efce46da-397a-42eb-bde3-fe7c10b9bc18"/>
-					<box rightPadding="2">
-						<topPen lineWidth="1.0"/>
-						<leftPen lineWidth="1.0"/>
-						<bottomPen lineWidth="1.0"/>
-						<rightPen lineWidth="1.0"/>
-					</box>
-					<textElement textAlignment="Right" verticalAlignment="Middle"/>
-					<textFieldExpression><![CDATA[$V{total_nota}]]></textFieldExpression>
-				</textField>
-				<textField pattern="#,##0.###;#,-##0.###">
 					<reportElement stretchType="RelativeToBandHeight" mode="Opaque" x="610" y="0" width="70" height="20" backcolor="#EDEDED" uuid="e0e941cb-c77a-4709-b2ca-6e16faeb882b"/>
 					<box rightPadding="2">
 						<topPen lineWidth="1.0"/>
@@ -455,6 +444,17 @@ WHERE
 					</box>
 					<textElement textAlignment="Right" verticalAlignment="Middle"/>
 					<textFieldExpression><![CDATA[$V{total_balcao}]]></textFieldExpression>
+				</textField>
+				<textField pattern="#,##0.###;#,-##0.###">
+					<reportElement stretchType="RelativeToBandHeight" mode="Opaque" x="420" y="0" width="60" height="20" backcolor="#EDEDED" uuid="2822f566-9956-4494-91a4-7e5f0e1eb791"/>
+					<box rightPadding="2">
+						<topPen lineWidth="1.0"/>
+						<leftPen lineWidth="1.0"/>
+						<bottomPen lineWidth="1.0"/>
+						<rightPen lineWidth="1.0"/>
+					</box>
+					<textElement textAlignment="Right" verticalAlignment="Middle"/>
+					<textFieldExpression><![CDATA[$V{total_g_nota}]]></textFieldExpression>
 				</textField>
 			</band>
 		</groupFooter>
