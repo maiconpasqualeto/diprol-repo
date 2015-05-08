@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<!-- Created with Jaspersoft Studio version 5.6.2.final using JasperReports Library version 5.6.1  -->
-<!-- 2015-05-08T09:38:29 -->
+<!-- Created with Jaspersoft Studio version 6.0.4.final using JasperReports Library version 6.0.4  -->
+<!-- 2015-05-08T16:30:07 -->
 <jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="estoque" pageWidth="842" pageHeight="595" orientation="Landscape" columnWidth="832" leftMargin="5" rightMargin="5" topMargin="20" bottomMargin="20" uuid="f5e92e74-07b9-4ef2-b40a-00c8f674f23d">
 	<property name="ireport.zoom" value="1.2100000000000009"/>
 	<property name="ireport.x" value="39"/>
@@ -27,7 +27,7 @@
      estoque_resumo."transferencia" AS estoque_resumo_transferencia,
      estoque_resumo."pre_venda" AS estoque_resumo_pre_venda,
      estoque_resumo."saida_estoque" AS estoque_resumo_saida_estoque,
-     estoque_resumo."saldo_atual" AS estoque_resumo_saldo_atual
+     sum(sum(saldo_atual)) over (order by cod_campanha, uf, data_movimento) as estoque_resumo_saldo_atual
 FROM
      "public"."estoque_resumo" estoque_resumo
 WHERE
