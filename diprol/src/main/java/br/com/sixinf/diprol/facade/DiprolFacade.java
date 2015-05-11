@@ -447,5 +447,5 @@ public class DiprolFacade {
 		EstoqueDAO.getInstance().atualizaResumoEstoque(
 				campanha, resumos.values());
 	}
-
+	
 }

@@ -1,0 +1,168 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE html>
+
+<html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:p="http://primefaces.org/ui"
+	xmlns:pe="http://primefaces.org/ui/extensions"
+	xmlns:f="http://java.sun.com/jsf/core">
+
+<h:head>
+
+</h:head>
+<h:body>
+	<!-- Na composição tudo que está fora da tag é ignorado -->
+	<ui:composition template="/layout/layout_interno.xhtml">
+
+		<ui:define name="principal">
+		
+			<!--  ==========  -->
+		    <!--  = Breadcrumbs =  -->
+		    <!--  ==========  -->
+	        <div class="container">
+	        	<div class="row">
+        			<div class="darker-stripe">
+						<ul class="breadcrumb">
+							<li>
+								<a href="#">Financeiro</a>
+								<span class="icon-chevron-right"></span>
+							</li>
+							<li>Receitas
+								<span class="icon-chevron-right"></span>
+							</li>
+							<li class="active">Previsão</li>
+						</ul>
+					</div>
+				</div>
+			</div>
+			
+			<h:form id="formPrevisao" prependId="false" class="form-horizontal" role="form">
+								
+				<p:growl id="msgs" />
+				
+								
+				<div class="container">
+					<div class="btn-toolbar pull-right push-down-20">
+						<h:button value="Voltar" styleClass="btn btn-primary" outcome="principal.xhtml" />
+						<p:commandButton actionListener="#{financeiroReceitasBean.salvarPrevisao}" 
+							value="Confirma" styleClass="btn btn-success" update="formPrevisao" />
+					</div>
+				</div>
+
+				<h:panelGroup layout="block" id="divForm" class="container well">
+					
+					<div class="form-group">
+						<p:outputLabel value="Ano" for="cmbAno" styleClass="col-sm-2 control-label" />
+						<div class="col-sm-2">
+							<h:selectOneMenu id="cmbAno" class="form-control" required="true"
+									value="#{financeiroReceitasBean.ano}" >
+								<f:selectItem  itemLabel="" />
+								<f:selectItems value="#{financeiroReceitasBean.listaAnos}" />
+							</h:selectOneMenu>	
+						</div>
+					</div>
+					<div class="form-group">
+						<p:outputLabel value="Conta" for="cmbConta" styleClass="col-sm-2 control-label" />
+						<div class="col-sm-5">
+							<h:selectOneMenu id="cmbConta" class="form-control" required="true"
+									value="#{financeiroReceitasBean.conta}" converter="entidadeConverter" >
+								<f:selectItem  itemLabel="" />
+								<f:selectItems var="c" value="#{financeiroReceitasBean.contas}"
+									itemLabel="#{c.contaGrupo.grupoConta} - #{c.conta}" itemValue="#{c}"  />								
+							</h:selectOneMenu>							
+						</div>
+						<div class="col-sm-1">
+							<p:commandButton id="btnConfirmaInicio" actionListener="#{financeiroReceitasBean.confirmaPrevisao}" 
+								value="Confirma" styleClass="btn btn-primary"
+							 	process="@this cmbAno cmbConta" update="divForm msgs"/>
+						</div>
+					</div>
+					
+					<hr/>
+					
+					<h:panelGroup id="divPrevisao" layout="block" rendered="#{financeiroReceitasBean.renderPrevisao}">
+						<div class="form-group">
+							<div class="col-sm-2">
+								<p:outputLabel value="Janeiro" for="txtJaneiro" />
+								<pe:inputNumber id="txtJaneiro" value="#{financeiroReceitasBean.contasMovimento[0].previsto}" symbol="R$ " symbolPosition="p"  
+									decimalSeparator="," thousandSeparator="." style="width: 100%;" styleClass="pe-fullwidth"/>									
+							</div>
+							<div class="col-sm-2">
+								<p:outputLabel value="Fevereiro" for="txtFevereiro" />
+								<pe:inputNumber id="txtFevereiro" value="#{financeiroReceitasBean.contasMovimento[1].previsto}" symbol="R$ " symbolPosition="p"  
+									decimalSeparator="," thousandSeparator="." style="width: 100%;" styleClass="pe-fullwidth"/>		
+							</div>
+							<div class="col-sm-2">
+								<p:outputLabel value="Março" for="txtMarco" />
+								<pe:inputNumber id="txtMarco" value="#{financeiroReceitasBean.contasMovimento[2].previsto}" symbol="R$ " symbolPosition="p"  
+									decimalSeparator="," thousandSeparator="." style="width: 100%;" styleClass="pe-fullwidth"/>		
+							</div>
+							<div class="col-sm-2">
+								<p:outputLabel value="Abril" for="txtAbril" />
+								<pe:inputNumber id="txtAbril" value="#{financeiroReceitasBean.contasMovimento[3].previsto}" symbol="R$ " symbolPosition="p"  
+									decimalSeparator="," thousandSeparator="." style="width: 100%;" styleClass="pe-fullwidth"/>
+							</div>
+							<div class="col-sm-2">
+								<p:outputLabel value="Maio" for="txtMaio" />
+								<pe:inputNumber id="txtMaio" value="#{financeiroReceitasBean.contasMovimento[4].previsto}" symbol="R$ " symbolPosition="p"  
+									decimalSeparator="," thousandSeparator="." style="width: 100%;" styleClass="pe-fullwidth"/>
+							</div>
+							<div class="col-sm-2">
+								<p:outputLabel value="Junho" for="txtJunho" />
+								<pe:inputNumber id="txtJunho" value="#{financeiroReceitasBean.contasMovimento[5].previsto}" symbol="R$ " symbolPosition="p"  
+									decimalSeparator="," thousandSeparator="." style="width: 100%;" styleClass="pe-fullwidth"/>
+							</div>
+						</div>
+						
+						<div class="form-group">
+							<div class="col-sm-2">
+								<p:outputLabel value="Julho" for="txtJulho" />
+								<pe:inputNumber id="txtJulho" value="#{financeiroReceitasBean.contasMovimento[6].previsto}" symbol="R$ " symbolPosition="p"  
+									decimalSeparator="," thousandSeparator="." style="width: 100%;" styleClass="pe-fullwidth"/>
+							</div>
+							<div class="col-sm-2">
+								<p:outputLabel value="Agosto" for="txtAgosto" />
+								<pe:inputNumber id="txtAgosto" value="#{financeiroReceitasBean.contasMovimento[7].previsto}" symbol="R$ " symbolPosition="p"  
+									decimalSeparator="," thousandSeparator="." style="width: 100%;" styleClass="pe-fullwidth"/>
+							</div>
+							<div class="col-sm-2">
+								<p:outputLabel value="Setembro" for="txtSetembro" />
+								<pe:inputNumber id="txtSetembro" value="#{financeiroReceitasBean.contasMovimento[8].previsto}" symbol="R$ " symbolPosition="p"  
+									decimalSeparator="," thousandSeparator="." style="width: 100%;" styleClass="pe-fullwidth"/>
+							</div>
+							<div class="col-sm-2">
+								<p:outputLabel value="Outubro" for="txtOutubro" />
+								<pe:inputNumber id="txtOutubro" value="#{financeiroReceitasBean.contasMovimento[9].previsto}" symbol="R$ " symbolPosition="p"  
+									decimalSeparator="," thousandSeparator="." style="width: 100%;" styleClass="pe-fullwidth"/>
+							</div>
+							<div class="col-sm-2">
+								<p:outputLabel value="Novembro" for="txtNovembro" />
+								<pe:inputNumber id="txtNovembro" value="#{financeiroReceitasBean.contasMovimento[10].previsto}" symbol="R$ " symbolPosition="p"  
+									decimalSeparator="," thousandSeparator="." style="width: 100%;" styleClass="pe-fullwidth"/>
+							</div>
+							<div class="col-sm-2">
+								<p:outputLabel value="Dezembro" for="txtDezembro" />
+								<pe:inputNumber id="txtDezembro" value="#{financeiroReceitasBean.contasMovimento[11].previsto}" symbol="R$ " symbolPosition="p"  
+									decimalSeparator="," thousandSeparator="." style="width: 100%;" styleClass="pe-fullwidth"/>
+							</div>
+							
+						</div>
+					
+					</h:panelGroup>
+					
+					
+				</h:panelGroup>
+				
+				
+				
+
+			</h:form>
+			
+		</ui:define>
+	</ui:composition>
+	<!-- Fim composição -->
+
+</h:body>
+
+</html>

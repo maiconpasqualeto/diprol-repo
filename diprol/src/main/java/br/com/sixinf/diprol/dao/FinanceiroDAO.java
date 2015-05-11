@@ -176,6 +176,35 @@ public class FinanceiroDAO extends BridgeBaseDAO {
 	 * 
 	 * @return
 	 */ 
+	public List<ContaGrupo> buscarGruposContaPorTipoConta(TipoConta tipoConta) {
+		EntityManager em = AdministradorPersistencia.getEntityManager();
+		
+		List<ContaGrupo> list = null;
+		try {
+			StringBuilder hql = new StringBuilder();
+			hql.append("select distinct(cg) from Conta c ");
+			hql.append("inner join c.contaGrupo cg ");
+			hql.append("where c.tipo = :tipoConta ");
+						
+			TypedQuery<ContaGrupo> q = em.createQuery(hql.toString(), ContaGrupo.class);
+			q.setParameter("tipoConta", tipoConta.getTipo());
+			
+			list = q.getResultList();
+			
+		} catch (NoResultException e) {
+			
+		} catch (Exception e) {
+			Logger.getLogger(getClass()).error("Erro ao buscar tosod as Grupos de Conta", e);
+		} finally {
+            em.close();
+        }
+		return list;
+	}
+	
+	/**
+	 * 
+	 * @return
+	 */ 
 	public List<ContaMovimento> buscarContasMovimento(Integer ano, Integer mes, ContaGrupo contaGrupo) {
 		EntityManager em = AdministradorPersistencia.getEntityManager();
 		

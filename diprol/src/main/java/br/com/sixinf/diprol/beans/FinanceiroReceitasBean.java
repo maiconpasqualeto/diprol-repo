@@ -31,9 +31,9 @@ import br.com.sixinf.diprol.facade.DiprolFacade;
  * @author maicon
  *
  */
-@ManagedBean(name="financeiroBean")
+@ManagedBean(name="financeiroReceitasBean")
 @ViewScoped
-public class FinanceiroBean implements Serializable {
+public class FinanceiroReceitasBean implements Serializable {
 
 	private static final long serialVersionUID = 1L;
 
@@ -59,10 +59,10 @@ public class FinanceiroBean implements Serializable {
 	
 	@ManagedProperty(value="#{segurancaBean}")
 	private SegurancaBean segurancaBean;
-		
+	
 	@PostConstruct
 	private void init() {
-		contas = FinanceiroDAO.getInstance().buscarContasPorTipo(TipoConta.DESPESAS);
+		contas = FinanceiroDAO.getInstance().buscarContasPorTipo(TipoConta.RECEITAS);
 		
 		for (int i=0; i<contasMovimento.length; i++) 
 			contasMovimento[i] = new ContaMovimento();
@@ -82,11 +82,11 @@ public class FinanceiroBean implements Serializable {
 		meses.add(new SelectItem(11, "Novembro"));
 		meses.add(new SelectItem(12, "Dezembro"));
 		
-		contasGrupo = FinanceiroDAO.getInstance().buscarGruposContaPorTipoConta(TipoConta.DESPESAS);
+		contasGrupo = FinanceiroDAO.getInstance().buscarGruposContaPorTipoConta(TipoConta.RECEITAS);
 		
 		renderRealizado = false;
 	}
-	
+
 	public String getAno() {
 		return ano;
 	}
@@ -111,22 +111,6 @@ public class FinanceiroBean implements Serializable {
 		this.contas = contas;
 	}
 
-	public Conta getConta() {
-		return conta;
-	}
-
-	public void setConta(Conta conta) {
-		this.conta = conta;
-	}
-	
-	public boolean isRenderPrevisao() {
-		return renderPrevisao;
-	}
-
-	public void setRenderPrevisao(boolean renderPrevisao) {
-		this.renderPrevisao = renderPrevisao;
-	}
-	
 	public ContaMovimento[] getContasMovimento() {
 		return contasMovimento;
 	}
@@ -135,12 +119,20 @@ public class FinanceiroBean implements Serializable {
 		this.contasMovimento = contasMovimento;
 	}
 
-	public SegurancaBean getSegurancaBean() {
-		return segurancaBean;
+	public boolean isRenderPrevisao() {
+		return renderPrevisao;
 	}
 
-	public void setSegurancaBean(SegurancaBean segurancaBean) {
-		this.segurancaBean = segurancaBean;
+	public void setRenderPrevisao(boolean renderPrevisao) {
+		this.renderPrevisao = renderPrevisao;
+	}
+
+	public Conta getConta() {
+		return conta;
+	}
+
+	public void setConta(Conta conta) {
+		this.conta = conta;
 	}
 
 	public List<SelectItem> getMeses() {
@@ -192,10 +184,15 @@ public class FinanceiroBean implements Serializable {
 		this.contasMovimentoRealizado = contasMovimentoRealizado;
 	}
 
-	/**
-	 * 
-	 */
-	public void confirmaPrevisao(){
+	public SegurancaBean getSegurancaBean() {
+		return segurancaBean;
+	}
+
+	public void setSegurancaBean(SegurancaBean segurancaBean) {
+		this.segurancaBean = segurancaBean;
+	}
+	
+	public void confirmaPrevisao() {
 		for (int i=0; i<contasMovimento.length; i++) 
 			contasMovimento[i] = new ContaMovimento();
 		
@@ -247,11 +244,12 @@ public class FinanceiroBean implements Serializable {
 	/**
 	 * 
 	 */
-	public void salvarPrevisao(){
+	public void salvarPrevisao() {
 		try {
 			if (!renderPrevisao) {
 				FacesMessage m = new FacesMessage(
-						FacesMessage.SEVERITY_ERROR, "Não existem previsões para gravação", "Não existem previsões para gravação");
+						FacesMessage.SEVERITY_ERROR, "Não existem previsões para gravação", 
+							"Não existem previsões para gravação");
 				FacesContext.getCurrentInstance().addMessage(null, m);
 				return;
 			}

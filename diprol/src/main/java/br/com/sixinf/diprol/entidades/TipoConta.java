@@ -2,7 +2,8 @@ package br.com.sixinf.diprol.entidades;
 
 public enum TipoConta {
 	
-	DESPESAS('D');
+	DESPESAS('D'),
+	RECEITAS('R');
 	
 	private Character tipo;
 	
