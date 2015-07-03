@@ -379,19 +379,19 @@ public class EstoqueBean implements Serializable {
 				}
 				
 				mostraCampoDevolucao = true;
+										
+				campanhasPermuta = EstoqueDAO.getInstance().buscarCampanhasAtivasPosteriores(campanhaPrincipal);
 				
-			} 
-			
-			campanhasPermuta = EstoqueDAO.getInstance().buscarCampanhasAtivasPosteriores(campanhaPrincipal);
-			
-			if (campanhasPermuta == null || 
-					campanhasPermuta.isEmpty()) {
-				FacesMessage m = new FacesMessage(
-						FacesMessage.SEVERITY_ERROR, "Não existem campanhas ABERTAS cadastradas", 
-							"Não existem campanhas ABERTAS cadastradas");
-				FacesContext.getCurrentInstance().addMessage(null, m);
-				return;
+				if (campanhasPermuta == null || 
+						campanhasPermuta.isEmpty()) {
+					FacesMessage m = new FacesMessage(
+							FacesMessage.SEVERITY_ERROR, "Não existem campanhas POSTERIORES cadastradas", 
+								"Não existem campanhas POSTERIORES cadastradas");
+					FacesContext.getCurrentInstance().addMessage(null, m);
+					return;
+				}
 			}
+			
 		} 
 		
 		
@@ -442,7 +442,7 @@ public class EstoqueBean implements Serializable {
 			} else {
 				estoque.setCampanha(campanhaPrincipal);
 			}
-									
+			
 			DiprolFacade.getInstance().salvarEstoque(
 					estoque, ufDestino, codCEF, codigoCEFContra, 
 					segurancaBean.getUsuario().getCpf(), campanhaPermuta);

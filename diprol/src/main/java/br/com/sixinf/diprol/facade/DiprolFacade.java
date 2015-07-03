@@ -120,7 +120,13 @@ public class DiprolFacade {
 			estDevolucao.setMovimento(mPermuta);
 			estDevolucao.setObservacao(estoque.getObservacao());
 			estDevolucao.setPac(estoque.getPac());
-			estDevolucao.setQuantidade(estoque.getQuantidade());
+			BigDecimal cem = new BigDecimal(100);
+			BigDecimal fatorAtual = estoque.getCampanha().getValorUnitario().multiply(cem.subtract(estoque.getCampanha().getComissaoPercentual())).divide(cem);
+			BigDecimal fatorPermuta = campanhaPermuta.getValorUnitario().multiply(cem.subtract(campanhaPermuta.getComissaoPercentual())).divide(cem);
+			BigDecimal quantidadeEstoque = new BigDecimal(estoque.getQuantidade());
+			BigDecimal quantidadeCalculada = fatorAtual.multiply(quantidadeEstoque).divide(fatorPermuta, 2, BigDecimal.ROUND_HALF_UP);
+			
+			estDevolucao.setQuantidade(quantidadeCalculada.setScale(0, BigDecimal.ROUND_HALF_UP).intValue());
 			estDevolucao.setUf(estoque.getUf());
 			estDevolucao.setUsuarioCPF(estoque.getUsuarioCPF());
 			
