@@ -440,7 +440,11 @@ public class EstoqueBean implements Serializable {
 			if (mostraCampoDevolucao) {
 				estoque.setCampanha(campanhaDevolucao);
 			} else {
-				estoque.setCampanha(campanhaPrincipal);
+				if (estoque.getMovimento().getCodMovimento().intValue() == 13) {
+					estoque.setCampanha(campanhaPermuta);
+					campanhaPermuta = campanhaPrincipal;
+				} else
+					estoque.setCampanha(campanhaPrincipal);
 			}
 			
 			DiprolFacade.getInstance().salvarEstoque(
