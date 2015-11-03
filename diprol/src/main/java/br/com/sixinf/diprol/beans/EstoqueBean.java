@@ -353,16 +353,19 @@ public class EstoqueBean implements Serializable {
 		
 		if (estoque.getMovimento().getCodMovimento().intValue() == 13) {
 			
-			campanhasPermuta = EstoqueDAO.getInstance().buscarCampanhasAtivasEncerradas();
+			campanhasDevolucao = EstoqueDAO.getInstance().buscarCampanhasAtivasEncerradas();
 			
-			if (campanhasPermuta == null || 
-					campanhasPermuta.isEmpty()) {
+			if (campanhasDevolucao == null || 
+					campanhasDevolucao.isEmpty()) {
 				FacesMessage m = new FacesMessage(
 						FacesMessage.SEVERITY_ERROR, "Não existem campanhas FECHADAS cadastradas", 
 							"Não existem campanhas FECHADAS cadastradas");
 				FacesContext.getCurrentInstance().addMessage(null, m);
 				return;
 			}
+			
+			mostraCampoDevolucao = true;
+			
 		} else {
 			
 			if (estoque.getMovimento().getCodMovimento().intValue() == 17) {
@@ -379,27 +382,23 @@ public class EstoqueBean implements Serializable {
 				}
 				
 				mostraCampoDevolucao = true;
+				mostraCampoPermuta = true;
+										
+				campanhasPermuta = EstoqueDAO.getInstance().buscarCampanhasAtivasPosteriores(campanhaPrincipal);
 				
-			} 
-			
-			campanhasPermuta = EstoqueDAO.getInstance().buscarCampanhasAtivasPosteriores(campanhaPrincipal);
-			
-			if (campanhasPermuta == null || 
-					campanhasPermuta.isEmpty()) {
-				FacesMessage m = new FacesMessage(
-						FacesMessage.SEVERITY_ERROR, "Não existem campanhas ABERTAS cadastradas", 
-							"Não existem campanhas ABERTAS cadastradas");
-				FacesContext.getCurrentInstance().addMessage(null, m);
-				return;
+				if (campanhasPermuta == null || 
+						campanhasPermuta.isEmpty()) {
+					FacesMessage m = new FacesMessage(
+							FacesMessage.SEVERITY_ERROR, "Não existem campanhas POSTERIORES cadastradas", 
+								"Não existem campanhas POSTERIORES cadastradas");
+					FacesContext.getCurrentInstance().addMessage(null, m);
+					return;
+				}
 			}
+			
 		} 
+			
 		
-		
-		
-		if ( 'S' == estoque.getMovimento().getPermuta().charValue() ) 
-			mostraCampoPermuta = true;
-		else
-			mostraCampoPermuta = false;
 		
 		estoque.setUf(c.getUf());
 		
@@ -437,12 +436,28 @@ public class EstoqueBean implements Serializable {
 			
 			// e for devolução sem troca, a campanha atual do estoque tem que ser a campanha passada
 			// cod movimento = 17
-			if (mostraCampoDevolucao) {
+			
+			if (estoque.getMovimento().getCodMovimento().intValue() == 17) {
 				estoque.setCampanha(campanhaDevolucao);
+			} else 
+				if (estoque.getMovimento().getCodMovimento().intValue() == 13) {
+					estoque.setCampanha(campanhaDevolucao);
+					campanhaPermuta = campanhaPrincipal;
 			} else {
 				estoque.setCampanha(campanhaPrincipal);
 			}
-									
+				
+				/*
+			if (mostraCampoDevolucao) {
+				estoque.setCampanha(campanhaDevolucao);
+			} else {
+				if (estoque.getMovimento().getCodMovimento().intValue() == 13) {
+					estoque.setCampanha(campanhaPermuta);
+					campanhaPermuta = campanhaPrincipal;
+				} else
+					estoque.setCampanha(campanhaPrincipal);
+			}*/
+			
 			DiprolFacade.getInstance().salvarEstoque(
 					estoque, ufDestino, codCEF, codigoCEFContra, 
 					segurancaBean.getUsuario().getCpf(), campanhaPermuta);

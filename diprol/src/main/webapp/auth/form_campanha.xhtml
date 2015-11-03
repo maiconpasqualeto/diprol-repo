@@ -53,7 +53,7 @@
 						<p:outputLabel value="Campanha" for="cmbCampanha" styleClass="col-sm-2 control-label" />
 						<div class="col-sm-3">
 							<h:selectOneMenu id="cmbCampanha" class="form-control" converter="entidadeConverter" 
-									value="#{cadastroCampanhaBean.campanha}">
+									value="#{cadastroCampanhaBean.campanha}" disabled="#{cadastroCampanhaBean.mostraCampos}">
 								<f:selectItem itemValue="#{null}" itemLabel="" />
 								<f:selectItems var="camp" value="#{cadastroCampanhaBean.campanhas}" 
 									itemValue="#{camp}" itemLabel="#{camp.campanha}"/>
@@ -112,7 +112,22 @@
 											symbol="R$ " symbolPosition="p" decimalSeparator="," thousandSeparator="" 
 											styleClass="form-control-numeric" required="true" 
 											requiredMessage="Valor unitário não informado" 
-											validatorMessage="Valor unitário não pode ser zero">
+											validatorMessage="Valor unitário não pode ser zero"
+											autocomplete="off">
+									<f:validateDoubleRange minimum="0.01" />
+								</pe:inputNumber>
+							</div>
+						</div>
+						<div class="form-group">
+							<p:outputLabel value="Porcentagem comissão" for="txtPorcentagem" 
+								styleClass="col-sm-2 control-label" />
+							<div class="col-sm-2">
+								<pe:inputNumber id="txtPorcentagem" value="#{cadastroCampanhaBean.campanha.comissaoPercentual}" 
+											symbol=" %" symbolPosition="s" decimalSeparator="," thousandSeparator="" 
+											styleClass="form-control-numeric" required="true" 
+											requiredMessage="Porcentagem não informada" 
+											validatorMessage="Porcentagem não pode ser zero" 
+											autocomplete="off">
 									<f:validateDoubleRange minimum="0.01" />
 								</pe:inputNumber>
 							</div>
@@ -122,14 +137,17 @@
 						<hr/>
 						
 						<div class="form-group">
-							<div class="col-sm-2 control-label">
+							<div class="col-sm-1 control-label">
 								<p:commandButton actionListener="#{cadastroCampanhaBean.confirmaCadastroCampanha}" 
 									value="Confirma" styleClass="btn btn-success" update="formCampanha" 
 									process="@this divCampanha"/>
 							</div>
+							<div class="col-sm-1 control-label">
+								<p:commandButton actionListener="#{cadastroCampanhaBean.cancelaCadastroCampanha}" 
+									value="Cancelar" styleClass="btn btn-primary" update="formCampanha" 
+									process="@this"/>
+							</div>
 						</div>
-						
-						
 					</h:panelGroup>	
 				</h:panelGroup>
 				

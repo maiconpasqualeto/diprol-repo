@@ -136,4 +136,12 @@ public class CadastroCampanhaBean implements Serializable {
 		campanha = new Campanha();
 		mostraCampos = true;
 	}
+	
+	/**
+	 * 
+	 */
+	public void cancelaCadastroCampanha() {		
+		campanha = new Campanha();
+		mostraCampos = false;
+	}
 }
