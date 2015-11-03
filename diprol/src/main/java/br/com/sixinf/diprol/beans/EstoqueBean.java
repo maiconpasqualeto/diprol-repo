@@ -58,6 +58,7 @@ public class EstoqueBean implements Serializable {
 	private List<Campanha> campanhasDevolucao;
 	private boolean mostraCampoDevolucao;
 	private Campanha campanhaPrincipal;
+	private String razaoSocial;
 	
 	@ManagedProperty(value="#{segurancaBean}")
 	private SegurancaBean segurancaBean;
@@ -90,7 +91,6 @@ public class EstoqueBean implements Serializable {
 		botaoConfirmaAtivo = true;
 		
 		estoque = new Estoque();
-		estoque.setDataEnvio(new Date());
 		
 		clientesPesquisa = new ArrayList<Cliente>();
 	}
@@ -263,6 +263,14 @@ public class EstoqueBean implements Serializable {
 		this.campanhaPrincipal = campanhaPrincipal;
 	}
 
+	public String getRazaoSocial() {
+		return razaoSocial;
+	}
+
+	public void setRazaoSocial(String razaoSocial) {
+		this.razaoSocial = razaoSocial;
+	}
+
 	/**
 	 * 
 	 * @param event
@@ -342,6 +350,10 @@ public class EstoqueBean implements Serializable {
 		mostraCampos = false;
 		mostraCampoDevolucao = false;
 		
+		
+		if (estoque.getMovimento().getCodMovimento().intValue() == 21) 
+			codCEF = "07.999999-9"; // balcão
+				
 		Cliente c = ClienteDAO.getInstance().buscarClientePorCodigo(codCEF);
 		if (c == null) {
 			FacesMessage m = new FacesMessage(
@@ -350,6 +362,8 @@ public class EstoqueBean implements Serializable {
 			FacesContext.getCurrentInstance().addMessage(null, m);
 			return;
 		}
+		
+		razaoSocial = c.getRazaoSocial();
 		
 		if (estoque.getMovimento().getCodMovimento().intValue() == 13) {
 			
@@ -397,7 +411,6 @@ public class EstoqueBean implements Serializable {
 			}
 			
 		} 
-			
 		
 		
 		estoque.setUf(c.getUf());
@@ -465,13 +478,17 @@ public class EstoqueBean implements Serializable {
 			FacesMessage m = new FacesMessage("Registro salvo com sucesso!");
 			FacesContext.getCurrentInstance().addMessage(null, m);
 			
+			Date dataEnvio = estoque.getDataEnvio();
+			
 			estoque = new Estoque();
-			estoque.setDataEnvio(new Date());
+			estoque.setDataEnvio(dataEnvio);
 			
 			campanhaPermuta = null;
 			mostraCampos = false;
 			mostraCampoPermuta = false;
 			mostraCampoDevolucao = false;
+			codCEF = null;
+			razaoSocial = null;
 			
 		} catch (Exception e) {
 			Logger.getLogger(getClass()).error("Erro ao gravar venda", e);
@@ -496,6 +513,7 @@ public class EstoqueBean implements Serializable {
 	public void pesquisaSelecionado(){
 		if (clienteSelecionadoPesquisa != null) {
 			this.codCEF = clienteSelecionadoPesquisa.getCodCEF();
+			this.razaoSocial = clienteSelecionadoPesquisa.getRazaoSocial();
 			
 			this.parPesquisaCliente = null;
 			this.clienteSelecionadoPesquisa = null;
@@ -510,6 +528,25 @@ public class EstoqueBean implements Serializable {
 	public void onRowDblClckSelect(final SelectEvent event) {
 	    clienteSelecionadoPesquisa = (Cliente) event.getObject();
 		pesquisaSelecionado();
+	}
+	
+	/**
+	 * 
+	 */
+	public void movimentoChangeVenda() {
+		if ("07.999999-9".equals(codCEF)) {
+			codCEF = null;
+			razaoSocial = null;
+		}
+	}
+	
+	/**
+	 * 
+	 */
+	public void cancelarVenda() {
+		codCEF = null;
+		razaoSocial = null;
+		mostraCampos = false;
 	}
 	
 }

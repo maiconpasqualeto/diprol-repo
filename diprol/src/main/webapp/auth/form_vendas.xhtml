@@ -50,26 +50,35 @@
 						<p:outputLabel value="Campanha" for="cmbCampanha" styleClass="col-sm-2 control-label" />
 						<div class="col-sm-3">
 							<h:selectOneMenu id="cmbCampanha" class="form-control" converter="entidadeConverter" 
-									required="true" value="#{estoqueBean.campanhaPrincipal}">
+									required="true" value="#{estoqueBean.campanhaPrincipal}" disabled="#{estoqueBean.mostraCampos}">
 								<f:selectItem itemValue="#{null}" itemLabel="" />
 								<f:selectItems var="camp" value="#{estoqueBean.campanhas}" 
 									itemValue="#{camp}" itemLabel="#{camp.campanha}"/>
 							</h:selectOneMenu>
 						</div>
 					</div>
-					<div class="form-group">
+					<h:panelGroup id="divCEF" layout="block" class="form-group">
 						<p:outputLabel value="Código CEF" for="txtCodigoCEF" styleClass="col-sm-2 control-label" />
-						<div class="col-sm-2">
-							<p:inputMask id="txtCodigoCEF" value="#{estoqueBean.codCEF}" 
-								validatorMessage="Código CEF inválido" label="Código CEF" 
-								mask="99.999999-9" class="form-control fullwidth" required="true"/>
+						<div class="col-sm-3">
+							<div class="input-group">
+								<p:inputMask id="txtCodigoCEF" value="#{estoqueBean.codCEF}" 
+									validatorMessage="Código CEF inválido" label="Código CEF" 
+									mask="99.999999-9" class="form-control fullwidth" 
+									required="#{estoqueBean.estoque.movimento.movimento ne 'BALCÃO'}"
+									disabled="#{estoqueBean.mostraCampos}"/>
+								<span class="input-group-btn">
+							    	<button id="btnPesquisa" class="btn btn-primary" data-toggle="modal" data-target="#modalCEF" type="button" 
+							    			title="Pesquisar Cliente">
+									  <span class="glyphicon glyphicon-search"></span>
+									</button>
+							    </span>
+						     </div>
 						</div>
-						<div class="col-sm-1">
-							<button class="btn btn-primary" data-toggle="modal" data-target="#modalCEF" type="button" title="Pesquisar Cliente">
-							  Pesquisar
-							</button>
+						<div class="col-sm-6">
+							<h:outputLabel styleClass="control-label" value="Razão Social:" />&#160;
+							<h:outputText styleClass="control-label" value="#{estoqueBean.razaoSocial}" />
 						</div>
-					</div>
+					</h:panelGroup>
 					<!-- DIALOG Pesquisar Lotérica -->
 					<div class="modal fade" id="modalCEF" tabindex="-1" role="dialog"
 						aria-labelledby="modalCEFLabel" aria-hidden="true">
@@ -100,7 +109,7 @@
 												emptyMessage="Sem registros" >
 												
 											<p:ajax event="rowDblselect" listener="#{estoqueBean.onRowDblClckSelect}" 
-    											process="@this" update=":formEstoque:txtParPesquisa :formEstoque:divClientes :formEstoque:txtCodigoCEF" 
+    											process="@this" update=":formEstoque:txtParPesquisa :formEstoque:divClientes :formEstoque:divCEF" 
     											global="false" oncomplete="$('#modalCEF').modal('hide')" />
 												
 											<p:column headerText="Código CEF">
@@ -115,7 +124,7 @@
 								<div class="modal-footer">
 									<button type="button" class="btn btn-primary" data-dismiss="modal">Fechar</button>
 									<p:commandButton value="Confirmar" actionListener="#{estoqueBean.pesquisaSelecionado}"
-											process="tblCliente @this" update="txtParPesquisa divClientes txtCodigoCEF" 
+											process="tblCliente @this" update="txtParPesquisa divClientes divCEF" 
 											styleClass="btn btn-success">
 										<f:passThroughAttribute name="data-dismiss" value="modal"/>
 									</p:commandButton>
@@ -128,7 +137,11 @@
 						<p:outputLabel value="Movimento" for="cmbMovimento" styleClass="col-sm-2 control-label" />
 						<div class="col-sm-3">
 							<h:selectOneMenu id="cmbMovimento" class="form-control" required="true"
-									value="#{estoqueBean.estoque.movimento}" converter="entidadeConverter" >
+									value="#{estoqueBean.estoque.movimento}" converter="entidadeConverter" 
+									disabled="#{estoqueBean.mostraCampos}">
+									
+								<p:ajax event="change" process="@this" listener="#{estoqueBean.movimentoChangeVenda}" update="divCEF" />
+								
 								<f:selectItem  itemLabel="" />
 								<f:selectItems var="mov" value="#{estoqueBean.movimentos}"
 									itemLabel="#{mov.movimento}" itemValue="#{mov}"  />								
@@ -137,7 +150,8 @@
 						<div class="col-sm-2">
 							<p:commandButton id="btnConfirmaInicio" actionListener="#{estoqueBean.confirmaInicioVendas}" 
 								value="Confirma" styleClass="btn btn-primary" rendered="#{estoqueBean.botaoConfirmaAtivo}"
-							 	process="@this cmbMovimento txtCodigoCEF cmbCampanha" update="divForm msgs"/>
+							 	process="@this cmbMovimento txtCodigoCEF cmbCampanha" update="divForm msgs"
+							 	disabled="#{estoqueBean.mostraCampos}" oncomplete="if (!args.validationFailed) { $('#btnPesquisa').attr('disabled', 'disabled').button('refresh'); }"/>
 						</div>
 					</div>
 					<hr/>
@@ -209,17 +223,21 @@
 						<hr/>
 						
 						<div class="form-group">
-							<div class="col-sm-2 control-label">
+							<div class="col-sm-1 control-label">
 								<p:commandButton actionListener="#{estoqueBean.confirmaVenda}" rendered="#{estoqueBean.botaoConfirmaAtivo}"
-							value="Confirma" styleClass="btn btn-success" update="formEstoque" />
+									value="Confirma" styleClass="btn btn-success" update="formEstoque" 
+									oncomplete="if (!args.validationFailed) { $('#btnPesquisa').removeAttr('disabled') }"/>
+							</div>
+							<div class="col-sm-1 control-label">
+								<p:commandButton actionListener="#{estoqueBean.cancelarVenda}" rendered="#{estoqueBean.mostraCampos}"
+									value="Cancela" styleClass="btn btn-warning" update="formEstoque" process="@this"
+									oncomplete="$('#btnPesquisa').removeAttr('disabled')"/>
 							</div>
 						</div>
 						
 						
 					</h:panelGroup>	
 				</h:panelGroup>
-				
-				
 				
 
 			</h:form>

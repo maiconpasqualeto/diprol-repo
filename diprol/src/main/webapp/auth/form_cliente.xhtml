@@ -86,7 +86,7 @@
 
 					<div class="row formrow">
 						<p:outputLabel for="txtCEP" value="CEP" styleClass="col-sm-2" />
-						<div class="col-sm-3">
+						<div class="col-sm-2">
 							<p:inputMask id="txtCEP" required="true" mask="99999-999"
 								value="#{cadastroClienteBean.cliente.cep}" converter="inputMaskConverter"
 								class="form-control fullwidth" >
@@ -103,7 +103,7 @@
 						</h:panelGroup>
 
 						<label class="col-sm-1" for="txtNumero">Número</label>
-						<div class="col-sm-1">
+						<div class="col-sm-2">
 							<p:inputText id="txtNumero"
 								value="#{cadastroClienteBean.cliente.enderecoNumero}"
 								class="form-control fullwidth" />
